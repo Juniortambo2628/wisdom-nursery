@@ -21,3 +21,7 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+
+# Published by `php artisan filament:upgrade` on composer install
+/public/css/filament
+/public/js/filament
