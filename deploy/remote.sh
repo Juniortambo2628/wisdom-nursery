@@ -54,10 +54,8 @@ cd "$RELEASE_DIR"
 # --- Laravel -------------------------------------------------------------------
 "$PHP_BIN" artisan migrate --force --no-interaction
 
-# public/storage -> storage/app/public. Relative so it survives the release swap.
-if [[ ! -L public/storage ]]; then
-  "$PHP_BIN" artisan storage:link --relative --no-interaction || ln -sfn ../storage/app/public public/storage
-fi
+# public/storage -> storage/app/public (uploaded photos). Relative, so it follows the release.
+[[ -L public/storage ]] || ln -sfn ../storage/app/public public/storage
 
 # Content seeders. Safe on every deploy: each seeder runs once per database and
 # is recorded in `settings` (see database/seeders/DatabaseSeeder.php), so the
@@ -68,6 +66,11 @@ fi
 "$PHP_BIN" artisan filament:optimize --no-interaction 2>/dev/null || true
 
 # --- Go live (atomic symlink swap) --------------------------------------------
+# cPanel creates the document root (current/public) as a real folder when the
+# domain is added. Move that placeholder aside (never delete) so the symlink fits.
+if [[ -d "$DEPLOY_PATH/current" && ! -L "$DEPLOY_PATH/current" ]]; then
+  mv "$DEPLOY_PATH/current" "$DEPLOY_PATH/cpanel-placeholder-$(date +%Y%m%d%H%M%S)"
+fi
 ln -sfn "$RELEASE_DIR" "$DEPLOY_PATH/current.tmp"
 mv -Tf "$DEPLOY_PATH/current.tmp" "$DEPLOY_PATH/current"
 
