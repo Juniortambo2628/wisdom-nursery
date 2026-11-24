@@ -9,10 +9,11 @@ class TeamSeeder extends Seeder
 {
     public function run(): void
     {
-        foreach (range(1, 4) as $i) {
-            TeamMember::firstOrCreate(['sort_order' => $i], [
-                'name' => '[Team member name]',
-                'role' => '[Role]',
+        // Roles as drawn in the concepts deck; names and photos come from the client.
+        foreach (['Founder / Director', 'Nursery manager', 'Agronomist', 'Sales & orders'] as $i => $role) {
+            TeamMember::firstOrCreate(['sort_order' => $i + 1], [
+                'name' => '[Name]',
+                'role' => $role,
             ]);
         }
     }

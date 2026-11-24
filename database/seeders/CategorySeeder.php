@@ -11,17 +11,17 @@ class CategorySeeder extends Seeder
     {
         // Aligned to the client's divisions (Kitui sales strategy, 24 Nov 2026).
         $categories = [
-            ['slug' => 'fruit-trees', 'name' => 'Fruit trees'],
-            ['slug' => 'vegetable-seedlings', 'name' => 'Vegetable seedlings'],
-            ['slug' => 'ornamentals-palms', 'name' => 'Ornamentals & palms'],
-            ['slug' => 'indoor-plants', 'name' => 'Indoor plants'],
-            ['slug' => 'tree-seedlings', 'name' => 'Tree seedlings'],
+            ['slug' => 'fruit-trees', 'name' => 'Fruit trees', 'summary' => 'Grafted mango, avocado and orange, ready for transplanting.'],
+            ['slug' => 'vegetable-seedlings', 'name' => 'Vegetable seedlings', 'summary' => 'Tomato, cabbage, kale and more, for farms and kitchen gardens.'],
+            ['slug' => 'ornamentals-palms', 'name' => 'Ornamentals & palms', 'summary' => 'Cypress, crotons, Ashoka and palms for compounds and landscaping.'],
+            ['slug' => 'indoor-plants', 'name' => 'Indoor plants', 'summary' => 'Swiss cheese plant, bird of paradise, alocasia and more.'],
+            ['slug' => 'tree-seedlings', 'name' => 'Tree seedlings', 'summary' => 'Grevillea, neem, blue gum and more, by the tray.'],
         ];
 
         foreach ($categories as $i => $c) {
             Category::firstOrCreate(['slug' => $c['slug']], [
                 'name' => $c['name'],
-                'summary' => '['.$c['name'].': one-line description]',
+                'summary' => $c['summary'],
                 'sort_order' => $i,
             ]);
         }

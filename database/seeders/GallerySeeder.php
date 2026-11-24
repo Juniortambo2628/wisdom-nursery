@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\GalleryImage;
 use Illuminate\Database\Seeder;
 
-/** Labelled placeholders (no path) until the real photos arrive. */
+/** Labelled placeholders (no path) until the real photos arrive; the caption says what photo goes there. */
 class GallerySeeder extends Seeder
 {
     public function run(): void
@@ -22,7 +22,7 @@ class GallerySeeder extends Seeder
         ];
 
         foreach ($items as $i => [$category, $caption]) {
-            GalleryImage::firstOrCreate(['caption' => "[Photo: {$caption}]"], [
+            GalleryImage::firstOrCreate(['caption' => $caption], [
                 'category' => $category,
                 'sort_order' => $i,
             ]);
