@@ -20,12 +20,19 @@ account.
 The key is made on your own machine, so the private half never passes through anyone else.
 It is used only by GitHub Actions to deploy; keep your own cPanel login separate.
 
-**Windows (PowerShell), macOS or Linux** (OpenSSH is built in):
+**macOS / Linux:**
 ```bash
-ssh-keygen -t ed25519 -C "github-actions-wisdom-nursery-deploy" -f ~/.ssh/wisdom_nursery_deploy
+mkdir -p ~/.ssh && ssh-keygen -t ed25519 -C "github-actions-wisdom-nursery-deploy" -f ~/.ssh/wisdom_nursery_deploy
+```
+
+**Windows (PowerShell):** `ssh-keygen` does not understand `~`, and `.ssh` may not exist yet:
+```powershell
+New-Item -ItemType Directory -Force "$HOME\.ssh" | Out-Null
+ssh-keygen -t ed25519 -C "github-actions-wisdom-nursery-deploy" -f "$HOME\.ssh\wisdom_nursery_deploy"
 ```
 Press **Enter twice** when asked for a passphrase (GitHub Actions cannot type one).
-On Windows `~` is `C:\Users\<you>`; the files are in `C:\Users\<you>\.ssh\`.
+On Windows, use `"$HOME\.ssh\wisdom_nursery_deploy"` wherever this guide writes
+`~/.ssh/wisdom_nursery_deploy`.
 
 This makes two files:
 - `wisdom_nursery_deploy.pub`: the **public** key → the server (step 1b)
@@ -33,7 +40,8 @@ This makes two files:
 
 Show the public key to copy it:
 ```bash
-cat ~/.ssh/wisdom_nursery_deploy.pub
+cat ~/.ssh/wisdom_nursery_deploy.pub                      # macOS / Linux
+Get-Content "$HOME\.ssh\wisdom_nursery_deploy.pub"         # Windows PowerShell
 ```
 
 ### 1b. Add the public key to `authorized_keys` on the server
@@ -195,7 +203,13 @@ Show the private key to copy it: `cat ~/.ssh/wisdom_nursery_deploy` (PowerShell:
 `Get-Content ~/.ssh/wisdom_nursery_deploy -Raw`). Paste it straight into the secret box and
 don't save it anywhere else. With the GitHub CLI you can skip copy-paste entirely:
 ```bash
+# macOS / Linux
 gh secret set SSH_PRIVATE_KEY --repo Juniortambo2628/wisdom-nursery < ~/.ssh/wisdom_nursery_deploy
+ssh-keyscan -p <port> <host> | gh secret set SSH_KNOWN_HOSTS --repo Juniortambo2628/wisdom-nursery
+```
+```powershell
+# Windows PowerShell (no "<" redirection: pipe instead)
+Get-Content "$HOME\.ssh\wisdom_nursery_deploy" -Raw | gh secret set SSH_PRIVATE_KEY --repo Juniortambo2628/wisdom-nursery
 ssh-keyscan -p <port> <host> | gh secret set SSH_KNOWN_HOSTS --repo Juniortambo2628/wisdom-nursery
 ```
 
