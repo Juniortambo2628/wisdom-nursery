@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\Fulfilment;
 use App\Enums\OrderStatus;
+use App\Events\OrderStatusChanged;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -75,10 +76,31 @@ class Order extends Model
     /** Move to a new status and stamp its timestamp column. */
     public function transitionTo(OrderStatus $status): void
     {
+        $from = $this->status;
         $this->status = $status;
         if ($column = $status->timestampColumn()) {
             $this->{$column} ??= now();
         }
         $this->save();
+
+        if ($from !== $status) {
+            OrderStatusChanged::dispatch($this, $from);
+        }
+    }
+
+    /** Statuses staff can move this order to next from the dashboard. */
+    public function nextStatuses(): array
+    {
+        return match ($this->status) {
+            OrderStatus::Paid => [OrderStatus::Ready],
+            OrderStatus::Ready => $this->fulfilment === Fulfilment::Delivery ? [OrderStatus::Dispatched] : [OrderStatus::Collected],
+            OrderStatus::Dispatched => [OrderStatus::Delivered],
+            default => [],
+        };
+    }
+
+    public function adminUrl(): string
+    {
+        return url('/admin/orders/'.$this->id);
     }
 }

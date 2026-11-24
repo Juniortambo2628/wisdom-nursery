@@ -7,6 +7,7 @@ use App\Enums\OrderStatus;
 use App\Http\Requests\CheckoutForm;
 use App\Models\DeliveryArea;
 use App\Models\Order;
+use App\Services\Mpesa\PaymentService;
 use App\Support\Cart;
 use App\Support\Phone;
 use Illuminate\Http\RedirectResponse;
@@ -29,11 +30,8 @@ class CheckoutController extends Controller
         ]);
     }
 
-    /**
-     * Creates the order (awaiting payment) and opens its payment page.
-     * The STK push to the customer's phone is added with the M-Pesa service.
-     */
-    public function store(CheckoutForm $request, Cart $cart): RedirectResponse
+    /** Creates the order (awaiting payment), sends the M-Pesa prompt and opens the payment page. */
+    public function store(CheckoutForm $request, Cart $cart, PaymentService $payments): RedirectResponse
     {
         $lines = $cart->lines();
         if ($lines->isEmpty()) {
@@ -74,8 +72,8 @@ class CheckoutController extends Controller
             return $order;
         });
 
-        session(['checkout_mpesa_phone' => Phone::normalise($data['mpesa_phone'])]);
         $cart->clear();
+        $payments->requestStk($order, Phone::normalise($data['mpesa_phone']));
 
         return redirect()->route('orders.show', $order);
     }

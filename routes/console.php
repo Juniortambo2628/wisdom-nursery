@@ -16,7 +16,7 @@ Schedule::command('queue:work --stop-when-empty --max-time=50 --tries=3 --backof
     ->withoutOverlapping(5);
 
 // Re-check STK payments whose callback never arrived (M-Pesa status query).
-// Registered once the M-Pesa service lands (week 2).
+Schedule::command('mpesa:reconcile')->everyTwoMinutes()->withoutOverlapping(5);
 
 // Backups: daily database + uploads; retention per config/backup.php
 // (SLA 9.2: weekly backups kept 4 weeks).

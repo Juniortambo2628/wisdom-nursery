@@ -32,6 +32,7 @@ Route::post('/checkout', [CheckoutController::class, 'store'])->middleware('thro
 
 Route::get('/orders/{order:public_token}', [OrderController::class, 'show'])->name('orders.show');
 Route::get('/orders/{order:public_token}/status', [OrderController::class, 'status'])->middleware('throttle:60,1')->name('orders.status');
+Route::post('/orders/{order:public_token}/retry', [OrderController::class, 'retry'])->middleware('throttle:checkout')->name('orders.retry');
 Route::post('/orders/{order:public_token}/mpesa-code', [OrderController::class, 'submitCode'])->middleware('throttle:forms')->name('orders.mpesa-code');
 
 Route::get('/quote', [QuoteController::class, 'show'])->name('quote.show');
