@@ -198,7 +198,7 @@ Repository → **Settings**.
 | `SSH_PORT` | `<port>` |
 | `SSH_USER` | `<user>` |
 | `SSH_PRIVATE_KEY` | the whole private key file `~/.ssh/wisdom_nursery_deploy`, including the `-----BEGIN…` and `-----END…` lines |
-| `SSH_KNOWN_HOSTS` | the output of `ssh-keyscan -p <port> <host>` run on your laptop (all lines) |
+| `SSH_KNOWN_HOSTS` | the server's line from your laptop's `known_hosts` (saved when you typed `yes` in step 2), or the output of `ssh-keyscan -p <port> <host>`. With port 1624 every line must start with `[host]:1624`, not just the host. |
 
 Show the private key to copy it: `cat ~/.ssh/wisdom_nursery_deploy` (PowerShell:
 `Get-Content ~/.ssh/wisdom_nursery_deploy -Raw`). Paste it straight into the secret box and
@@ -277,7 +277,7 @@ From now on every push to `staging` updates the preview within a few minutes.
 | Symptom (Actions log or browser) | Fix |
 |---|---|
 | `Permission denied (publickey)` | The public key line is missing or broken in `~/.ssh/authorized_keys` (one line, no line breaks), permissions are not `700` on `~/.ssh` / `600` on the file (step 1b), or `SSH_USER` is wrong. |
-| `Host key verification failed` | `SSH_KNOWN_HOSTS` missing or for another port: rerun `ssh-keyscan -p <port> <host>`. |
+| `Host key verification failed` / `SSH_KNOWN_HOSTS has no entry…` | The secret's lines must start with `[host]:port`. Copy the line from your laptop: `Select-String -Path "$HOME\.ssh\known_hosts" -SimpleMatch "[<host>]:<port>" \| ForEach-Object Line` (PowerShell), or `ssh-keygen -F "[<host>]:<port>"` (macOS/Linux). |
 | `Set the DEPLOY_PATH variable on this environment` | Step 11: the variable is on the `staging` **environment**, not a repository variable. |
 | `Missing …/shared/.env` | Step 8. |
 | `Your PHP version … does not satisfy` / syntax errors | CLI PHP is older than 8.2: set `PHP_BIN` (step 2, 11). |
