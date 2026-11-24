@@ -119,7 +119,7 @@ nano .env      # paste the template below, fill in, Ctrl+O, Enter, Ctrl+X
 chmod 600 .env
 ```
 
-Template (staging):
+Template (staging). **Replace every `<user>` with your cPanel username** (e.g. `DB_USERNAME=<user>_nurserystg` becomes `DB_USERNAME=xrhlhoko_nurserystg`), and put the password in quotes if it contains `#`, spaces or `$`:
 ```dotenv
 APP_NAME="Wisdom Nursery"
 APP_ENV=staging

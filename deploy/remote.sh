@@ -44,6 +44,13 @@ if [[ ! -f "$SHARED/.env" ]]; then
   exit 1
 fi
 
+# Catch values still holding the guide's placeholders, e.g. DB_USERNAME=<user>_nurserystg.
+if grep -nE '^[A-Z0-9_]+=.*<[a-z_]+>' "$SHARED/.env" | cut -d= -f1 | grep -q .; then
+  echo "shared/.env still has placeholders in: $(grep -nE '^[A-Z0-9_]+=.*<[a-z_]+>' "$SHARED/.env" | cut -d: -f2 | cut -d= -f1 | tr '\n' ' ')" >&2
+  echo "Replace <user> etc. with the real values (cPanel Terminal: nano $SHARED/.env)." >&2
+  exit 1
+fi
+
 rm -rf "$RELEASE_DIR/storage"
 ln -sfn "$SHARED/storage" "$RELEASE_DIR/storage"
 ln -sfn "$SHARED/.env" "$RELEASE_DIR/.env"
