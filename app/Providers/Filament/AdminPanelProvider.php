@@ -34,7 +34,13 @@ class AdminPanelProvider extends PanelProvider
                 'warning' => Color::hex('#B9822F'), // clay
                 'gray' => Color::Stone,
             ])
-            ->sidebarCollapsibleOnDesktop()
+            ->navigationGroups(['Orders', 'Plants', 'Content', 'Settings'])
+            // Self-hosted Inter (same as the public site) instead of a font CDN.
+            ->font('Inter Variable', provider: \Filament\FontProviders\LocalFontProvider::class)
+            ->renderHook('panels::head.end', fn () => \Illuminate\Support\Facades\Vite::withEntryPoints(['resources/css/admin-fonts.css'])->toHtml()
+                // On phones, start with the menu closed so the orders show first (Filament defaults to open).
+                .'<script>try{if(window.innerWidth<1024)localStorage.setItem("isOpen","false")}catch(e){}</script>')
+            ->renderHook('panels::user-menu.before', fn () => view('filament.view-site-link'))
             ->databaseNotifications()
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -42,9 +48,7 @@ class AdminPanelProvider extends PanelProvider
                 Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-            ->widgets([
-                Widgets\AccountWidget::class,
-            ])
+            ->widgets([])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
