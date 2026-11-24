@@ -85,8 +85,9 @@ cPanel → **Domains** → **Create A New Domain**:
 - **Submit**. (cPanel creates that folder; the first deploy moves it aside automatically.)
 
 ### 4. PHP version and extensions
-- cPanel → **MultiPHP Manager**: tick `staging.nursery.wisdomcapital.co.ke`, set **PHP 8.3**
-  (or 8.2) → Apply.
+- The server's command-line PHP is **8.4**. Give the site the same version: cPanel →
+  **Select PHP Version** (this server runs CloudLinux; MultiPHP Manager may also be offered)
+  → **8.4** for `staging.nursery.wisdomcapital.co.ke`.
 - cPanel → **Select PHP Version** (or MultiPHP INI Editor) for that version: make sure these
   extensions are on: `pdo_mysql, mbstring, intl, gd, zip, bcmath, fileinfo, sodium`.
 

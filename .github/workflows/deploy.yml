@@ -19,7 +19,7 @@ jobs:
 
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.2"
+          php-version: "8.4"
           extensions: mbstring, intl, gd, zip, pdo_sqlite, bcmath
           coverage: none
 
@@ -72,7 +72,7 @@ jobs:
 
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.2"
+          php-version: "8.4"
           extensions: mbstring, intl, gd, zip, bcmath
           coverage: none
 

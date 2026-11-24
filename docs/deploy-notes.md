@@ -17,7 +17,7 @@ secrets only.
 | DNS | `nursery.wisdomcapital.co.ke` (A) + `www.nursery…` (CNAME) for production; `staging.nursery.wisdomcapital.co.ke` (A) for staging, all created 24 Nov |
 | SSL | AutoSSL active on the account |
 | SSH | **Enabled** by Truehost support (24 Nov), Bash shell, non-standard port (in the `SSH_PORT` secret). Deploy key `github-actions-wisdom-nursery-deploy` (ed25519) generated on Kevin's laptop and added to `~/.ssh/authorized_keys` with `no-port-forwarding,no-agent-forwarding,no-X11-forwarding,no-pty`. |
-| CLI PHP version | **To confirm** with `php -v` over SSH. App targets 8.2+ (Composer platform pinned to 8.2). If `php` is older, use the `ea-php82`/`alt-php82` binary path as `PHP_BIN`. |
+| CLI PHP version | **PHP 8.4.28** (checked over SSH 24 Nov), so no `PHP_BIN` needed. CloudLinux with alt-php 5.2–8.6 and ea-php 5.6–8.5 also installed. Set the domains to 8.4 in *Select PHP Version* so web and CLI match. CI builds and tests on 8.4; Composer platform stays pinned at 8.2 as the minimum. |
 | Composer / Node / rsync on server | **Not needed.** Everything is built in GitHub Actions; upload uses `tar` over SSH. |
 | MySQL | Separate database and user for the nursery (never the Wisdom Capital database). |
 
@@ -57,7 +57,7 @@ will not enable SSH on this account, the options in order of preference:
 ## Open items
 
 - [x] SSH access and port confirmed (24 Nov)
-- [ ] Kevin: generate the deploy key locally, add it to `authorized_keys`, run `php -v` over SSH (guide steps 1–2)
+- [x] Deploy key generated locally and authorised; SSH login works, CLI PHP 8.4.28 (24 Nov)
 - [x] `{{STAGING_DOMAIN}}` = `staging.nursery.wisdomcapital.co.ke` (DNS created 24 Nov); create it as a domain in cPanel with docroot `{{STAGING_PATH}}/current/public` and run AutoSSL
 - [ ] Kevin: follow `docs/deploy-guide.md` (cPanel steps 1–9, GitHub steps 10–13). Dry run of `deploy/remote.sh` on a fake cPanel layout passed 24 Nov.
 - [ ] Staging: block search engines (`APP_ENV=staging` → `noindex`), optionally cPanel Directory Privacy password
