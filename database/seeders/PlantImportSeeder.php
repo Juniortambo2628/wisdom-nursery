@@ -77,7 +77,7 @@ class PlantImportSeeder extends Seeder
                 'name' => $name,
                 'slug' => $this->uniqueSlug($name),
                 'botanical_name' => ($row['botanical_name'] ?? null) ?: null,
-                'sold_as' => $categorySlug === 'tree-seedlings' ? SoldAs::Seedling : SoldAs::Potted,
+                'sold_as' => in_array($categorySlug, ['tree-seedlings', 'vegetable-seedlings'], true) ? SoldAs::Seedling : SoldAs::Potted,
                 'price' => $price,
                 // Stock is not in the export: 0 until the team confirms counts (proposal 06).
                 'stock_qty' => (int) ($row['stock'] ?? 0),
@@ -133,9 +133,11 @@ class PlantImportSeeder extends Seeder
         $t = Str::lower($text);
 
         return match (true) {
-            Str::contains($t, 'palm') => 'palms',
-            Str::contains($t, ['seedling', 'grevillea', 'neem', 'blue gum', 'eucalyptus', 'cypress', 'pine', 'croton megalocarpus']) => 'tree-seedlings',
-            Str::contains($t, ['fruit', 'mango', 'avocado', 'orange', 'lemon', 'pawpaw', 'outdoor']) => 'outdoor-fruit-trees',
+            Str::contains($t, 'croton megalocarpus') => 'tree-seedlings', // a tree, not the ornamental croton
+            Str::contains($t, ['tomato', 'cabbage', 'kale', 'sukuma', 'spinach', 'onion', 'capsicum', 'vegetable']) => 'vegetable-seedlings',
+            Str::contains($t, ['palm', 'cypress', 'croton', 'ashoka', 'ornamental', 'shrub', 'flower']) => 'ornamentals-palms',
+            Str::contains($t, ['fruit', 'mango', 'avocado', 'orange', 'lemon', 'pawpaw', 'grafted']) => 'fruit-trees',
+            Str::contains($t, ['seedling', 'grevillea', 'neem', 'blue gum', 'eucalyptus', 'pine', 'croton megalocarpus', 'tree']) => 'tree-seedlings',
             Str::contains($t, 'indoor') => 'indoor-plants',
             // Proposal: seedlings sell from KES 30, indoor plants at KES 1,600.
             $price > 0 && $price < 200 => 'tree-seedlings',

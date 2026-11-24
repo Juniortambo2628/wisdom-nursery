@@ -9,10 +9,12 @@ class CategorySeeder extends Seeder
 {
     public function run(): void
     {
+        // Aligned to the client's divisions (Kitui sales strategy, 24 Nov 2026).
         $categories = [
+            ['slug' => 'fruit-trees', 'name' => 'Fruit trees'],
+            ['slug' => 'vegetable-seedlings', 'name' => 'Vegetable seedlings'],
+            ['slug' => 'ornamentals-palms', 'name' => 'Ornamentals & palms'],
             ['slug' => 'indoor-plants', 'name' => 'Indoor plants'],
-            ['slug' => 'palms', 'name' => 'Palms'],
-            ['slug' => 'outdoor-fruit-trees', 'name' => 'Outdoor & fruit trees'],
             ['slug' => 'tree-seedlings', 'name' => 'Tree seedlings'],
         ];
 

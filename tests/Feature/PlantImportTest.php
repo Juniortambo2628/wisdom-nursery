@@ -36,6 +36,6 @@ it('imports nursery rows only, idempotently, without overwriting team edits', fu
     expect(Plant::count())->toBe(3)
         ->and(Plant::where('name', 'Snake Plant')->value('price'))->toBe(1800)
         ->and(Plant::where('name', 'Grevillea')->first()->category->slug)->toBe('tree-seedlings')
-        ->and(Plant::where('name', 'Fan Palm')->first()->category->slug)->toBe('palms')
+        ->and(Plant::where('name', 'Fan Palm')->first()->category->slug)->toBe('ornamentals-palms')
         ->and(Plant::where('name', 'Grevillea')->value('price'))->toBe(30);
 });

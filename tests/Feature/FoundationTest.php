@@ -13,7 +13,7 @@ it('runs every content seeder once and is safe to re-run on each deploy', functi
 
     $this->seed();
 
-    expect(Category::count())->toBe(4)
+    expect(Category::count())->toBe(5)
         ->and(Post::count())->toBe(6)
         ->and(Post::published()->count())->toBe(0) // launch guides are drafts
         ->and(Setting::get('phone'))->toBe('+254 700 000 000')
