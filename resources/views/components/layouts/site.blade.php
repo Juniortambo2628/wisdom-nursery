@@ -45,7 +45,7 @@
         <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','{{ config('nursery.ga4_id') }}');</script>
     @endif
 </head>
-<body class="min-h-screen bg-cream" x-data="{ menu: false }" :class="menu && 'overflow-hidden lg:overflow-auto'">
+<body class="min-h-screen bg-mist" x-data="{ menu: false }" :class="menu && 'overflow-hidden lg:overflow-auto'">
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-white focus:px-4 focus:py-2">Skip to content</a>
 
     {{-- Top strip --}}
@@ -57,7 +57,7 @@
     </div>
 
     {{-- Header --}}
-    <header class="sticky top-0 z-30 border-b border-ink/10 bg-cream/95 backdrop-blur">
+    <header class="sticky top-0 z-30 border-b border-ink/10 bg-mist/95 backdrop-blur">
         <div class="container-page flex h-[72px] items-center justify-between gap-4 lg:h-24">
             <x-logo />
             <nav aria-label="Main" class="hidden items-center gap-8 lg:flex">
@@ -89,14 +89,14 @@
     <div x-cloak x-show="menu" x-transition.opacity class="fixed inset-0 z-40 bg-ink/40 lg:hidden" @click="menu = false"></div>
     <nav x-cloak x-show="menu" x-transition:enter="transition" x-transition:enter-start="translate-x-full" x-transition:leave="transition" x-transition:leave-end="translate-x-full"
          @keydown.escape.window="menu = false" aria-label="Mobile"
-         class="fixed inset-y-0 right-0 z-50 flex w-[85%] max-w-sm flex-col bg-cream p-6 shadow-xl lg:hidden">
+         class="fixed inset-y-0 right-0 z-50 flex w-[85%] max-w-sm flex-col bg-mist p-6 shadow-xl lg:hidden">
         <div class="flex items-center justify-between">
             <x-logo />
             <button type="button" class="grid h-11 w-11 place-items-center text-forest" @click="menu = false" aria-label="Close menu"><x-glyph name="close" class="h-6 w-6" /></button>
         </div>
         <ul class="mt-8 space-y-1">
             @foreach ($nav as $key => [$label, $href])
-                <li><a href="{{ $href }}" @class(['block rounded-xl px-4 py-3 text-lg font-display', 'bg-mist text-leaf' => $active === $key, 'text-forest hover:bg-mist' => $active !== $key])>{{ $label }}</a></li>
+                <li><a href="{{ $href }}" @class(['block rounded-xl px-4 py-3 text-lg font-display', 'bg-sage text-forest' => $active === $key, 'text-forest hover:bg-sage' => $active !== $key])>{{ $label }}</a></li>
             @endforeach
         </ul>
         <div class="mt-auto space-y-3">
@@ -109,7 +109,7 @@
 
     @if (session('status') && ! session('quote_sent') && ! session('contact_sent'))
         <div class="container-page pt-4" role="status">
-            <p class="rounded-xl bg-mist px-4 py-3 text-sm font-medium text-leaf">{{ session('status') }}</p>
+            <p class="rounded-xl bg-sage px-4 py-3 text-sm font-medium text-forest">{{ session('status') }}</p>
         </div>
     @endif
     @if (session('error'))

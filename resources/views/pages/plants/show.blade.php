@@ -44,7 +44,7 @@
                     <x-photo :label="'Main photo: '.$plant->name" class="aspect-square w-full rounded-image-lg" />
                     <div class="mt-4 grid grid-cols-4 gap-3">
                         @foreach (['In pot', 'Leaf close-up', 'Grown plant', 'In place'] as $thumb)
-                            <x-photo :label="$thumb" @class(['aspect-[4/3] w-full rounded-image text-[10px]', 'ring-2 ring-leaf ring-offset-2 ring-offset-cream' => $loop->first]) />
+                            <x-photo :label="$thumb" @class(['aspect-[4/3] w-full rounded-image text-[10px]', 'ring-2 ring-leaf ring-offset-2 ring-offset-mist' => $loop->first]) />
                         @endforeach
                     </div>
                 @else
@@ -54,7 +54,7 @@
                     @if ($images->count() > 1)
                         <div class="mt-4 grid grid-cols-4 gap-3">
                             @foreach ($images as $i => $image)
-                                <button type="button" @click="active = {{ $i }}" class="overflow-hidden rounded-image ring-offset-2 ring-offset-cream" :class="active === {{ $i }} && 'ring-2 ring-leaf'" aria-label="Show photo {{ $i + 1 }}">
+                                <button type="button" @click="active = {{ $i }}" class="overflow-hidden rounded-image ring-offset-2 ring-offset-mist" :class="active === {{ $i }} && 'ring-2 ring-leaf'" aria-label="Show photo {{ $i + 1 }}">
                                     <img src="{{ $image->url() }}" alt="" class="aspect-[4/3] w-full object-cover">
                                 </button>
                             @endforeach
@@ -152,7 +152,7 @@
                     ]);
                 @endphp
                 @if ($facts)
-                    <dl class="mt-7 grid grid-cols-2 gap-x-6 gap-y-5 rounded-card bg-mist p-6">
+                    <dl class="mt-7 grid grid-cols-2 gap-x-6 gap-y-5 rounded-card bg-sage/70 p-6">
                         @foreach ($facts as $label => $value)
                             <div><dt class="text-sm text-ink/60">{{ $label }}</dt><dd class="mt-0.5 font-semibold">{{ $value }}</dd></div>
                         @endforeach

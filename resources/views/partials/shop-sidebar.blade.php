@@ -26,7 +26,7 @@
         @endif
     </section>
 
-    <section class="rounded-card bg-mist p-6 ring-1 ring-ink/5">
+    <section class="rounded-card bg-sage p-6 ring-1 ring-ink/5">
         <h2 class="text-2xl">Quote list <span class="font-sans text-sm text-ink/60">for bulk orders</span></h2>
         @if ($quoteLines->isEmpty())
             <p class="mt-3 text-sm text-ink/60">Buying in bulk? Add plants to a quote list and we'll reply with prices and a ready date.</p>

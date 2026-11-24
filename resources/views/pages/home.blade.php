@@ -47,7 +47,7 @@
     <section class="container-page grid items-center gap-12 py-20 lg:grid-cols-2 lg:gap-20 lg:py-28">
         <div class="relative pb-16 pr-16 sm:pb-24 sm:pr-24">
             <x-photo :src="site_image('image_story_main')" label="Founder / manager portrait" class="aspect-[9/10] w-full rounded-image-lg" />
-            <div class="absolute bottom-0 right-0 w-1/2 rounded-image-lg bg-cream p-2.5">
+            <div class="absolute bottom-0 right-0 w-1/2 rounded-image-lg bg-mist p-2.5">
                 <x-photo :src="site_image('image_story_small')" label="Hands potting a seedling" class="aspect-square w-full rounded-image" />
             </div>
         </div>

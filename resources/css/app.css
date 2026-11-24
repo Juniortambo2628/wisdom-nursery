@@ -7,7 +7,7 @@
 @tailwind utilities;
 
 @layer base {
-    html { @apply bg-cream text-ink antialiased; -webkit-tap-highlight-color: transparent; }
+    html { @apply bg-mist text-ink antialiased; -webkit-tap-highlight-color: transparent; }
     body { @apply font-sans; }
     h1, h2, h3, h4 { @apply font-display font-normal text-ink; letter-spacing: -0.01em; }
     [x-cloak] { display: none !important; }
