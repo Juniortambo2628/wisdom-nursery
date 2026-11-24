@@ -112,6 +112,60 @@ Use the same `PHP_BIN` path as above if `php` is not the right version. The sche
 - `backup:monitor` daily (emails `BACKUP_NOTIFY_EMAIL` if backups stop)
 - pruning of old notification logs, failed jobs and password resets
 
+## Payments (M-Pesa)
+
+Safaricom Daraja STK Push (`app/Services/Mpesa`). At checkout the customer gets the M-Pesa
+prompt on their phone; the order page waits and updates by itself.
+
+- **Callback:** `https://<domain>/api/mpesa/callback/<MPESA_CALLBACK_SECRET>`. Each
+  `CheckoutRequestID` is processed once, the amount is checked against the order, then the
+  order is marked paid, stock is reduced and the alerts go out. Raw callbacks are kept on the
+  payment and in the daily log.
+- **Missed callbacks:** `mpesa:reconcile` (scheduler, every 2 minutes) asks Safaricom about
+  prompts older than 90 seconds.
+- **Fallback:** "No prompt? Pay to Till … and enter the M-Pesa code". The code is stored as
+  *pending verification*; staff confirm it on the order (Payments → Confirm payment) after
+  checking the M-Pesa statement. Short payments land there too.
+- **Without credentials** (until Daraja is approved) no prompt is sent: the order page offers
+  the till / code fallback and WhatsApp.
+- **Going live:** in `shared/.env` set `MPESA_ENV=production`, the production consumer
+  key/secret and passkey, `MPESA_TYPE` (`paybill` or `till`), `MPESA_SHORTCODE` (the paybill,
+  or the till's store number) and `MPESA_PARTY_B` (the till customers pay to). Then make a
+  KSh 10 test purchase.
+
+## Alerts
+
+Every paid order and quote request alerts each active **alert recipient** (Dashboard →
+Settings → Alert recipients) on the channels they chose; customers get SMS on payment, ready
+for collection and dispatched. Messages go through the queue (`SendAlert` job) and every
+attempt is recorded in **Settings → Alert log** (sent / failed / skipped / logged).
+
+| Channel | Provider | Settings |
+|---|---|---|
+| SMS | Africa's Talking | `AT_ENV`, `AT_USERNAME`, `AT_API_KEY`, `AT_SENDER_ID` (sandbox first) |
+| WhatsApp | WhatsApp Cloud API, or `log` until templates are approved | `WHATSAPP_*`, see [`docs/whatsapp-templates.md`](docs/whatsapp-templates.md) |
+| Email | server SMTP | `MAIL_*` |
+
+SMS without credentials is logged as *skipped* rather than retried. Use **Send test** on a
+recipient to check a channel end to end.
+
+## Order dashboard
+
+`/admin` (Filament), built to work on a phone. Create staff logins with
+`php artisan make:filament-user`.
+
+- **Dashboard:** sales today, orders to prepare, new quotes, payments to check, and the
+  orders to prepare with one-tap **Mark ready / Mark dispatched / Mark collected /
+  Mark delivered** and **Call**.
+- **Orders:** filters (to prepare, today, payment to verify), order view with items and
+  payments, cancel.
+- **Plants:** edit price, stock and availability straight from the list; photos, care facts,
+  "goes well with"; select plants → **Print QR labels** (A4 PDF linking to each plant page).
+- **Quote requests** (status, call, reply on WhatsApp), **Messages**, **Categories**,
+  **Delivery areas**, **Grower tips**, **Team**, **Gallery**, **Testimonials**, **Partners**.
+- **Settings:** site settings (contact, hours, till, home and about text), alert recipients,
+  alert log.
+
 ## Placeholders
 
 | Placeholder | Where it is set |

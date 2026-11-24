@@ -43,7 +43,7 @@ class PaymentService
             ]);
         } catch (Throwable $e) {
             Log::warning('STK push failed', ['order' => $order->number, 'error' => $e->getMessage()]);
-            $payment->update([
+            $payment->refresh()->update([
                 'status' => PaymentStatus::Failed,
                 'result_desc' => mb_substr($e->getMessage(), 0, 250),
                 'processed_at' => now(),

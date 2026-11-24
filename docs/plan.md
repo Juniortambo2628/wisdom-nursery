@@ -50,7 +50,7 @@ Likely `{{DOMAIN}} = nursery.wisdomcapital.co.ke`; to be confirmed.
 - [x] Home (hero, stats, story, 5 categories, popular this season, how we grow, bulk quote band, gallery preview, testimonial + partners, visit us + map + contact form)
 - [x] Our plants: availability list and shop (filters, search, availability states, sticky cart + quote list)
 - [x] Individual plant pages (gallery, buy-as options, stepper, WhatsApp order, care facts, goes well with)
-- [~] Cart and M-Pesa checkout (Cart → Details → Pay → Done; collect/delivery; STK waiting state; till fallback): pages + order creation + manual code done; STK push/callback week 2
+- [x] Cart and M-Pesa checkout (Cart → Details → Pay → Done; collect/delivery; STK push, waiting state, retry, till/code fallback)
 - [x] About, team and "How we grow"
 - [x] Gallery (filters: Team, Plants, Nursery, Deliveries)
 - [x] Grower tips (posts)
@@ -59,29 +59,29 @@ Likely `{{DOMAIN}} = nursery.wisdomcapital.co.ke`; to be confirmed.
 
 ## Scope: "also included" (proposal 05)
 
-- [ ] Order dashboard for the team, works on a phone (Filament: today view, status chips, one-tap actions)
-- [ ] Order alerts by SMS, WhatsApp and email (events → queued notifications → `notification_logs`)
+- [x] Order dashboard for the team, works on a phone (Filament: Today stats, orders to prepare, status chips, one-tap Mark ready/dispatched/collected/delivered, Call)
+- [x] Order alerts by SMS, WhatsApp and email (OrderPaid / QuoteRequested → queued SendAlert jobs → `notification_logs`); WhatsApp on `log` driver until Meta approves the templates
 - [x] WhatsApp ordering (floating button, plant-page "Order on WhatsApp", cart handoff `wa.me` link)
-- [~] Quote request for bulk orders (quote list + form done; alerts + dashboard resource week 2)
+- [x] Quote request for bulk orders (quote list + form + team alerts + dashboard resource with status, call, WhatsApp reply)
 - [x] Map and directions (embed + directions link, from settings `map_embed_url` / `map_link`)
 - [x] Basic search engine setup (titles/meta, OG, sitemap.xml, robots.txt, Product + LocalBusiness schema)
 - [ ] Short training session for the nursery team → `docs/handover.md` as the training guide
 
 ## Scope: investment line items (proposal 08)
 
-- [~] Website design and development, The Grower's Story, green palette (tokens + self-hosted fonts done; pages need the concepts deck)
-- [ ] Online shop: cart, M-Pesa checkout (Daraja STK + status query + idempotent callback + manual code), stock levels, customer SMS confirmations
-- [ ] Order alerts by SMS, WhatsApp, email, with order dashboard
+- [x] Website design and development, The Grower's Story, green palette
+- [x] Online shop: cart, M-Pesa checkout (Daraja STK + status query + idempotent callback + manual code), stock levels, customer SMS confirmations — sandbox tested with fakes; live test week 3
+- [x] Order alerts by SMS, WhatsApp, email, with order dashboard
 
 ## Scope: included at no extra cost (proposal 08)
 
 - [~] All 33 plants moved across with photos, descriptions and prices (idempotent importer written + tested; needs `database/seeders/data/wisdom-capital-products.csv` + images)
 - [x] Brand story, team and "How we grow" pages (placeholders until copy arrives)
-- [ ] Quote request for bulk and institutional orders
+- [x] Quote request for bulk and institutional orders
 - [ ] Six plant care and tree planting guides (seeded as drafts; Kevin supplies copy)
 - [ ] Google Business Profile — off-site task for Kevin; site supplies LocalBusiness schema + NAP consistency
 - [ ] WhatsApp Business catalogue — off-site task for Kevin; site can export plant list (name, price, image URL) to help
-- [ ] QR code labels for plants (Filament bulk action → PDF)
+- [x] QR code labels for plants (Plants → select → Print QR labels → A4 PDF)
 - [ ] Link from wisdomcapital.co.ke → `docs/launch-checklist.md` (redirect plan only; do not edit that site)
 - [ ] Search engine setup + monthly visitor report for 3 months (GA4 via `.env`)
 - [ ] Staff training and 3 months support → `docs/handover.md`; weekly backups kept 4 weeks (SLA 9.2) via scheduler
@@ -89,19 +89,19 @@ Likely `{{DOMAIN}} = nursery.wisdomcapital.co.ke`; to be confirmed.
 ## Platform
 
 - [x] Laravel **12** (11 is out of security support; see note), PHP 8.2+ platform pin, MySQL; Blade + Vite + Tailwind + Alpine
-- [~] Filament 3 installed, primary colour = leaf; custom theme with self-hosted Inter comes with the dashboard (week 2)
+- [x] Filament 3 dashboard in the palette (primary = leaf, self-hosted Inter); menu closed by default on phones
 - [x] Queue `database` driver, run from scheduler (`queue:work --stop-when-empty --max-time=50`)
 - [x] Scheduler: queue, daily DB backup (retain 4 weeks of weeklies), log pruning
-- [ ] Security: rate limits (forms, STK), honeypot, validation, secrets in `.env` only, complete `.env.example`
+- [x] Security: rate limits (forms, checkout, retry, callback), honeypot, validation, secret callback path, secrets in `.env` only, complete `.env.example`
 - [x] Data model (plus plant_pairings, stock_alerts, contact_messages): categories, plants, plant_images, orders, order_items, payments, quote_requests, quote_items, alert_recipients, posts, team_members, gallery_images, testimonials, partners, delivery_areas, settings, notification_logs
 
 ## Tests (Pest)
 
-- [~] ~~Add to cart · checkout creates order~~ (done) · STK callback success / failure / duplicate · stock decrement
-- [ ] Quote request · alerts dispatched (faked) · status change sends customer SMS
+- [x] Add to cart · checkout creates order · STK callback success / failure / duplicate · amount mismatch · reconcile · stock decrement
+- [x] Quote request · alerts dispatched (faked) · SMS / WhatsApp / email drivers · status change sends customer SMS · dashboard actions
 
 ## Milestones
 
 - [ ] Week 1: pipeline + staging live; design system; public pages with seeded content; importer → report to Kevin
-- [ ] Week 2: cart, checkout, M-Pesa sandbox, quotes, alerts, Filament → report to Kevin
+- [~] Week 2: cart, checkout, M-Pesa sandbox, quotes, alerts, Filament → built and tested 24 Nov; needs Daraja sandbox keys and Africa's Talking keys on staging for an end-to-end run
 - [ ] Week 3: tests, 375px QA, live M-Pesa test, content swap, production launch, `docs/handover.md` → report to Kevin
