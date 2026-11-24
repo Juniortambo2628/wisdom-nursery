@@ -1,0 +1,124 @@
+name: Test and deploy
+
+# push to `staging` -> staging (client preview link, SLA section 04)
+# push to `main`    -> production
+on:
+  push:
+    branches: [main, staging]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: mbstring, intl, gd, zip, pdo_sqlite, bcmath
+          coverage: none
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: |
+          composer install --no-interaction --prefer-dist --no-progress
+          npm ci
+
+      - name: Build assets
+        run: npm run build
+
+      - name: Run tests
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          php artisan test
+
+  deploy:
+    needs: test
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    # GitHub Environments "production" and "staging" each hold their own
+    # DEPLOY_PATH / PHP_BIN variables (Settings > Environments).
+    environment: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
+    concurrency:
+      group: deploy-${{ github.ref_name }}
+      cancel-in-progress: false
+    env:
+      DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+      PHP_BIN: ${{ vars.PHP_BIN || 'php' }}
+      RELEASE: ${{ github.sha }}
+    steps:
+      - name: Only main or staging deploy
+        if: github.ref_name != 'main' && github.ref_name != 'staging'
+        run: |
+          echo "Deploys run only from main or staging (got ${{ github.ref_name }})"
+          exit 1
+
+      - name: Check configuration
+        run: |
+          test -n "$DEPLOY_PATH" || { echo "Set the DEPLOY_PATH variable on this environment"; exit 1; }
+          case "$DEPLOY_PATH" in *nursery*) ;; *) echo "DEPLOY_PATH must contain 'nursery'"; exit 1;; esac
+
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: mbstring, intl, gd, zip, bcmath
+          coverage: none
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Build release
+        run: |
+          composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --no-progress
+          npm ci
+          npm run build
+          rm -rf node_modules
+
+      - name: Set up SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          cat > ~/.ssh/config <<EOF
+          Host server
+            HostName $SSH_HOST
+            Port ${SSH_PORT:-22}
+            User $SSH_USER
+            IdentityFile ~/.ssh/deploy_key
+            IdentitiesOnly yes
+            StrictHostKeyChecking yes
+            ServerAliveInterval 30
+          EOF
+
+      - name: Upload release
+        run: |
+          remote_dir="$DEPLOY_PATH/releases/$RELEASE"
+          tar --exclude=.git --exclude=.github --exclude=node_modules --exclude=tests \
+              --exclude=.env --exclude=storage --exclude=docs \
+              -czf - . \
+            | ssh server "mkdir -p $(printf %q "$remote_dir") && tar -xzf - -C $(printf %q "$remote_dir")"
+
+      - name: Activate release
+        run: |
+          ssh server "DEPLOY_PATH=$(printf %q "$DEPLOY_PATH") RELEASE=$(printf %q "$RELEASE") PHP_BIN=$(printf %q "$PHP_BIN") bash -s" < deploy/remote.sh

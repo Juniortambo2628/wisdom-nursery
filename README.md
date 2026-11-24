@@ -1,66 +1,122 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Wisdom Nursery website
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+The website, online shop and order dashboard for Wisdom Nursery (Wisdom Capital Limited).
+Built by OKJTechnologies under proposal OKJ-WN-2026-01 Rev 3 and agreement OKJ-WN-2026-02 (both in `docs/`).
+Progress against the agreed scope is tracked in [`docs/plan.md`](docs/plan.md).
 
-## About Laravel
+**Stack:** Laravel 12 · PHP 8.2+ · MySQL · Blade + Vite + Tailwind CSS + Alpine.js · Filament 3 (dashboard at `/admin`) · Pest.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Local setup
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```bash
+composer install
+npm ci
+cp .env.example .env    # then set DB_CONNECTION=sqlite, APP_ENV=local, APP_DEBUG=true for local work
+php artisan key:generate
+php artisan migrate --seed
+php artisan make:filament-user
+npm run dev              # in one terminal
+php artisan serve        # in another
+php artisan test         # Pest
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Content (categories, settings, launch guides, placeholders, the plant import) comes from seeders in
+`database/seeders`. Each seeder runs **once per database** and is recorded in `settings` as
+`seeded:<Class>`, so `php artisan db:seed` is safe to run on every deploy and never overwrites the
+team's edits. To re-run one deliberately: delete its `seeded:` row, then `php artisan db:seed`.
 
-## Learning Laravel
+The plant import reads `database/seeders/data/wisdom-capital-products.csv` and
+`database/seeders/data/images/`. Until that CSV is committed the importer skips and retries on the
+next deploy.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Deploy
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Builds run in GitHub Actions; the server only receives a ready-to-run release over SSH.
+Workflow: [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). Server-side steps:
+[`deploy/remote.sh`](deploy/remote.sh). Background and decisions: [`docs/deploy-notes.md`](docs/deploy-notes.md).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Branch | Deploys to | GitHub Environment |
+|---|---|---|
+| `staging` | staging subdomain (client preview link) | `staging` |
+| `main` | production | `production` |
 
-## Laravel Sponsors
+Every push and pull request runs the test suite first; a failing test blocks the deploy.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Each deploy
 
-### Premium Partners
+1. Actions: `composer install --no-dev --optimize-autoloader`, `npm ci && npm run build`.
+2. Upload as `DEPLOY_PATH/releases/<commit-sha>/` (tar over SSH; no rsync or Composer needed on the server).
+3. On the server: link the shared `.env` and `storage/`, `php artisan migrate --force`,
+   `storage:link` (first time), `db:seed --force` (each seeder once), `optimize`.
+4. Switch `DEPLOY_PATH/current` to the new release (atomic symlink swap), `queue:restart`,
+   and keep the last 5 releases.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Rollback: on the server, `ln -sfn DEPLOY_PATH/releases/<older-sha> DEPLOY_PATH/current`
+(migrations are not rolled back automatically).
 
-## Contributing
+### Safety
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+The deploy only ever writes inside `DEPLOY_PATH`. Both the workflow and `remote.sh` refuse a path
+that is not absolute, is the account home or `public_html`, or does not contain `nursery`. Nothing
+of the Wisdom Capital site (files, database, cron) is touched. The nursery uses its own MySQL
+database and user.
 
-## Code of Conduct
+### Repository secrets (Settings → Secrets and variables → Actions)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+| Secret | Value |
+|---|---|
+| `SSH_HOST` | cPanel server hostname |
+| `SSH_PORT` | SSH port given by the host (often not 22 on shared hosting) |
+| `SSH_USER` | cPanel username |
+| `SSH_PRIVATE_KEY` | private half of a deploy key made for this repo (public half added in cPanel → SSH Access → Manage SSH Keys, then **Authorize**) |
+| `SSH_KNOWN_HOSTS` | output of `ssh-keyscan -p <port> <host>` |
 
-## Security Vulnerabilities
+### Environment variables (Settings → Environments → `production` / `staging`)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+| Variable | Example | Notes |
+|---|---|---|
+| `DEPLOY_PATH` | `/home/<cpanel-user>/nursery.wisdomcapital.co.ke` | `{{NURSERY_PATH}}` / `{{STAGING_PATH}}`. Outside `public_html`. Must contain `nursery`. |
+| `PHP_BIN` | `/opt/cpanel/ea-php82/root/usr/bin/php` | Optional. CLI PHP matching the site's PHP version; defaults to `php`. |
 
-## License
+Add a required reviewer on the `production` environment if launches should need a manual approval.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### One-time server setup (per environment)
+
+1. **Database:** cPanel → MySQL Databases: create a database and user for the nursery and grant all privileges.
+2. **Domain:** cPanel → Domains: create the (sub)domain with document root
+   `DEPLOY_PATH/current/public`. Run AutoSSL so it gets HTTPS.
+3. **PHP:** cPanel → MultiPHP Manager: set the domain to PHP 8.2 or newer, with extensions
+   `pdo_mysql, mbstring, intl, gd, zip, bcmath, fileinfo` (MultiPHP INI / Select PHP Version).
+4. **Shared `.env`:** create `DEPLOY_PATH/shared/.env` from `.env.example`, fill in the database,
+   mail, M-Pesa and SMS values, then generate the key with
+   `php -r "echo 'base64:'.base64_encode(random_bytes(32)).PHP_EOL;"` and paste it as `APP_KEY`.
+   For staging, also set `APP_ENV=staging` and `MPESA_ENV=sandbox`.
+5. **Push** to the branch. The first deploy creates the tables and seeds the content.
+6. **Dashboard login:** `cd DEPLOY_PATH/current && php artisan make:filament-user`.
+7. **Cron** (below).
+
+### cPanel cron entries
+
+cPanel → Cron Jobs, one entry per environment, every minute:
+
+```
+* * * * * cd DEPLOY_PATH/current && php artisan schedule:run >> /dev/null 2>&1
+```
+
+Use the same `PHP_BIN` path as above if `php` is not the right version. The scheduler
+(`routes/console.php`) then runs:
+
+- the queue (`queue:work --stop-when-empty --max-time=50`) every minute: order alerts, SMS and emails
+- the database backup daily at 02:00, and uploaded photos weekly; retention keeps a week of dailies
+  and 4 weekly backups (SLA 9.2), stored in `DEPLOY_PATH/shared/storage/app/private/`
+- `backup:monitor` daily (emails `BACKUP_NOTIFY_EMAIL` if backups stop)
+- pruning of old notification logs, failed jobs and password resets
+
+## Placeholders
+
+| Placeholder | Where it is set |
+|---|---|
+| `{{DOMAIN}}` / `{{STAGING_DOMAIN}}` | cPanel domain + `APP_URL` in each `shared/.env` |
+| `{{NURSERY_PATH}}` / `{{STAGING_PATH}}` | `DEPLOY_PATH` on each GitHub Environment |
+| `{{NURSERY_WHATSAPP}}` | `NURSERY_WHATSAPP` in `shared/.env` |
+| `{{TILL}}` | `MPESA_PARTY_B` in `shared/.env` and `till_number` in Settings |

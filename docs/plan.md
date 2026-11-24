@@ -9,7 +9,8 @@ Legend: `[ ]` to do · `[x]` done · `[~]` blocked (reason given)
 
 | Needed | From | Blocks |
 |---|---|---|
-| Wisdom Capital repo (deploy workflow to copy) | Kevin | Step 0, staging link |
+| ~~Wisdom Capital repo~~ (never on GitHub; deploy set up fresh) | — | — |
+| SSH access + port, CLI PHP version on the server | Kevin | First deploy |
 | `docs/Wisdom Nursery - Design Concepts (Rev 1).pdf` | Kevin | All page layouts |
 | `docs/data/wisdom-capital-products.csv` + `docs/data/images/` | Kevin | Plant importer (33 plants) |
 | `{{NURSERY_PATH}}`, `{{STAGING_PATH}}`, `{{DOMAIN}}`, `{{STAGING_DOMAIN}}` | Kevin | deploy.yml |
@@ -22,15 +23,23 @@ Observed (from Kevin's cPanel screenshot, 24 Nov): server `lim107.truehost.cloud
 `nursery.wisdomcapital.co.ke` (A → shared IP) and `www.nursery.wisdomcapital.co.ke` (CNAME) already created.
 Likely `{{DOMAIN}} = nursery.wisdomcapital.co.ke`; to be confirmed.
 
+## Notes
+
+- **Laravel 12 instead of 11** (24 Nov): Laravel 11 no longer receives security fixes; `composer audit`
+  flagged a high-severity CRLF injection in the email validation rule, fixed only in 12.60+. Same
+  skeleton, Filament 3 supports it. Laravel 12 security support runs to Feb 2027; plan the move to 13
+  (needs PHP 8.3 and Filament 4) inside the support period.
+- **Design tokens** are in `tailwind.config.js`; Fraunces + Inter are self-hosted via `@fontsource-variable`.
+
 ## Step 0: deployment (before app code)
 
-- [~] Read Wisdom Capital `.github/workflows/` + deploy scripts → `docs/deploy-notes.md` (repo not reachable yet)
-- [ ] Confirm SSH is available (needed for `php artisan migrate/optimize`); if not, propose fix before building
-- [ ] `.github/workflows/deploy.yml`: same connection + secret names; `main` → production, `staging` → staging
-- [ ] Build in Actions (`composer install --no-dev -o`, `npm ci && npm run build`), upload release, run migrate/storage:link/optimize
-- [ ] First-deploy-only seeding guarded by marker
-- [ ] Guard rails: explicit target paths, no deletes outside nursery dirs, never touch Wisdom Capital files/DB
-- [ ] README "Deploy" section (secrets, paths, cron)
+- [x] `docs/deploy-notes.md` (no Wisdom Capital workflow exists; fresh SSH + tar design for the same server)
+- [~] Confirm SSH is available (needed for `php artisan migrate/optimize`); fallback written in deploy-notes (waiting on Kevin)
+- [x] `.github/workflows/deploy.yml`: `main` → production, `staging` → staging, tests gate the deploy
+- [x] Build in Actions (`composer install --no-dev -o`, `npm ci && npm run build`), upload release, run migrate/storage:link/optimize
+- [x] Seeding guarded per seeder (`seeded:<Class>` in settings): runs once, never overwrites edits, late seeders still run
+- [x] Guard rails: explicit target paths, no deletes outside nursery dirs, never touch Wisdom Capital files/DB
+- [x] README "Deploy" section (secrets, paths, cron)
 
 ## Scope: pages (proposal 05)
 
@@ -56,13 +65,13 @@ Likely `{{DOMAIN}} = nursery.wisdomcapital.co.ke`; to be confirmed.
 
 ## Scope: investment line items (proposal 08)
 
-- [ ] Website design and development, The Grower's Story, green palette (design tokens, Fraunces + Inter self-hosted)
+- [~] Website design and development, The Grower's Story, green palette (tokens + self-hosted fonts done; pages need the concepts deck)
 - [ ] Online shop: cart, M-Pesa checkout (Daraja STK + status query + idempotent callback + manual code), stock levels, customer SMS confirmations
 - [ ] Order alerts by SMS, WhatsApp, email, with order dashboard
 
 ## Scope: included at no extra cost (proposal 08)
 
-- [~] All 33 plants moved across with photos, descriptions and prices (idempotent seeder; needs CSV + images)
+- [~] All 33 plants moved across with photos, descriptions and prices (idempotent importer written + tested; needs `database/seeders/data/wisdom-capital-products.csv` + images)
 - [ ] Brand story, team and "How we grow" pages (placeholders until copy arrives)
 - [ ] Quote request for bulk and institutional orders
 - [ ] Six plant care and tree planting guides (seeded as drafts; Kevin supplies copy)
@@ -75,12 +84,12 @@ Likely `{{DOMAIN}} = nursery.wisdomcapital.co.ke`; to be confirmed.
 
 ## Platform
 
-- [ ] Laravel 11, PHP per server (target 8.2+), MySQL; Blade + Vite + Tailwind + Alpine
-- [ ] Filament 3 admin in palette
-- [ ] Queue `database` driver, run from scheduler (`queue:work --stop-when-empty --max-time=50`)
-- [ ] Scheduler: queue, daily DB backup (retain 4 weeks of weeklies), log pruning
+- [x] Laravel **12** (11 is out of security support; see note), PHP 8.2+ platform pin, MySQL; Blade + Vite + Tailwind + Alpine
+- [~] Filament 3 installed, primary colour = leaf; custom theme with self-hosted Inter comes with the dashboard (week 2)
+- [x] Queue `database` driver, run from scheduler (`queue:work --stop-when-empty --max-time=50`)
+- [x] Scheduler: queue, daily DB backup (retain 4 weeks of weeklies), log pruning
 - [ ] Security: rate limits (forms, STK), honeypot, validation, secrets in `.env` only, complete `.env.example`
-- [ ] Data model: categories, plants, plant_images, orders, order_items, payments, quote_requests, quote_items, alert_recipients, posts, team_members, gallery_images, testimonials, partners, delivery_areas, settings, notification_logs
+- [x] Data model (plus plant_pairings, stock_alerts, contact_messages): categories, plants, plant_images, orders, order_items, payments, quote_requests, quote_items, alert_recipients, posts, team_members, gallery_images, testimonials, partners, delivery_areas, settings, notification_logs
 
 ## Tests (Pest)
 
