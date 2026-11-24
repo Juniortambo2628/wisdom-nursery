@@ -11,7 +11,7 @@
             'text-ink/50' => $plant->availabilityTone() === 'out',
         ])>{{ $plant->availabilityTone() === 'ready' ? 'In stock' : $plant->availabilityLabel() }}</p>
         <h3 class="mt-2 text-xl">
-            <a href="{{ route('plants.show', $plant) }}" class="hover:text-leaf">{{ $plant->name }}</a>
+            <a href="{{ route('plants.show', $plant) }}" class="-my-2 block py-2 hover:text-leaf">{{ $plant->name }}</a>
         </h3>
         <p class="mt-1 text-sm text-ink/60">{{ $plant->category->name }} · {{ $plant->sold_as->label() }}</p>
         <div class="mt-auto flex items-center justify-between pt-5">

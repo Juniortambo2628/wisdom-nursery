@@ -6,9 +6,9 @@
         <p class="mt-4 rounded-xl bg-mist px-4 py-3 text-sm font-medium text-leaf" role="status">{{ session('status') }}</p>
     @endif
     <div class="mt-5 grid gap-4">
-        <x-field name="name" label="Name" placeholder="Your name" required autocomplete="name" />
-        <x-field name="phone" label="Phone" type="tel" placeholder="07XX XXX XXX" required autocomplete="tel" />
-        <x-field name="message" label="What are you looking for?" textarea required />
+        <x-field prefix="c" name="name" label="Name" placeholder="Your name" required autocomplete="name" />
+        <x-field prefix="c" name="phone" label="Phone" type="tel" placeholder="07XX XXX XXX" required autocomplete="tel" />
+        <x-field prefix="c" name="message" label="What are you looking for?" textarea required />
     </div>
     <button class="btn-primary mt-6 w-full">Send</button>
 </form>

@@ -1,7 +1,7 @@
-<x-layouts.site title="Checkout">
+<x-layouts.site title="Checkout" :floating-whatsapp="false">
     <div class="container-page py-10 lg:py-14"
          x-data="{ fulfilment: @js(old('fulfilment', 'collect')), area: @js((string) old('delivery_area_id', '')), fees: @js($areas->pluck('fee', 'id')), subtotal: {{ $subtotal }},
-                   phone: @js(old('phone', '')), mpesa: @js(old('mpesa_phone', '')), mpesaTouched: {{ old('mpesa_phone') ? 'true' : 'false' }},
+                   phone: @js(old('phone', '')), mpesa: @js(old('mpesa_phone', '')), mpesaTouched: {{ old('mpesa_phone') && old('mpesa_phone') !== old('phone') ? 'true' : 'false' }},
                    get fee() { return this.fulfilment === 'delivery' ? (this.fees[this.area] ?? 0) : 0 },
                    get total() { return this.subtotal + this.fee },
                    ksh(n) { return 'KSh ' + n.toLocaleString('en-KE') } }">
@@ -62,7 +62,7 @@
                 </section>
 
                 <section class="rounded-card border-2 border-mpesa bg-white p-6 sm:p-8">
-                    <h2 class="flex items-center gap-3 text-2xl sm:text-3xl"><x-mpesa-badge class="px-3 py-2 text-sm" /> Pay with M-Pesa</h2>
+                    <h2 class="flex items-center gap-3 text-2xl sm:text-3xl"><x-mpesa-badge class="px-3 py-2 text-sm" /> Pay with <span class="whitespace-nowrap">M-Pesa</span></h2>
                     <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-start">
                         <x-field name="mpesa_phone" label="M-Pesa phone number" type="tel" required placeholder="07XX XXX XXX" class="flex-1" x-model="mpesa" @input="mpesaTouched = true" />
                         <button class="btn-mpesa text-base sm:mt-7 sm:min-w-44" x-text="'Pay ' + ksh(total)">Pay {{ ksh($subtotal) }}</button>

@@ -5,7 +5,7 @@
             <div class="flex flex-wrap gap-2" role="group" aria-label="Filter photos">
                 @foreach (['all' => 'All'] + \App\Models\GalleryImage::CATEGORIES as $key => $label)
                     <button type="button" @click="filter = '{{ $key }}'" :aria-pressed="filter === '{{ $key }}'"
-                        class="rounded-full border px-4 py-2 text-sm transition"
+                        class="min-h-10 rounded-full border px-4 py-2 text-sm transition"
                         :class="filter === '{{ $key }}' ? 'border-forest bg-forest text-white' : 'border-ink/15 bg-white hover:border-leaf'">{{ $label }}</button>
                 @endforeach
             </div>

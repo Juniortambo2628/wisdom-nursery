@@ -1,18 +1,19 @@
-@props(['name', 'label', 'type' => 'text', 'placeholder' => null, 'value' => null, 'textarea' => false, 'required' => false])
+@props(['name', 'label', 'type' => 'text', 'placeholder' => null, 'value' => null, 'textarea' => false, 'required' => false, 'prefix' => 'f'])
+@php $id = $prefix.'-'.$name; @endphp
 <div {{ $attributes->only('class') }}>
-    <label for="f-{{ $name }}" class="label">{{ $label }}</label>
+    <label for="{{ $id }}" class="label">{{ $label }}</label>
     @if ($textarea)
-        <textarea id="f-{{ $name }}" name="{{ $name }}" rows="4" placeholder="{{ $placeholder }}" @required($required)
+        <textarea id="{{ $id }}" name="{{ $name }}" rows="4" placeholder="{{ $placeholder }}" @required($required)
             @class(['input', 'border-red-600' => $errors->has($name)])
-            @if ($errors->has($name)) aria-invalid="true" aria-describedby="e-{{ $name }}" @endif
+            @if ($errors->has($name)) aria-invalid="true" aria-describedby="e-{{ $id }}" @endif
             {{ $attributes->except('class') }}>{{ old($name, $value) }}</textarea>
     @else
-        <input id="f-{{ $name }}" name="{{ $name }}" type="{{ $type }}" value="{{ old($name, $value) }}" placeholder="{{ $placeholder }}" @required($required)
+        <input id="{{ $id }}" name="{{ $name }}" type="{{ $type }}" value="{{ old($name, $value) }}" placeholder="{{ $placeholder }}" @required($required)
             @class(['input', 'border-red-600' => $errors->has($name)])
-            @if ($errors->has($name)) aria-invalid="true" aria-describedby="e-{{ $name }}" @endif
+            @if ($errors->has($name)) aria-invalid="true" aria-describedby="e-{{ $id }}" @endif
             {{ $attributes->except('class') }}>
     @endif
     @error($name)
-        <p id="e-{{ $name }}" class="mt-1.5 text-sm text-red-700">{{ $message }}</p>
+        <p id="e-{{ $id }}" class="mt-1.5 text-sm text-red-700">{{ $message }}</p>
     @enderror
 </div>

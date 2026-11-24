@@ -25,7 +25,7 @@
             @csrf
             <input type="hidden" name="plant_id" value="{{ $plant->id }}">
             <input type="hidden" name="qty" value="{{ $plant->bulk_min_qty }}">
-            <button class="text-xs font-semibold text-leaf underline-offset-2 hover:underline">or add {{ number_format($plant->bulk_min_qty) }}+ to quote</button>
+            <button class="-my-2 min-h-10 py-2 text-xs font-semibold text-leaf underline-offset-2 hover:underline">or add {{ number_format($plant->bulk_min_qty) }}+ to quote</button>
         </form>
     @endif
 </div>

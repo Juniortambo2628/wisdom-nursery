@@ -21,7 +21,7 @@
             </div>
             <a href="{{ route('checkout.show') }}" class="btn-primary mt-5 w-full">Checkout · <x-mpesa-badge /></a>
             @if ($cartWhatsapp)
-                <a href="{{ $cartWhatsapp }}" target="_blank" rel="noopener" class="mt-3 block text-center text-sm text-ink/60 hover:text-leaf">or send this cart on WhatsApp</a>
+                <a href="{{ $cartWhatsapp }}" target="_blank" rel="noopener" class="mt-1 block py-2.5 text-center text-sm text-ink/60 hover:text-leaf">or send this cart on WhatsApp</a>
             @endif
         @endif
     </section>
@@ -42,7 +42,7 @@
                             @csrf
                             <input type="hidden" name="plant_id" value="{{ $line->plant->id }}">
                             <label class="sr-only" for="q-{{ $line->plant->id }}">Quantity of {{ $line->plant->name }}</label>
-                            <input id="q-{{ $line->plant->id }}" name="qty" type="number" min="0" value="{{ $line->qty }}" class="input w-28 py-2 text-right" @change="$el.form.submit()">
+                            <input id="q-{{ $line->plant->id }}" name="qty" type="number" min="0" value="{{ $line->qty }}" class="input w-28 py-2.5 text-right" @change="$el.form.submit()">
                         </form>
                     </li>
                 @endforeach

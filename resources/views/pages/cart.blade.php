@@ -28,7 +28,7 @@
                                 @csrf @method('PATCH')
                                 <input type="hidden" name="key" value="{{ $line->key }}">
                                 <label for="qty-{{ $loop->index }}" class="sr-only">Quantity of {{ $line->label }}</label>
-                                <input id="qty-{{ $loop->index }}" name="qty" type="number" min="0" max="{{ \App\Support\Cart::MAX_QTY }}" value="{{ $line->qty }}" class="input w-20 py-2 text-center" @change="$el.form.submit()">
+                                <input id="qty-{{ $loop->index }}" name="qty" type="number" min="0" max="{{ \App\Support\Cart::MAX_QTY }}" value="{{ $line->qty }}" class="input w-20 py-2.5 text-center" @change="$el.form.submit()">
                                 <button name="qty" value="0" class="grid h-10 w-10 place-items-center rounded-full text-ink/50 hover:bg-mist hover:text-red-700" aria-label="Remove {{ $line->label }}"><x-glyph name="trash" class="h-4 w-4" /></button>
                             </form>
                             <span class="w-24 text-right font-semibold">{{ ksh($line->lineTotal) }}</span>
@@ -40,7 +40,7 @@
                     <p class="mt-2 text-sm text-ink/60">Collection is free. Delivery fees are shown at the next step.</p>
                     <a href="{{ route('checkout.show') }}" class="btn-primary mt-6 w-full">Checkout · <x-mpesa-badge /></a>
                     @if ($whatsapp)
-                        <a href="{{ $whatsapp }}" target="_blank" rel="noopener" class="mt-3 block text-center text-sm text-ink/60 hover:text-leaf">or send this cart on WhatsApp</a>
+                        <a href="{{ $whatsapp }}" target="_blank" rel="noopener" class="mt-1 block py-2.5 text-center text-sm text-ink/60 hover:text-leaf">or send this cart on WhatsApp</a>
                     @endif
                     <p class="mt-6 rounded-xl bg-mist p-4 text-sm text-ink/70">Buying 100 or more? <a href="{{ route('quote.show') }}" class="font-semibold text-forest">Request a bulk quote</a> for better prices.</p>
                 </section>

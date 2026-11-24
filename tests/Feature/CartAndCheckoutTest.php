@@ -56,7 +56,7 @@ it('creates an order awaiting payment from the cart', function () {
         ->and(session('cart', []))->toBeEmpty();
 
     // Without Daraja credentials no prompt is sent: the page offers the till / code fallback.
-    $this->get(route('orders.show', $order))->assertSee('Pay KSh 3,500 with M-Pesa')->assertDontSee('Check your phone');
+    $this->get(route('orders.show', $order))->assertSeeText('Pay KSh 3,500 with M-Pesa')->assertDontSee('Check your phone');
     $this->getJson(route('orders.status', $order))->assertJson(['paid' => false, 'status' => 'pending_payment']);
 });
 

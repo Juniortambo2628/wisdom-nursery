@@ -1,5 +1,5 @@
 @props(['current' => 1])
-@php $steps = [1 => 'Cart', 2 => 'Details', 3 => 'Pay with M-Pesa', 4 => 'Done']; @endphp
+@php $steps = [1 => 'Cart', 2 => 'Details', 3 => 'Pay with M‑Pesa', 4 => 'Done']; @endphp
 <p class="eyebrow text-ink/60 sm:hidden">Step {{ $current }} of 4</p>
 <ol class="hidden items-center gap-3 text-sm sm:flex" aria-label="Checkout steps">
     @foreach ($steps as $n => $label)

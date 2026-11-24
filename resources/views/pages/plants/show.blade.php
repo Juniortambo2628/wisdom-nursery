@@ -109,7 +109,7 @@
                         <div class="flex items-center rounded-full border border-ink/15 bg-white">
                             <button type="button" class="grid h-12 w-12 place-items-center text-forest disabled:opacity-40" @click="qty = Math.max(1, qty - 1)" :disabled="qty <= 1" aria-label="One less"><x-glyph name="minus" class="h-4 w-4" /></button>
                             <label for="qty" class="sr-only">Quantity</label>
-                            <input id="qty" name="qty" type="number" min="1" max="{{ \App\Support\Cart::MAX_QTY }}" x-model.number="qty" class="w-12 border-0 bg-transparent p-0 text-center font-semibold [appearance:textfield] focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none">
+                            <input id="qty" name="qty" type="number" min="1" max="{{ \App\Support\Cart::MAX_QTY }}" x-model.number="qty" class="h-12 w-12 border-0 bg-transparent p-0 text-center font-semibold [appearance:textfield] focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none">
                             <button type="button" class="grid h-12 w-12 place-items-center text-forest" @click="qty = Math.min({{ \App\Support\Cart::MAX_QTY }}, qty + 1)" aria-label="One more"><x-glyph name="plus" class="h-4 w-4" /></button>
                         </div>
                         <button class="btn-primary flex-1 text-base"><x-glyph name="cart" class="h-5 w-5" /> {{ $inCart ? 'Add more to cart' : 'Add to cart' }}</button>

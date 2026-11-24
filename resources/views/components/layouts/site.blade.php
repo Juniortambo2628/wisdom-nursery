@@ -3,6 +3,7 @@
     'description' => null,
     'active' => null,    // nav key: about | plants | how | gallery | tips | contact
     'ogImage' => null,
+    'floatingWhatsapp' => true, // hidden on checkout and payment pages, where it would cover the form
 ])
 @php
     $nav = [
@@ -167,7 +168,7 @@
     </footer>
 
     {{-- Floating WhatsApp --}}
-    @if ($whatsapp)
+    @if ($whatsapp && $floatingWhatsapp)
         <a href="{{ $whatsapp }}" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"
            class="fixed bottom-5 right-5 z-30 grid h-14 w-14 place-items-center rounded-full bg-mpesa text-white shadow-lg transition hover:scale-105 sm:bottom-8 sm:right-8 sm:h-16 sm:w-16">
             <x-glyph name="chat" class="h-7 w-7" />

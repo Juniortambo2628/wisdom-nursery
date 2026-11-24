@@ -13,7 +13,7 @@
         <div class="min-w-0">
             <form method="GET" action="{{ route('plants.index') }}" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                 <nav aria-label="Plant categories" class="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
-                    @php $pill = 'shrink-0 rounded-full border px-4 py-2 text-sm transition'; @endphp
+                    @php $pill = 'inline-flex min-h-10 shrink-0 items-center rounded-full border px-4 py-2 text-sm transition'; @endphp
                     <a href="{{ route('plants.index', array_filter(['q' => $search])) }}" @class([$pill, 'border-forest bg-forest text-white' => ! $activeCategory, 'border-ink/15 bg-white hover:border-leaf' => $activeCategory]) @if (! $activeCategory) aria-current="page" @endif>All</a>
                     @foreach ($categories as $category)
                         <a href="{{ route('plants.index', array_filter(['category' => $category->slug, 'q' => $search])) }}"
@@ -56,7 +56,7 @@
                                         </a>
                                     </td>
                                     <td class="md:py-4 md:pr-3">
-                                        <a href="{{ route('plants.show', $plant) }}" class="font-semibold hover:text-leaf">{{ $plant->name }}</a>
+                                        <a href="{{ route('plants.show', $plant) }}" class="-my-2 inline-block py-2.5 font-semibold hover:text-leaf">{{ $plant->name }}</a>
                                         @if ($plant->botanical_name)<p class="text-sm italic text-ink/50">{{ $plant->botanical_name }}</p>@endif
                                         <p class="text-sm text-ink/60 md:hidden">{{ $plant->category->name }} · {{ $plant->sold_as->label() }}</p>
                                     </td>

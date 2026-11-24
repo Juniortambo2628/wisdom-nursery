@@ -6,10 +6,10 @@
     $waiting = ! $paid && $payment?->method === 'stk' && $status === PaymentStatus::Pending;
     $failed = ! $paid && in_array($status, [PaymentStatus::Failed, PaymentStatus::Cancelled], true);
 @endphp
-<x-layouts.site :title="'Order '.$order->number">
+<x-layouts.site :title="'Order '.$order->number" :floating-whatsapp="false">
     <div class="container-page py-10 lg:py-14">
         <x-checkout-steps :current="$paid ? 4 : 3" />
-        <h1 class="mt-6 text-5xl lg:text-6xl">{{ $paid ? 'Payment received' : 'Pay with M-Pesa' }}</h1>
+        <h1 class="mt-6 text-5xl lg:text-6xl">@if ($paid) Payment received @else Pay with <span class="whitespace-nowrap">M-Pesa</span> @endif</h1>
         <p class="mt-3 text-ink/70">Order <strong class="font-semibold text-ink">{{ $order->number }}</strong></p>
 
         <div class="mt-8 grid gap-8 lg:grid-cols-[1fr_440px]">
@@ -56,7 +56,7 @@
                                 <h2 class="text-2xl">The payment didn't go through</h2>
                                 <p class="mt-2 text-ink/70">{{ $status === PaymentStatus::Cancelled ? 'The M-Pesa prompt was cancelled.' : 'M-Pesa did not complete the payment.' }} You can send the prompt again, or pay another way below.</p>
                             @else
-                                <h2 class="text-2xl">Pay {{ ksh($order->total) }} with M-Pesa</h2>
+                                <h2 class="text-2xl">Pay {{ ksh($order->total) }} with <span class="whitespace-nowrap">M-Pesa</span></h2>
                                 <p class="mt-2 text-ink/70">@if ($till)Pay to Till <strong>{{ $till }}</strong>, then enter the M-Pesa code below.@else Pay with M-Pesa, then enter the M-Pesa code below, or order on WhatsApp.@endif</p>
                             @endif
                         </div>
