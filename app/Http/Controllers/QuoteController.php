@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\QuoteRequested;
 use App\Http\Requests\QuoteRequestForm;
 use App\Models\Plant;
 use App\Models\QuoteRequest;
@@ -40,7 +41,7 @@ class QuoteController extends Controller
             return back()->withInput()->withErrors(['plants' => 'Tell us which plants you need, or add some to your quote list.']);
         }
 
-        DB::transaction(function () use ($data, $lines) {
+        $quote = DB::transaction(function () use ($data, $lines) {
             $quote = QuoteRequest::create([
                 'name' => $data['name'],
                 'phone' => Phone::normalise($data['phone']),
@@ -56,8 +57,11 @@ class QuoteController extends Controller
             if (! empty($data['plants'])) {
                 $quote->items()->create(['plant_name' => $data['plants'], 'quantity' => (int) ($data['quantity'] ?? 1)]);
             }
-            // QuoteRequested alert to the team is dispatched here once alerts land (week 2).
+
+            return $quote;
         });
+
+        QuoteRequested::dispatch($quote);
 
         $list->clear();
 

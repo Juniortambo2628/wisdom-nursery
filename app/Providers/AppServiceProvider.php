@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\Services\Alerts\AfricasTalkingSms;
+use App\Services\Alerts\WhatsApp\CloudWhatsApp;
+use App\Services\Alerts\WhatsApp\LogWhatsApp;
+use App\Services\Alerts\WhatsApp\WhatsAppChannel;
+use App\Services\Mpesa\Daraja;
 use App\Support\Cart;
 use App\Support\QuoteList;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -16,6 +21,11 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->scoped(Cart::class);
         $this->app->scoped(QuoteList::class);
+        $this->app->bind(Daraja::class, fn () => Daraja::fromConfig());
+        $this->app->bind(AfricasTalkingSms::class, fn () => AfricasTalkingSms::fromConfig());
+        $this->app->bind(WhatsAppChannel::class, fn () => config('nursery.whatsapp_alerts.driver') === 'cloud'
+            ? new CloudWhatsApp(config('nursery.whatsapp_alerts'))
+            : new LogWhatsApp);
     }
 
     public function boot(): void
