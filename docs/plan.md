@@ -10,8 +10,8 @@ Legend: `[ ]` to do · `[x]` done · `[~]` blocked (reason given)
 | Needed | From | Blocks |
 |---|---|---|
 | ~~Wisdom Capital repo~~ (never on GitHub; deploy set up fresh) | — | — |
-| SSH access + port, CLI PHP version on the server | Kevin | First deploy |
-| `docs/Wisdom Nursery - Design Concepts (Rev 1).pdf` | Kevin | All page layouts |
+| ~~SSH access + port~~ (enabled 24 Nov); deploy key to authorise; CLI PHP version | Kevin | First deploy |
+| ~~Design Concepts (Rev 1)~~ received 24 Nov | — | — |
 | `docs/data/wisdom-capital-products.csv` + `docs/data/images/` | Kevin | Plant importer (33 plants) |
 | `{{NURSERY_PATH}}`, `{{STAGING_PATH}}`, `{{DOMAIN}}`, `{{STAGING_DOMAIN}}` | Kevin | deploy.yml |
 | Logo (original file), photos, hours, delivery areas/fees | Client (proposal 06) | Content swap-in |
@@ -34,7 +34,7 @@ Likely `{{DOMAIN}} = nursery.wisdomcapital.co.ke`; to be confirmed.
 ## Step 0: deployment (before app code)
 
 - [x] `docs/deploy-notes.md` (no Wisdom Capital workflow exists; fresh SSH + tar design for the same server)
-- [~] Confirm SSH is available (needed for `php artisan migrate/optimize`); fallback written in deploy-notes (waiting on Kevin)
+- [x] SSH available (Truehost enabled it 24 Nov); deploy key generated for Kevin to authorise
 - [x] `.github/workflows/deploy.yml`: `main` → production, `staging` → staging, tests gate the deploy
 - [x] Build in Actions (`composer install --no-dev -o`, `npm ci && npm run build`), upload release, run migrate/storage:link/optimize
 - [x] Seeding guarded per seeder (`seeded:<Class>` in settings): runs once, never overwrites edits, late seeders still run

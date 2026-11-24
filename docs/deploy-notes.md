@@ -14,9 +14,9 @@ secrets only.
 | Item | Status |
 |---|---|
 | Hosting | Shared cPanel (Jupiter theme, cPanel 138) at Truehost; same account as wisdomcapital.co.ke |
-| DNS | `nursery.wisdomcapital.co.ke` (A record) and `www.nursery.wisdomcapital.co.ke` (CNAME) already created |
+| DNS | `nursery.wisdomcapital.co.ke` (A) + `www.nursery…` (CNAME) for production; `staging.nursery.wisdomcapital.co.ke` (A) for staging, all created 24 Nov |
 | SSL | AutoSSL active on the account |
-| SSH | **To confirm.** cPanel → SSH Access must allow key login, and Truehost must have shell access enabled on the account (some plans need a support ticket). Needed for the artisan commands. |
+| SSH | **Enabled** by Truehost support (24 Nov), Bash shell, non-standard port (in the `SSH_PORT` secret). Deploy key `github-actions-wisdom-nursery-deploy` (ed25519) to be authorised in cPanel → SSH Access. |
 | CLI PHP version | **To confirm** with `php -v` over SSH. App targets 8.2+ (Composer platform pinned to 8.2). If `php` is older, use the `ea-php82`/`alt-php82` binary path as `PHP_BIN`. |
 | Composer / Node / rsync on server | **Not needed.** Everything is built in GitHub Actions; upload uses `tar` over SSH. |
 | MySQL | Separate database and user for the nursery (never the Wisdom Capital database). |
@@ -56,7 +56,8 @@ will not enable SSH on this account, the options in order of preference:
 
 ## Open items
 
-- [ ] Kevin: confirm SSH access, port and CLI PHP version
-- [ ] Kevin: pick `{{STAGING_DOMAIN}}` (suggestion: `staging.nursery.wisdomcapital.co.ke`, covered by AutoSSL)
+- [x] SSH access and port confirmed (24 Nov)
+- [ ] Kevin: authorise the deploy key in cPanel, run `php -v` over SSH to confirm the CLI PHP version
+- [x] `{{STAGING_DOMAIN}}` = `staging.nursery.wisdomcapital.co.ke` (DNS created 24 Nov); create it as a domain in cPanel with docroot `{{STAGING_PATH}}/current/public` and run AutoSSL
 - [ ] Kevin: create the two GitHub Environments and secrets (README → Deploy)
 - [ ] Staging: block search engines (`APP_ENV=staging` → `noindex`), optionally cPanel Directory Privacy password
