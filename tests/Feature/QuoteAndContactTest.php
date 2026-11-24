@@ -58,3 +58,26 @@ it('normalises Kenyan phone numbers', function (string $in, ?string $out) {
     ['0612345678', null],
     ['12345', null],
 ]);
+
+it('texts "Notify me" customers once when a plant is back in stock', function () {
+    \Illuminate\Support\Facades\Queue::fake([\App\Jobs\SendAlert::class]);
+    $zebra = Plant::where('slug', 'zebra-plant')->first();
+    $zebra->update(['stock_qty' => 0, 'availability' => \App\Enums\Availability::OutOfStock]);
+    $this->post("/plants/{$zebra->slug}/notify", ['phone' => '0712345678']);
+
+    $zebra->update(['stock_qty' => 10, 'availability' => \App\Enums\Availability::Ready]);
+    $zebra->update(['stock_qty' => 12]); // already buyable: no second text
+
+    \Illuminate\Support\Facades\Queue::assertPushed(\App\Jobs\SendAlert::class, 1);
+    \Illuminate\Support\Facades\Queue::assertPushed(\App\Jobs\SendAlert::class, fn ($j) => $j->event === 'back_in_stock' && $j->recipient === '254712345678' && str_contains($j->body, 'Zebra Plant is back in stock'));
+    expect(StockAlert::sole()->notified_at)->not->toBeNull();
+});
+
+it('exports the plant list for the WhatsApp catalogue', function () {
+    $csv = \App\Support\CatalogueExport::csv();
+    $rows = array_map('str_getcsv', array_filter(explode("\n", $csv)));
+    expect($rows[0])->toBe(\App\Support\CatalogueExport::COLUMNS)
+        ->and($csv)->toContain('swiss-cheese-plant')
+        ->and($csv)->toContain('1600.00 KES')
+        ->and($csv)->toContain('in stock');
+});

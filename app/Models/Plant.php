@@ -31,6 +31,20 @@ class Plant extends Model
         ];
     }
 
+    protected static function booted(): void
+    {
+        // "Notify me": text waiting customers when a plant becomes buyable again.
+        static::updated(function (Plant $plant) {
+            if (! $plant->wasChanged(['stock_qty', 'availability', 'is_active'])) {
+                return;
+            }
+            $before = (clone $plant)->setRawAttributes($plant->getRawOriginal());
+            if (! $before->isBuyable() && $plant->isBuyable() && $plant->stockAlerts()->whereNull('notified_at')->exists()) {
+                \App\Jobs\NotifyBackInStock::dispatch($plant);
+            }
+        });
+    }
+
     public function getRouteKeyName(): string
     {
         return 'slug';

@@ -74,3 +74,7 @@ it('prints QR labels for selected plants', function () {
     $plants = Plant::limit(4)->get();
     Livewire::test(ListPlants::class)->callTableBulkAction('qr_labels', $plants)->assertFileDownloaded('wisdom-nursery-qr-labels.pdf');
 });
+
+it('downloads the WhatsApp catalogue from the plant list', function () {
+    Livewire::test(ListPlants::class)->callAction('whatsapp_catalogue')->assertFileDownloaded('wisdom-propagation-nursery-catalogue.csv');
+});
