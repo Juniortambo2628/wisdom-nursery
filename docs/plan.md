@@ -25,6 +25,10 @@ Likely `{{DOMAIN}} = nursery.wisdomcapital.co.ke`; to be confirmed.
 
 ## Notes
 
+- **Pages built 24 Nov** from the concepts deck (Concept B). Decisions agreed with Kevin: shared Blade
+  components in `resources/views/components`; coming-soon plants with stock can be pre-ordered (as the
+  deck shows). Local preview data: `php artisan db:seed --class=DemoPlantSeeder` (never run by deploy).
+
 - **Laravel 12 instead of 11** (24 Nov): Laravel 11 no longer receives security fixes; `composer audit`
   flagged a high-severity CRLF injection in the email validation rule, fixed only in 12.60+. Same
   skeleton, Filament 3 supports it. Laravel 12 security support runs to Feb 2027; plan the move to 13
@@ -43,24 +47,24 @@ Likely `{{DOMAIN}} = nursery.wisdomcapital.co.ke`; to be confirmed.
 
 ## Scope: pages (proposal 05)
 
-- [ ] Home (hero, stats, story, 4 categories, popular this season, how we grow, bulk quote band, gallery preview, testimonial + partners, visit us + map + contact form)
-- [ ] Our plants: availability list and shop (filters, search, availability states, sticky cart + quote list)
-- [ ] Individual plant pages (gallery, buy-as options, stepper, WhatsApp order, care facts, goes well with)
-- [ ] Cart and M-Pesa checkout (Cart → Details → Pay → Done; collect/delivery; STK waiting state; till fallback)
-- [ ] About, team and "How we grow"
-- [ ] Gallery (filters: Team, Plants, Nursery, Deliveries)
-- [ ] Grower tips (posts)
-- [ ] Contact and visit (address, hours, map, form, WhatsApp, phone)
-- [ ] Designed for phones and computers (QA at 375px)
+- [x] Home (hero, stats, story, 5 categories, popular this season, how we grow, bulk quote band, gallery preview, testimonial + partners, visit us + map + contact form)
+- [x] Our plants: availability list and shop (filters, search, availability states, sticky cart + quote list)
+- [x] Individual plant pages (gallery, buy-as options, stepper, WhatsApp order, care facts, goes well with)
+- [~] Cart and M-Pesa checkout (Cart → Details → Pay → Done; collect/delivery; STK waiting state; till fallback): pages + order creation + manual code done; STK push/callback week 2
+- [x] About, team and "How we grow"
+- [x] Gallery (filters: Team, Plants, Nursery, Deliveries)
+- [x] Grower tips (posts)
+- [x] Contact and visit (address, hours, map, form, WhatsApp, phone)
+- [~] Designed for phones and computers: every page screenshot-checked at 375px and 1440px with no horizontal scroll (24 Nov); repeat on real phones in week 3
 
 ## Scope: "also included" (proposal 05)
 
 - [ ] Order dashboard for the team, works on a phone (Filament: today view, status chips, one-tap actions)
 - [ ] Order alerts by SMS, WhatsApp and email (events → queued notifications → `notification_logs`)
-- [ ] WhatsApp ordering (floating button, plant-page "Order on WhatsApp", cart handoff `wa.me` link)
-- [ ] Quote request for bulk orders (quote list + form + alerts + dashboard resource)
-- [ ] Map and directions (embed + directions link)
-- [ ] Basic search engine setup (titles/meta, OG, sitemap.xml, robots.txt, Product + LocalBusiness schema)
+- [x] WhatsApp ordering (floating button, plant-page "Order on WhatsApp", cart handoff `wa.me` link)
+- [~] Quote request for bulk orders (quote list + form done; alerts + dashboard resource week 2)
+- [x] Map and directions (embed + directions link, from settings `map_embed_url` / `map_link`)
+- [x] Basic search engine setup (titles/meta, OG, sitemap.xml, robots.txt, Product + LocalBusiness schema)
 - [ ] Short training session for the nursery team → `docs/handover.md` as the training guide
 
 ## Scope: investment line items (proposal 08)
@@ -72,7 +76,7 @@ Likely `{{DOMAIN}} = nursery.wisdomcapital.co.ke`; to be confirmed.
 ## Scope: included at no extra cost (proposal 08)
 
 - [~] All 33 plants moved across with photos, descriptions and prices (idempotent importer written + tested; needs `database/seeders/data/wisdom-capital-products.csv` + images)
-- [ ] Brand story, team and "How we grow" pages (placeholders until copy arrives)
+- [x] Brand story, team and "How we grow" pages (placeholders until copy arrives)
 - [ ] Quote request for bulk and institutional orders
 - [ ] Six plant care and tree planting guides (seeded as drafts; Kevin supplies copy)
 - [ ] Google Business Profile — off-site task for Kevin; site supplies LocalBusiness schema + NAP consistency
@@ -93,7 +97,7 @@ Likely `{{DOMAIN}} = nursery.wisdomcapital.co.ke`; to be confirmed.
 
 ## Tests (Pest)
 
-- [ ] Add to cart · checkout creates order · STK callback success / failure / duplicate · stock decrement
+- [~] ~~Add to cart · checkout creates order~~ (done) · STK callback success / failure / duplicate · stock decrement
 - [ ] Quote request · alerts dispatched (faked) · status change sends customer SMS
 
 ## Milestones
