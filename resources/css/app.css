@@ -9,7 +9,7 @@
 @layer base {
     html { @apply bg-cream text-ink antialiased; -webkit-tap-highlight-color: transparent; }
     body { @apply font-sans; }
-    h1, h2, h3, h4 { @apply font-display font-medium tracking-tight text-forest; }
+    h1, h2, h3, h4 { @apply font-display font-normal text-ink; letter-spacing: -0.01em; }
     [x-cloak] { display: none !important; }
 }
 
@@ -26,7 +26,7 @@
     .btn-mpesa { @apply btn bg-mpesa text-white hover:brightness-95; }
     .btn-sm { @apply px-4 py-2 text-xs; }
 
-    .card { @apply rounded-card bg-white shadow-[0_1px_2px_rgba(20,33,26,0.06)] ring-1 ring-ink/5; }
+    .card { @apply rounded-card bg-white shadow-card ring-1 ring-ink/5; }
 
     .badge { @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold; }
     .badge-ready { @apply badge bg-mist text-leaf; }
@@ -41,4 +41,16 @@
         @apply relative flex items-center justify-center overflow-hidden bg-sage text-center text-xs font-medium text-forest/70;
         background-image: repeating-linear-gradient(135deg, rgba(45,106,62,0.10) 0 12px, rgba(45,106,62,0.02) 12px 24px);
     }
+    .photo-placeholder-dark {
+        @apply bg-white/5 text-moss/80;
+        background-image: repeating-linear-gradient(135deg, rgba(143,179,107,0.08) 0 14px, transparent 14px 28px);
+    }
+
+    /* Grower tips body (HTML from the dashboard editor). */
+    .prose-post { @apply space-y-5 text-lg leading-relaxed text-ink/80; }
+    .prose-post h2 { @apply pt-4 text-3xl; }
+    .prose-post h3 { @apply pt-2 text-2xl; }
+    .prose-post a { @apply font-semibold text-leaf underline; }
+    .prose-post ul { @apply list-disc space-y-2 pl-6; }
+    .prose-post ol { @apply list-decimal space-y-2 pl-6; }
 }

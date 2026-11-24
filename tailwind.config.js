@@ -37,6 +37,10 @@ export default {
                 image: '20px',
                 'image-lg': '28px',
             },
+            boxShadow: {
+                card: '0 1px 2px rgba(20, 33, 26, 0.06)',   // ink at 6%
+                lift: '0 12px 32px rgba(20, 33, 26, 0.08)', // floating panels (stats strip)
+            },
             maxWidth: {
                 page: '1440px',
             },
