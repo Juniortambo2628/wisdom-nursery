@@ -9,30 +9,65 @@ automatically on every push to the `staging` branch. About 45 minutes, done once
 > Truehost gave you.
 
 Already done: DNS record for `staging.nursery.wisdomcapital.co.ke`, SSH enabled on the
-account, deploy key generated.
+account.
 
 ---
 
 ## Part A: cPanel
 
-### 1. Authorise the deploy key
-1. cPanel → **SSH Access** → **Manage SSH Keys** → **Import Key**.
-2. Name: `wisdom-nursery-deploy`. Paste the **public** key
-   (`ssh-ed25519 AAAAC3Nza… github-actions-wisdom-nursery-deploy`) into *Public Key*.
-   Leave the private key and passphrase boxes empty. **Import**.
-3. Back on Manage SSH Keys, under *Public Keys*, click **Manage** next to
-   `wisdom-nursery-deploy` → **Authorize**.
+### 1. Generate the deploy key on your laptop
+
+The key is made on your own machine, so the private half never passes through anyone else.
+It is used only by GitHub Actions to deploy; keep your own cPanel login separate.
+
+**Windows (PowerShell), macOS or Linux** (OpenSSH is built in):
+```bash
+ssh-keygen -t ed25519 -C "github-actions-wisdom-nursery-deploy" -f ~/.ssh/wisdom_nursery_deploy
+```
+Press **Enter twice** when asked for a passphrase (GitHub Actions cannot type one).
+On Windows `~` is `C:\Users\<you>`; the files are in `C:\Users\<you>\.ssh\`.
+
+This makes two files:
+- `wisdom_nursery_deploy.pub`: the **public** key → the server (step 1b)
+- `wisdom_nursery_deploy`: the **private** key → GitHub secret `SSH_PRIVATE_KEY` (step 10) and nowhere else
+
+Show the public key to copy it:
+```bash
+cat ~/.ssh/wisdom_nursery_deploy.pub
+```
+
+### 1b. Add the public key to `authorized_keys` on the server
+
+cPanel → **Terminal** (or **File Manager** with "Show Hidden Files" on). In Terminal:
+```bash
+mkdir -p ~/.ssh && chmod 700 ~/.ssh
+nano ~/.ssh/authorized_keys
+```
+Add **one new line** at the end (keep any lines already there), made of these options, a
+space, then the whole public key:
+```
+no-port-forwarding,no-agent-forwarding,no-X11-forwarding,no-pty ssh-ed25519 AAAA…your key… github-actions-wisdom-nursery-deploy
+```
+Save (Ctrl+O, Enter, Ctrl+X), then:
+```bash
+chmod 600 ~/.ssh/authorized_keys
+```
+The options limit this key to running commands: it cannot open tunnels or an interactive
+terminal, which is all the deploy needs.
+
+(File Manager instead: open `/home/<user>/.ssh/authorized_keys`, or create it, add the same
+line, then set permissions to 600 and the `.ssh` folder to 700.)
 
 ### 2. Test the key and find the PHP binary (from your laptop)
 ```bash
-chmod 600 wisdom_nursery_deploy
-ssh -i wisdom_nursery_deploy -p <port> <user>@<host> 'php -v; ls -d /opt/cpanel/ea-php* /opt/alt/php* 2>/dev/null'
+ssh -i ~/.ssh/wisdom_nursery_deploy -p <port> <user>@<host> 'php -v; ls -d /opt/cpanel/ea-php* /opt/alt/php* 2>/dev/null'
 ```
-- It should log in without a password and print the PHP version.
+- It should run without asking for a password and print the PHP version. (A note that no
+  terminal was allocated is expected: that is the `no-pty` option.)
 - If `php -v` shows **8.2 or newer**, nothing more to do.
 - If it shows an older version, pick a newer binary from the list it printed, e.g.
   `/opt/cpanel/ea-php83/root/usr/bin/php` or `/opt/alt/php83/usr/bin/php`, and note it as
-  **PHP_BIN** (used in steps 9, 11 and 13).
+  **PHP_BIN** (used in steps 9, 11 and 14).
 
 ### 3. Create the staging domain
 cPanel → **Domains** → **Create A New Domain**:
@@ -65,8 +100,8 @@ Then **Connect Devices** shows the SMTP server and port (usually 465/SSL). On st
 skip this and set `MAIL_MAILER=log` in step 8.
 
 ### 8. Create the shared `.env` on the server
+In cPanel → **Terminal** (the deploy key has no interactive terminal, by design):
 ```bash
-ssh -i wisdom_nursery_deploy -p <port> <user>@<host>
 mkdir -p ~/staging.nursery.wisdomcapital.co.ke/shared
 cd ~/staging.nursery.wisdomcapital.co.ke/shared
 php -r "echo 'base64:'.base64_encode(random_bytes(32)).PHP_EOL;"   # copy the output: APP_KEY
@@ -153,8 +188,16 @@ Repository → **Settings**.
 | `SSH_HOST` | `<host>` |
 | `SSH_PORT` | `<port>` |
 | `SSH_USER` | `<user>` |
-| `SSH_PRIVATE_KEY` | the whole private key file `wisdom_nursery_deploy`, including the `-----BEGIN…` and `-----END…` lines |
+| `SSH_PRIVATE_KEY` | the whole private key file `~/.ssh/wisdom_nursery_deploy`, including the `-----BEGIN…` and `-----END…` lines |
 | `SSH_KNOWN_HOSTS` | the output of `ssh-keyscan -p <port> <host>` run on your laptop (all lines) |
+
+Show the private key to copy it: `cat ~/.ssh/wisdom_nursery_deploy` (PowerShell:
+`Get-Content ~/.ssh/wisdom_nursery_deploy -Raw`). Paste it straight into the secret box and
+don't save it anywhere else. With the GitHub CLI you can skip copy-paste entirely:
+```bash
+gh secret set SSH_PRIVATE_KEY --repo Juniortambo2628/wisdom-nursery < ~/.ssh/wisdom_nursery_deploy
+ssh-keyscan -p <port> <host> | gh secret set SSH_KNOWN_HOSTS --repo Juniortambo2628/wisdom-nursery
+```
 
 ### 11. The `staging` environment
 **Environments → New environment** → `staging` → under **Environment variables** add:
@@ -183,8 +226,8 @@ Open the **Actions** tab: "Test and deploy" runs the tests (about 2 min), then d
 ## Part C: after the first deploy
 
 ### 14. Create the dashboard login(s)
+In cPanel → **Terminal**:
 ```bash
-ssh -i wisdom_nursery_deploy -p <port> <user>@<host>
 cd ~/staging.nursery.wisdomcapital.co.ke/current
 php artisan make:filament-user        # name, email, password
 ```
@@ -218,7 +261,7 @@ From now on every push to `staging` updates the preview within a few minutes.
 
 | Symptom (Actions log or browser) | Fix |
 |---|---|
-| `Permission denied (publickey)` | Key not **Authorized** in cPanel (step 1), or `SSH_USER` wrong. |
+| `Permission denied (publickey)` | The public key line is missing or broken in `~/.ssh/authorized_keys` (one line, no line breaks), permissions are not `700` on `~/.ssh` / `600` on the file (step 1b), or `SSH_USER` is wrong. |
 | `Host key verification failed` | `SSH_KNOWN_HOSTS` missing or for another port: rerun `ssh-keyscan -p <port> <host>`. |
 | `Set the DEPLOY_PATH variable on this environment` | Step 11: the variable is on the `staging` **environment**, not a repository variable. |
 | `Missing …/shared/.env` | Step 8. |
@@ -227,5 +270,8 @@ From now on every push to `staging` updates the preview within a few minutes.
 | 500 error | Read `~/staging.nursery.wisdomcapital.co.ke/shared/storage/logs/laravel-*.log`; most often DB credentials in `.env`. After editing `.env`: `cd …/current && php artisan optimize`. |
 | Dashboard login keeps returning to the login page | HTTPS not active yet (step 5). |
 | Alerts or backups never run | Cron job (step 9). |
+
+Replacing the key later: generate a new one (step 1), add its line to `authorized_keys`,
+update `SSH_PRIVATE_KEY`, then delete the old line.
 
 Rollback: `ln -sfn ~/staging.nursery.wisdomcapital.co.ke/releases/<older-sha> ~/staging.nursery.wisdomcapital.co.ke/current`.
