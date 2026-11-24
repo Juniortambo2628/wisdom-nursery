@@ -27,7 +27,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->brandName('Wisdom Nursery')
+            ->brandName('Wisdom Propagation Nursery')
             ->colors([
                 'primary' => Color::hex('#2D6A3E'), // leaf
                 'success' => Color::hex('#3D9B35'),

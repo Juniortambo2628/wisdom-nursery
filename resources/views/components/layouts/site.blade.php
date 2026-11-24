@@ -13,9 +13,9 @@
         'tips' => ['Grower tips', route('posts.index')],
         'contact' => ['Contact', route('contact')],
     ];
-    $pageTitle = $title ? $title.' · Wisdom Nursery' : 'Wisdom Nursery · '.setting('site_tagline', 'Every plant gets a strong start');
-    $metaDescription = $description ?? 'Fruit trees, vegetable seedlings, ornamentals, indoor plants and tree seedlings from Wisdom Nursery, part of the Wisdom Capital family. Pay with M-Pesa, collect or get it delivered.';
-    $whatsapp = \App\Support\WhatsApp::link('Hello Wisdom Nursery');
+    $pageTitle = $title ? $title.' · Wisdom Propagation Nursery' : 'Wisdom Propagation Nursery · '.setting('site_tagline', 'Every plant gets a strong start');
+    $metaDescription = $description ?? 'Fruit trees, vegetable seedlings, ornamentals, indoor plants and tree seedlings from Wisdom Propagation Nursery, part of the Wisdom Capital family. Pay with M-Pesa, collect or get it delivered.';
+    $whatsapp = \App\Support\WhatsApp::link('Hello Wisdom Propagation Nursery');
     $phone = setting('phone');
 @endphp
 <!DOCTYPE html>
@@ -30,7 +30,7 @@
         <meta name="robots" content="noindex, nofollow">
     @endif
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Wisdom Nursery">
+    <meta property="og:site_name" content="Wisdom Propagation Nursery">
     <meta property="og:title" content="{{ $pageTitle }}">
     <meta property="og:description" content="{{ $metaDescription }}">
     <meta property="og:url" content="{{ url()->current() }}">
@@ -161,7 +161,7 @@
             </div>
         </div>
         <div class="container-page flex flex-col gap-2 border-t border-white/10 py-6 text-sm text-white/60 sm:flex-row sm:justify-between">
-            <p>© {{ date('Y') }} Wisdom Nursery, a Wisdom Capital company</p>
+            <p>© {{ date('Y') }} Wisdom Propagation Nursery, a Wisdom Capital company</p>
             <p>Wisdom Chicken · Wisdom Feeds · Uki Honey</p>
         </div>
     </footer>

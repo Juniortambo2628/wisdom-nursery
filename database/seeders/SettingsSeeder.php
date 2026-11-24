@@ -17,7 +17,7 @@ class SettingsSeeder extends Seeder
         $defaults = [
             'since_year' => '[Year]',
             'site_tagline' => 'Every plant gets a strong start',
-            'hero_intro' => '[Hero intro: one or two sentences about Wisdom Nursery]',
+            'hero_intro' => '[Hero intro: one or two sentences about Wisdom Propagation Nursery]',
             'story_title' => '[Our story heading]',
             'story_text' => '[Our story: who we are, where we grow, why we started. Part of the Wisdom Capital family alongside Wisdom Chicken, Wisdom Feeds and Uki Honey.]',
             'stat_1_value' => '[00]', 'stat_1_label' => '[Stat label]',

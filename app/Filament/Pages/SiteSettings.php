@@ -71,6 +71,21 @@ class SiteSettings extends Page implements HasForms
                     $t('how_we_grow_1', 'Step 1: Seed'), $t('how_we_grow_2', 'Step 2: Germination'),
                     $t('how_we_grow_3', 'Step 3: Hardening'), $t('how_we_grow_4', 'Step 4: Dispatch'),
                 ]),
+                Forms\Components\Tabs\Tab::make('Photos')->columns(3)->schema(collect([
+                    'image_hero' => 'Home: large top photo',
+                    'image_story_main' => 'Home: our story (large)',
+                    'image_story_small' => 'Home: our story (small)',
+                    'image_step_1' => 'How we grow 1: Seed',
+                    'image_step_2' => 'How we grow 2: Germination',
+                    'image_step_3' => 'How we grow 3: Hardening',
+                    'image_step_4' => 'How we grow 4: Dispatch',
+                    'image_shop_banner' => 'Our plants: wide photo',
+                    'image_about_banner' => 'About: team photo',
+                    'image_facility_1' => 'Facilities 1',
+                    'image_facility_2' => 'Facilities 2',
+                    'image_facility_wide' => 'Facilities: wide photo',
+                ])->map(fn ($label, $key) => Forms\Components\FileUpload::make($key)->label($label)
+                    ->image()->imageEditor()->disk('public')->directory('site')->maxSize(6144))->values()->all()),
                 Forms\Components\Tabs\Tab::make('About')->columns(2)->schema([
                     $a('about_text', 'About us'),
                     $a('facilities_text', 'Facilities'),

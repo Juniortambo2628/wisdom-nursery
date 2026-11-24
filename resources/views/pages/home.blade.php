@@ -10,9 +10,15 @@
 
     {{-- Hero --}}
     <section class="relative overflow-hidden bg-forest text-white">
-        <x-photo label="Full-screen photo: team in uniforms" dark class="absolute inset-0 h-full w-full items-start pt-6 text-[11px] sm:items-center sm:pt-0 sm:text-transparent" />
+        @if ($hero = site_image('image_hero'))
+            <img src="{{ $hero }}" alt="" class="absolute inset-0 h-full w-full object-cover" fetchpriority="high">
+            {{-- Darken the photo so the headline reads (forest at 85% → 45%). --}}
+            <div class="absolute inset-0 bg-gradient-to-r from-forest/90 via-forest/70 to-forest/40" aria-hidden="true"></div>
+        @else
+            <x-photo label="Full-screen photo: team in uniforms" dark class="absolute inset-0 h-full w-full items-start pt-6 text-[11px] sm:items-center sm:pt-0 sm:text-transparent" />
+        @endif
         <div class="container-page relative pb-28 pt-40 sm:pb-36 sm:pt-32 lg:pb-44 lg:pt-44">
-            <p class="eyebrow text-moss">Wisdom Nursery · Since {{ setting('since_year', '[Year]') }}</p>
+            <p class="eyebrow text-moss">Wisdom Propagation Nursery · Since {{ setting('since_year', '[Year]') }}</p>
             <h1 class="mt-5 max-w-3xl text-[44px] leading-[1.02] text-white sm:text-6xl lg:text-[88px]">
                 Every plant gets a <em class="font-normal italic text-moss">strong</em> start.
             </h1>
@@ -40,9 +46,9 @@
     {{-- Our story --}}
     <section class="container-page grid items-center gap-12 py-20 lg:grid-cols-2 lg:gap-20 lg:py-28">
         <div class="relative pb-16 pr-16 sm:pb-24 sm:pr-24">
-            <x-photo label="Founder / manager portrait" class="aspect-[9/10] w-full rounded-image-lg" />
+            <x-photo :src="site_image('image_story_main')" label="Founder / manager portrait" class="aspect-[9/10] w-full rounded-image-lg" />
             <div class="absolute bottom-0 right-0 w-1/2 rounded-image-lg bg-cream p-2.5">
-                <x-photo label="Hands potting a seedling" class="aspect-square w-full rounded-image" />
+                <x-photo :src="site_image('image_story_small')" label="Hands potting a seedling" class="aspect-square w-full rounded-image" />
             </div>
         </div>
         <div>
@@ -66,7 +72,7 @@
                         <div class="mt-4 flex items-baseline justify-between gap-3">
                             <h3 class="text-xl group-hover:text-leaf">{{ $category->name }}</h3>
                             <span class="shrink-0 text-sm text-ink/60">
-                                @if ($category->plants_min_price) From {{ ksh($category->plants_min_price) }} @endif
+                                @if ($category->plants_min_price) From {{ ksh($category->plants_min_price) }} @else Ask us @endif
                             </span>
                         </div>
                         <p class="mt-1.5 text-sm text-ink/60">{{ $category->summary }}</p>
@@ -97,7 +103,7 @@
             <ol class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
                 @foreach ($steps as $i => [$name, $text, $photo])
                     <li>
-                        <x-photo :label="$photo" dark class="aspect-[4/3] w-full rounded-image" />
+                        <x-photo :src="site_image('image_step_'.($i + 1))" :label="$photo" dark class="aspect-[4/3] w-full rounded-image" />
                         <p class="mt-5 text-sm font-semibold text-moss">{{ sprintf('%02d', $i + 1) }}</p>
                         <h3 class="mt-1 text-2xl text-white">{{ $name }}</h3>
                         <p class="mt-2 text-white/75">{{ $text }}</p>

@@ -46,7 +46,7 @@ class AlertRecipientResource extends Resource
     Tables\Actions\Action::make('test')->label('Send test')->icon('heroicon-o-paper-airplane')->color('gray')
         ->requiresConfirmation()->modalDescription('Sends a short test message on each of this person\'s channels. SMS costs about KSh 1.')
         ->action(function (AlertRecipient $r) {
-            $text = 'Test alert from the Wisdom Nursery website. Order alerts will arrive like this.';
+            $text = 'Test alert from the Wisdom Propagation Nursery website. Order alerts will arrive like this.';
             foreach ($r->channels ?? [] as $ch) {
                 $to = $ch === 'email' ? $r->email : $r->phone;
                 if ($to) {

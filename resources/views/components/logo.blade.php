@@ -6,5 +6,5 @@
     'border-white/30 text-white' => $dark,
 ]) }}>
     <x-glyph name="leaf" class="h-4 w-4" />
-    <span>Wisdom Nursery</span>
+    <span>Wisdom Propagation Nursery</span>
 </a>

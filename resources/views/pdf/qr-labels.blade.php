@@ -24,7 +24,7 @@
                     <div class="name">{{ $l['name'] }}</div>
                     @if ($l['botanical'])<div class="bot">{{ $l['botanical'] }}</div>@endif
                     <div class="price">{{ $l['price'] }}</div>
-                    <div class="brand">WISDOM NURSERY · SCAN TO ORDER</div>
+                    <div class="brand">WISDOM PROPAGATION NURSERY · SCAN TO ORDER</div>
                 </td>
             @endforeach
             @for ($i = $row->count(); $i < 3; $i++)<td style="border:0"></td>@endfor

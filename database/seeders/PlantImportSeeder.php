@@ -38,6 +38,7 @@ class PlantImportSeeder extends Seeder
         'image' => ['image', 'images', 'image_url', 'featured_image', 'photo'],
         'botanical_name' => ['botanical_name', 'scientific_name', 'latin_name'],
         'stock' => ['stock', 'stock_qty', 'quantity', 'qty'],
+        'featured' => ['featured', 'is_featured'],
     ];
 
     public function run(): bool
@@ -83,6 +84,9 @@ class PlantImportSeeder extends Seeder
                 'stock_qty' => (int) ($row['stock'] ?? 0),
                 'availability' => Availability::Ready,
                 'description' => ($row['description'] ?? null) ?: null,
+                // Seedlings sell by the hundred to farms and schools: 100+ goes on the quote list.
+                'bulk_min_qty' => in_array($categorySlug, ['tree-seedlings', 'vegetable-seedlings'], true) && $price < 200 ? 100 : null,
+                'is_featured' => in_array(strtolower($row['featured'] ?? ''), ['1', 'yes', 'true'], true),
                 'sort_order' => $i,
                 'source_ref' => $ref,
             ]);
@@ -135,12 +139,15 @@ class PlantImportSeeder extends Seeder
         return match (true) {
             Str::contains($t, 'croton megalocarpus') => 'tree-seedlings', // a tree, not the ornamental croton
             Str::contains($t, ['tomato', 'cabbage', 'kale', 'sukuma', 'spinach', 'onion', 'capsicum', 'vegetable']) => 'vegetable-seedlings',
-            Str::contains($t, ['palm', 'cypress', 'croton', 'ashoka', 'ornamental', 'shrub', 'flower']) => 'ornamentals-palms',
-            Str::contains($t, ['fruit', 'mango', 'avocado', 'orange', 'lemon', 'pawpaw', 'grafted']) => 'fruit-trees',
-            Str::contains($t, ['seedling', 'grevillea', 'neem', 'blue gum', 'eucalyptus', 'pine', 'croton megalocarpus', 'tree']) => 'tree-seedlings',
+            // The Wisdom Capital export files plants under Indoor-plants / Outdoor-plants: indoor wins first,
+            // so indoor palms (Broadleaf Lady Palm) stay with the indoor plants.
             Str::contains($t, 'indoor') => 'indoor-plants',
+            Str::contains($t, ['palm', 'cypress', 'croton', 'ashoka', 'ornamental', 'shrub']) => 'ornamentals-palms',
+            Str::contains($t, ['fruit', 'mango', 'avocado', 'orange', 'lemon', 'pawpaw', 'grafted']) => 'fruit-trees',
+            Str::contains($t, ['seedling', 'grevillea', 'neem', 'blue gum', 'eucalyptus', 'pine', 'senna', 'acacia', 'aquilaria', 'tree']) => 'tree-seedlings',
             // Proposal: seedlings sell from KES 30, indoor plants at KES 1,600.
             $price > 0 && $price < 200 => 'tree-seedlings',
+            Str::contains($t, 'outdoor') => 'tree-seedlings',
             default => 'indoor-plants',
         };
     }

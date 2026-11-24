@@ -69,7 +69,7 @@ class QuoteRequestResource extends Resource
                 Tables\Actions\EditAction::make()->label('Open'),
                 Tables\Actions\Action::make('call')->icon('heroicon-o-phone')->color('gray')->iconButton()->url(fn (QuoteRequest $r) => 'tel:+'.$r->phone),
                 Tables\Actions\Action::make('whatsapp')->icon('heroicon-o-chat-bubble-left-right')->color('success')->iconButton()
-                    ->url(fn (QuoteRequest $r) => 'https://wa.me/'.$r->phone.'?text='.rawurlencode("Hello {$r->name}, thank you for your quote request Q-{$r->id} to Wisdom Nursery. "))
+                    ->url(fn (QuoteRequest $r) => 'https://wa.me/'.$r->phone.'?text='.rawurlencode("Hello {$r->name}, thank you for your quote request Q-{$r->id} to Wisdom Propagation Nursery. "))
                     ->openUrlInNewTab(),
             ]);
     }

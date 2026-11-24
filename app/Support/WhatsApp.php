@@ -20,7 +20,7 @@ class WhatsApp
 
     public static function forPlant(Plant $plant, int $qty = 1): ?string
     {
-        return self::link("Hello Wisdom Nursery, I'd like to order {$qty} × {$plant->name} (".ksh($plant->price).' each). '
+        return self::link("Hello Wisdom Propagation Nursery, I'd like to order {$qty} × {$plant->name} (".ksh($plant->price).' each). '
             .route('plants.show', $plant));
     }
 
@@ -29,6 +29,6 @@ class WhatsApp
     {
         $items = $lines->map(fn ($l) => "• {$l->qty} × {$l->label}: ".ksh($l->lineTotal))->implode("\n");
 
-        return self::link("Hello Wisdom Nursery, I'd like to order:\n{$items}\nTotal: ".ksh($total));
+        return self::link("Hello Wisdom Propagation Nursery, I'd like to order:\n{$items}\nTotal: ".ksh($total));
     }
 }

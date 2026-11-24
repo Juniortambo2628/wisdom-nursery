@@ -1,4 +1,4 @@
-<x-layouts.site title="Grower tips" active="tips" description="Plant care and tree planting guides from the Wisdom Nursery team.">
+<x-layouts.site title="Grower tips" active="tips" description="Plant care and tree planting guides from the Wisdom Propagation Nursery team.">
     <section class="container-page py-12 lg:py-20">
         <p class="eyebrow">Grower tips</p>
         <h1 class="mt-4 text-5xl sm:text-6xl lg:text-7xl">Grow it well.</h1>

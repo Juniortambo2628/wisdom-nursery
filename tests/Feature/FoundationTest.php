@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\Setting;
 
 it('runs every content seeder once and is safe to re-run on each deploy', function () {
+    \Illuminate\Support\Facades\Storage::fake('public');
     $this->seed();
     Setting::put('phone', '+254 700 000 000'); // team edits a value in the dashboard
 
@@ -18,7 +19,12 @@ it('runs every content seeder once and is safe to re-run on each deploy', functi
         ->and(Post::published()->count())->toBe(0) // launch guides are drafts
         ->and(Setting::get('phone'))->toBe('+254 700 000 000')
         ->and(Setting::get('seeded:CategorySeeder'))->not->toBeNull()
-        ->and(Setting::get('seeded:PlantImportSeeder'))->toBeNull(); // no CSV yet: retried next deploy
+        ->and(Setting::get('seeded:PlantImportSeeder'))->not->toBeNull()
+        ->and(Plant::count())->toBe(37)                       // 33 from Wisdom Capital + 4 grafted fruit
+        ->and(Plant::where('is_featured', true)->count())->toBe(4)
+        ->and(Plant::has('images')->count())->toBe(33)
+        ->and(Setting::get('image_hero'))->toBe('site/nursery-24.webp')
+        ->and(\App\Models\GalleryImage::whereNull('path')->count())->toBe(0);
 });
 
 it('numbers orders from WN-1001', function () {

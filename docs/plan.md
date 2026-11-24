@@ -25,6 +25,9 @@ Likely `{{DOMAIN}} = nursery.wisdomcapital.co.ke`; to be confirmed.
 
 ## Notes
 
+- **Renamed to Wisdom Propagation Nursery** (Aldo, 24 Nov). Domain unchanged.
+- **Real photos** from the old nursery page are in place (plants, hero, story, steps, facilities, gallery); env-4 (children) deliberately excluded. Staff can swap any of them in Site settings → Photos.
+
 - **Pages built 24 Nov** from the concepts deck (Concept B). Decisions agreed with Kevin: shared Blade
   components in `resources/views/components`; coming-soon plants with stock can be pre-ordered (as the
   deck shows). Local preview data: `php artisan db:seed --class=DemoPlantSeeder` (never run by deploy).
@@ -75,7 +78,7 @@ Likely `{{DOMAIN}} = nursery.wisdomcapital.co.ke`; to be confirmed.
 
 ## Scope: included at no extra cost (proposal 08)
 
-- [~] All 33 plants moved across with photos, descriptions and prices (idempotent importer written + tested; needs `database/seeders/data/wisdom-capital-products.csv` + images)
+- [x] All 33 plants moved across with photos, descriptions and prices (from the Wisdom Capital database dump and the old site's photos, 24 Nov), plus 4 grafted fruit varieties from the client's latest catalogue
 - [x] Brand story, team and "How we grow" pages (placeholders until copy arrives)
 - [x] Quote request for bulk and institutional orders
 - [ ] Six plant care and tree planting guides (seeded as drafts; Kevin supplies copy)

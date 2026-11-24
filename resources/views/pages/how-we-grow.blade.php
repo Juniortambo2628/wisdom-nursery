@@ -1,5 +1,5 @@
 <x-layouts.site title="How we grow" active="how"
-    description="How Wisdom Nursery raises its plants, from seed to dispatch.">
+    description="How Wisdom Propagation Nursery raises its plants, from seed to dispatch.">
     @php
         $steps = [
             ['Seed', setting('how_we_grow_1'), 'Sowing in clean trays'],
@@ -14,7 +14,7 @@
         <ol class="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             @foreach ($steps as $i => [$name, $text, $photo])
                 <li>
-                    <x-photo :label="$photo" class="aspect-[4/3] w-full rounded-image" />
+                    <x-photo :src="site_image('image_step_'.($i + 1))" :label="$photo" class="aspect-[4/3] w-full rounded-image" />
                     <p class="mt-5 text-sm font-semibold text-fern">{{ sprintf('%02d', $i + 1) }}</p>
                     <h2 class="mt-1 text-2xl">{{ $name }}</h2>
                     <p class="mt-2 text-ink/70">{{ $text }}</p>

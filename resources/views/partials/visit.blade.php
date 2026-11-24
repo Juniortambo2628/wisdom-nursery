@@ -9,7 +9,7 @@
                 <li class="flex gap-3"><x-glyph name="phone" class="mt-0.5 h-5 w-5 shrink-0 text-leaf" /> {{ setting('phone') }} · {{ setting('email') }}</li>
             </ul>
             @if ($embed = setting('map_embed_url'))
-                <iframe src="{{ $embed }}" title="Map to Wisdom Nursery" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="mt-8 aspect-[16/10] w-full rounded-image border-0"></iframe>
+                <iframe src="{{ $embed }}" title="Map to Wisdom Propagation Nursery" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="mt-8 aspect-[16/10] w-full rounded-image border-0"></iframe>
             @else
                 <x-photo label="Map" class="mt-8 aspect-[16/10] w-full rounded-image" />
             @endif

@@ -1,5 +1,5 @@
 <x-layouts.site title="About us" active="about"
-    description="The people and the place behind Wisdom Nursery, part of the Wisdom Capital family.">
+    description="The people and the place behind Wisdom Propagation Nursery, part of the Wisdom Capital family.">
     <section class="container-page grid items-end gap-8 pt-12 lg:grid-cols-2 lg:pt-20">
         <div>
             <p class="eyebrow">About us</p>
@@ -8,7 +8,7 @@
         <p class="text-lg text-ink/70 lg:pb-3">{{ setting('about_text', setting('story_text')) }}</p>
     </section>
     <div class="container-page mt-10 lg:mt-14">
-        <x-photo label="Group photo: whole team in new uniforms at the nursery entrance" class="aspect-[16/10] w-full rounded-image-lg sm:aspect-[2.2/1]" />
+        <x-photo :src="site_image('image_about_banner')" label="Group photo: whole team in new uniforms at the nursery entrance" class="aspect-[16/10] w-full rounded-image-lg sm:aspect-[2.2/1]" />
     </div>
 
     <section class="container-page py-20 lg:py-28">

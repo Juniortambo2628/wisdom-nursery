@@ -21,9 +21,11 @@ class DatabaseSeeder extends Seeder
         CategorySeeder::class,
         SettingsSeeder::class,
         PlantImportSeeder::class,
+        FruitTreeSeeder::class,
         PostSeeder::class,
         TeamSeeder::class,
         GallerySeeder::class,
+        SitePhotosSeeder::class,
         TestimonialSeeder::class,
     ];
 

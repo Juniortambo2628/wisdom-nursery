@@ -1,12 +1,12 @@
 <x-layouts.site title="Our plants" active="plants"
-    description="See what's growing at Wisdom Nursery now, with prices and availability. Buy online with M-Pesa, or request a quote for bulk orders.">
+    description="See what's growing at Wisdom Propagation Nursery now, with prices and availability. Buy online with M-Pesa, or request a quote for bulk orders.">
     <section class="container-page grid items-center gap-10 py-12 lg:grid-cols-2 lg:py-20">
         <div>
             <p class="eyebrow">Availability · Updated {{ $updatedAt ? \Illuminate\Support\Carbon::parse($updatedAt)->format('j M Y') : '[date]' }}</p>
             <h1 class="mt-4 text-5xl sm:text-6xl lg:text-7xl">What's growing now</h1>
             <p class="mt-5 max-w-lg text-lg text-ink/70">Buy online and pay with M-Pesa, or add large quantities to a quote list and we'll reply with prices and a ready date.</p>
         </div>
-        <x-photo label="Wide photo: rows of seedlings under the shade net" class="hidden aspect-[2/1] w-full rounded-image-lg sm:flex" />
+        <x-photo :src="site_image('image_shop_banner')" label="Wide photo: rows of seedlings under the shade net" class="hidden aspect-[2/1] w-full rounded-image-lg sm:flex" />
     </section>
 
     <section class="container-page grid gap-8 pb-20 lg:grid-cols-[1fr_380px] lg:pb-28">

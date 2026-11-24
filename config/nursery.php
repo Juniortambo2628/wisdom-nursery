@@ -17,7 +17,7 @@ return [
         'type' => env('MPESA_TYPE', 'paybill'), // paybill | till
         'party_b' => env('MPESA_PARTY_B', env('MPESA_SHORTCODE')),
         'passkey' => env('MPESA_PASSKEY'),
-        'account_reference' => env('MPESA_ACCOUNT_REFERENCE', 'Wisdom Nursery'),
+        'account_reference' => env('MPESA_ACCOUNT_REFERENCE', 'Wisdom Propagation Nursery'),
         'callback_secret' => env('MPESA_CALLBACK_SECRET'),
         'base_urls' => [
             'sandbox' => 'https://sandbox.safaricom.co.ke',

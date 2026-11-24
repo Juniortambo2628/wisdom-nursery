@@ -67,7 +67,7 @@ class SendAlert implements ShouldQueue
                     $log($whatsapp->name() === 'log' ? 'logged' : 'sent', $id);
                 })(),
                 'email' => (function () use ($log) {
-                    Mail::raw($this->body, fn ($m) => $m->to($this->recipient)->subject($this->emailSubject ?? 'Wisdom Nursery alert'));
+                    Mail::raw($this->body, fn ($m) => $m->to($this->recipient)->subject($this->emailSubject ?? 'Wisdom Propagation Nursery alert'));
                     $log('sent');
                 })(),
             };
