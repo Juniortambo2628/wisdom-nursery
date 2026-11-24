@@ -56,6 +56,11 @@ class Plant extends Model
         return $this->belongsToMany(Plant::class, 'plant_pairings', 'plant_id', 'paired_plant_id');
     }
 
+    public function stockAlerts(): HasMany
+    {
+        return $this->hasMany(StockAlert::class);
+    }
+
     public function scopeActive(Builder $q): Builder
     {
         return $q->where('is_active', true);
@@ -66,12 +71,31 @@ class Plant extends Model
         return $q->orderBy('sort_order')->orderBy('name');
     }
 
-    /** Can be added to the cart and paid for right now. */
+    /**
+     * Can be added to the cart and paid for. Plants that are coming soon can
+     * be pre-ordered while they have stock (as the concepts deck shows); the
+     * cart shows their ready date.
+     */
     public function isBuyable(): bool
     {
         return $this->is_active
-            && $this->availability === Availability::Ready
+            && $this->availability !== Availability::OutOfStock
             && $this->stock_qty > 0;
+    }
+
+    public function isComingSoon(): bool
+    {
+        return $this->availability === Availability::ReadyOn && $this->ready_on?->isFuture();
+    }
+
+    /** "ready" | "soon" | "out", for the coloured availability dot. */
+    public function availabilityTone(): string
+    {
+        if (! $this->isBuyable()) {
+            return 'out';
+        }
+
+        return $this->isComingSoon() ? 'soon' : 'ready';
     }
 
     /** "Ready now" / "Ready in 3 weeks" / "Out of stock". */
