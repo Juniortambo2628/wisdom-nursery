@@ -1,4 +1,20 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
+import forms from '@tailwindcss/forms';
+
+// Wisdom Nursery design tokens (Design Concepts Rev 1, Concept B, green palette).
+export const palette = {
+    forest: '#123524', // headers, footer, dark buttons
+    deep: '#0D2A1C',   // footer background
+    leaf: '#2D6A3E',   // main buttons, links, active states
+    fern: '#4F8A4B',   // eyebrow labels
+    moss: '#8FB36B',   // highlights on dark backgrounds
+    sage: '#DBE7CD',   // panels (bulk quote band)
+    mist: '#EEF4E6',   // soft backgrounds, in-cart states
+    cream: '#F8F7F1',  // page background
+    ink: '#14211A',    // body text
+    clay: '#B9822F',   // badges, cart count, "ready in X weeks"
+    mpesa: '#3D9B35',  // M-Pesa pay button only
+};
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -7,14 +23,27 @@ export default {
         './storage/framework/views/*.php',
         './resources/**/*.blade.php',
         './resources/**/*.js',
-        './resources/**/*.vue',
+        './app/**/*.php',
     ],
     theme: {
         extend: {
+            colors: palette,
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['"Inter Variable"', 'Inter', ...defaultTheme.fontFamily.sans],
+                display: ['"Fraunces Variable"', 'Fraunces', ...defaultTheme.fontFamily.serif],
+            },
+            borderRadius: {
+                card: '18px',
+                image: '20px',
+                'image-lg': '28px',
+            },
+            maxWidth: {
+                page: '1440px',
+            },
+            spacing: {
+                gutter: '72px',
             },
         },
     },
-    plugins: [],
+    plugins: [forms],
 };

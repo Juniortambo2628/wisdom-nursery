@@ -1,3 +1,44 @@
+@import '@fontsource-variable/fraunces/opsz.css';
+@import '@fontsource-variable/fraunces/opsz-italic.css';
+@import '@fontsource-variable/inter/index.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    html { @apply bg-cream text-ink antialiased; -webkit-tap-highlight-color: transparent; }
+    body { @apply font-sans; }
+    h1, h2, h3, h4 { @apply font-display font-medium tracking-tight text-forest; }
+    [x-cloak] { display: none !important; }
+}
+
+@layer components {
+    /* Page container: full width with 16px gutters on phones, 1440px / 72px side padding on desktop. */
+    .container-page { @apply mx-auto w-full max-w-page px-4 sm:px-8 lg:px-gutter; }
+
+    .eyebrow { @apply text-xs font-semibold uppercase tracking-[0.14em] text-fern; }
+
+    .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-leaf disabled:cursor-not-allowed disabled:opacity-60; }
+    .btn-primary { @apply btn bg-leaf text-white hover:bg-forest; }
+    .btn-dark { @apply btn bg-forest text-white hover:bg-deep; }
+    .btn-outline { @apply btn border border-leaf/30 bg-white text-leaf hover:border-leaf hover:bg-mist; }
+    .btn-mpesa { @apply btn bg-mpesa text-white hover:brightness-95; }
+    .btn-sm { @apply px-4 py-2 text-xs; }
+
+    .card { @apply rounded-card bg-white shadow-[0_1px_2px_rgba(20,33,26,0.06)] ring-1 ring-ink/5; }
+
+    .badge { @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold; }
+    .badge-ready { @apply badge bg-mist text-leaf; }
+    .badge-soon { @apply badge bg-clay/10 text-clay; }
+    .badge-out { @apply badge bg-ink/5 text-ink/60; }
+
+    .input { @apply block w-full rounded-xl border-ink/15 bg-white px-4 py-3 text-sm text-ink placeholder:text-ink/40 focus:border-leaf focus:ring-leaf; }
+    .label { @apply mb-1.5 block text-sm font-medium text-ink; }
+
+    /* Striped green placeholder (concepts deck) until real nursery photos arrive. */
+    .photo-placeholder {
+        @apply relative flex items-center justify-center overflow-hidden bg-sage text-center text-xs font-medium text-forest/70;
+        background-image: repeating-linear-gradient(135deg, rgba(45,106,62,0.10) 0 12px, rgba(45,106,62,0.02) 12px 24px);
+    }
+}
