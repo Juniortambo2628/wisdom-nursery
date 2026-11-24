@@ -25,6 +25,8 @@ Likely `{{DOMAIN}} = nursery.wisdomcapital.co.ke`; to be confirmed.
 
 ## Notes
 
+- **Week 3 (24 Nov):** back-in-stock SMS for "Notify me", WhatsApp catalogue export, 375px QA fixes, `docs/launch-checklist.md`, `docs/handover.md`. Waiting on client content and live keys for the live M-Pesa test and launch.
+
 - **Renamed to Wisdom Propagation Nursery** (Aldo, 24 Nov). Domain unchanged.
 - **Real photos** from the old nursery page are in place (plants, hero, story, steps, facilities, gallery); env-4 (children) deliberately excluded. Staff can swap any of them in Site settings → Photos.
 
@@ -58,7 +60,7 @@ Likely `{{DOMAIN}} = nursery.wisdomcapital.co.ke`; to be confirmed.
 - [x] Gallery (filters: Team, Plants, Nursery, Deliveries)
 - [x] Grower tips (posts)
 - [x] Contact and visit (address, hours, map, form, WhatsApp, phone)
-- [~] Designed for phones and computers: every page screenshot-checked at 375px and 1440px with no horizontal scroll (24 Nov); repeat on real phones in week 3
+- [x] Designed for phones and computers: automated 375px QA of every page, the buying flow, forms and dashboard (no overflow, 40px tap targets, labels, alt text); real-phone check is in the launch checklist
 
 ## Scope: "also included" (proposal 05)
 
@@ -68,7 +70,7 @@ Likely `{{DOMAIN}} = nursery.wisdomcapital.co.ke`; to be confirmed.
 - [x] Quote request for bulk orders (quote list + form + team alerts + dashboard resource with status, call, WhatsApp reply)
 - [x] Map and directions (embed + directions link, from settings `map_embed_url` / `map_link`)
 - [x] Basic search engine setup (titles/meta, OG, sitemap.xml, robots.txt, Product + LocalBusiness schema)
-- [ ] Short training session for the nursery team → `docs/handover.md` as the training guide
+- [x] Training guide → `docs/handover.md` (session itself after launch)
 
 ## Scope: investment line items (proposal 08)
 
@@ -81,13 +83,13 @@ Likely `{{DOMAIN}} = nursery.wisdomcapital.co.ke`; to be confirmed.
 - [x] All 33 plants moved across with photos, descriptions and prices (from the Wisdom Capital database dump and the old site's photos, 24 Nov), plus 4 grafted fruit varieties from the client's latest catalogue
 - [x] Brand story, team and "How we grow" pages (placeholders until copy arrives)
 - [x] Quote request for bulk and institutional orders
-- [ ] Six plant care and tree planting guides (seeded as drafts; Kevin supplies copy)
-- [ ] Google Business Profile — off-site task for Kevin; site supplies LocalBusiness schema + NAP consistency
-- [ ] WhatsApp Business catalogue — off-site task for Kevin; site can export plant list (name, price, image URL) to help
+- [~] Six plant care and tree planting guides (seeded as drafts; waiting on Kevin's copy)
+- [~] Google Business Profile: off-site, steps in launch checklist §9; site has LocalBusiness schema
+- [x] WhatsApp Business catalogue: Plants → Export for WhatsApp catalogue (Meta CSV); upload steps in launch checklist §9
 - [x] QR code labels for plants (Plants → select → Print QR labels → A4 PDF)
-- [ ] Link from wisdomcapital.co.ke → `docs/launch-checklist.md` (redirect plan only; do not edit that site)
-- [ ] Search engine setup + monthly visitor report for 3 months (GA4 via `.env`)
-- [ ] Staff training and 3 months support → `docs/handover.md`; weekly backups kept 4 weeks (SLA 9.2) via scheduler
+- [x] Link from wisdomcapital.co.ke → redirect plan in `docs/launch-checklist.md` §8 (`/wisdom-nursery.html` → new site, 301)
+- [~] Search engine setup done (meta, OG, sitemap, robots, schema); GA4 ID + monthly report start at launch
+- [~] Staff training guide (`docs/handover.md`) and weekly backups (4 weeks) done; training and 3-month support start at launch
 
 ## Platform
 
@@ -105,6 +107,6 @@ Likely `{{DOMAIN}} = nursery.wisdomcapital.co.ke`; to be confirmed.
 
 ## Milestones
 
-- [ ] Week 1: pipeline + staging live; design system; public pages with seeded content; importer → report to Kevin
+- [x] Week 1: pipeline + staging live; design system; public pages; importer
 - [~] Week 2: cart, checkout, M-Pesa sandbox, quotes, alerts, Filament → built and tested 24 Nov; needs Daraja sandbox keys and Africa's Talking keys on staging for an end-to-end run
-- [ ] Week 3: tests, 375px QA, live M-Pesa test, content swap, production launch, `docs/handover.md` → report to Kevin
+- [~] Week 3: tests (65), 375px QA, handover and launch checklist done; live M-Pesa test, content swap and production launch wait on client content and live keys
