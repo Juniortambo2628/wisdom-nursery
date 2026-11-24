@@ -31,6 +31,8 @@ next deploy.
 
 ## Deploy
 
+**First time? Follow [`docs/deploy-guide.md`](docs/deploy-guide.md)** (cPanel + GitHub, step by step).
+
 Builds run in GitHub Actions; the server only receives a ready-to-run release over SSH.
 Workflow: [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). Server-side steps:
 [`deploy/remote.sh`](deploy/remote.sh). Background and decisions: [`docs/deploy-notes.md`](docs/deploy-notes.md).

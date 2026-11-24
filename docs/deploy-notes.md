@@ -59,5 +59,5 @@ will not enable SSH on this account, the options in order of preference:
 - [x] SSH access and port confirmed (24 Nov)
 - [ ] Kevin: authorise the deploy key in cPanel, run `php -v` over SSH to confirm the CLI PHP version
 - [x] `{{STAGING_DOMAIN}}` = `staging.nursery.wisdomcapital.co.ke` (DNS created 24 Nov); create it as a domain in cPanel with docroot `{{STAGING_PATH}}/current/public` and run AutoSSL
-- [ ] Kevin: create the two GitHub Environments and secrets (README → Deploy)
+- [ ] Kevin: follow `docs/deploy-guide.md` (cPanel steps 1–9, GitHub steps 10–13). Dry run of `deploy/remote.sh` on a fake cPanel layout passed 24 Nov.
 - [ ] Staging: block search engines (`APP_ENV=staging` → `noindex`), optionally cPanel Directory Privacy password
