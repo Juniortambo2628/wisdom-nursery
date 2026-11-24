@@ -1,0 +1,5 @@
+@extends('errors.layout')
+@section('title', 'Page not found')
+@section('code', 'Error 404')
+@section('heading', 'This page has been transplanted.')
+@section('message', "We couldn't find that page. It may have moved, or the plant may no longer be listed. Try the plant list, or ask us on WhatsApp.")

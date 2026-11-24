@@ -1,0 +1,5 @@
+@extends('errors.layout')
+@section('title', 'Something went wrong')
+@section('code', 'Error 500')
+@section('heading', 'Something went wrong on our side.')
+@section('message', "Sorry, the page didn't load. We've been notified. Please try again in a few minutes, or order on WhatsApp in the meantime.")

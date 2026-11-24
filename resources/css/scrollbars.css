@@ -1,0 +1,36 @@
+/*
+ * Thin, quiet scrollbars in the palette, for the site and the dashboard.
+ * Light: leaf green at low opacity; dark (dashboard .dark): moss green.
+ * Track stays transparent so the bar reads as a hint, not a frame.
+ */
+:root {
+    --scrollbar-thumb: rgb(45 106 62 / 0.28);        /* leaf */
+    --scrollbar-thumb-hover: rgb(45 106 62 / 0.5);
+}
+.dark {
+    --scrollbar-thumb: rgb(143 179 107 / 0.28);      /* moss */
+    --scrollbar-thumb-hover: rgb(143 179 107 / 0.5);
+}
+
+/* Standard properties (Firefox, Chrome/Edge 121+, Safari 18.2+) */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+
+/* Older WebKit/Blink (used only where the standard properties are not supported) */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); background-clip: content-box; }
+::-webkit-scrollbar-button { display: none; height: 0; width: 0; }
+::-webkit-scrollbar-corner { background: transparent; }
+
+/* Rows that scroll sideways on phones (category pills): no visible bar at all. */
+.scrollbar-none { scrollbar-width: none; }
+.scrollbar-none::-webkit-scrollbar { display: none; }

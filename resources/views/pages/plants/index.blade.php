@@ -6,13 +6,13 @@
             <h1 class="mt-4 text-5xl sm:text-6xl lg:text-7xl">What's growing now</h1>
             <p class="mt-5 max-w-lg text-lg text-ink/70">Buy online and pay with M-Pesa, or add large quantities to a quote list and we'll reply with prices and a ready date.</p>
         </div>
-        <x-photo :src="site_image('image_shop_banner')" label="Wide photo: rows of seedlings under the shade net" class="hidden aspect-[2/1] w-full rounded-image-lg sm:flex" />
+        <x-photo :src="site_image('image_shop_banner')" :srcset="site_image_srcset('image_shop_banner')" sizes="(min-width: 1024px) 50vw, 100vw" label="Wide photo: rows of seedlings under the shade net" class="hidden aspect-[2/1] w-full rounded-image-lg sm:flex" />
     </section>
 
     <section class="container-page grid gap-8 pb-20 lg:grid-cols-[1fr_380px] lg:pb-28">
         <div class="min-w-0">
             <form method="GET" action="{{ route('plants.index') }}" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-                <nav aria-label="Plant categories" class="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
+                <nav aria-label="Plant categories" class="scrollbar-none -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
                     @php $pill = 'inline-flex min-h-10 shrink-0 items-center rounded-full border px-4 py-2 text-sm transition'; @endphp
                     <a href="{{ route('plants.index', array_filter(['q' => $search])) }}" @class([$pill, 'border-forest bg-forest text-white' => ! $activeCategory, 'border-ink/15 bg-white hover:border-leaf' => $activeCategory]) @if (! $activeCategory) aria-current="page" @endif>All</a>
                     @foreach ($categories as $category)

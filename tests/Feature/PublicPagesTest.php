@@ -58,3 +58,20 @@ it('serves a sitemap and blocks robots outside production', function () {
     $this->get('/sitemap.xml')->assertOk()->assertSee(route('plants.show', 'swiss-cheese-plant'), false);
     $this->get('/robots.txt')->assertOk()->assertSee('Disallow: /');
 });
+
+it('shows a branded 404 page', function () {
+    $this->get('/no-such-page')->assertNotFound()->assertSee('This page has been transplanted.')->assertSee('See our plants');
+});
+
+it('renders the 500 page without touching the database', function () {
+    \Illuminate\Support\Facades\DB::flushQueryLog();
+    \Illuminate\Support\Facades\DB::enableQueryLog();
+    expect(view('errors.500')->render())->toContain('Something went wrong on our side.')
+        ->and(\Illuminate\Support\Facades\DB::getQueryLog())->toBeEmpty();
+});
+
+it('sends baseline security headers', function () {
+    $this->get('/')->assertHeader('X-Content-Type-Options', 'nosniff')
+        ->assertHeader('X-Frame-Options', 'SAMEORIGIN')
+        ->assertHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+});

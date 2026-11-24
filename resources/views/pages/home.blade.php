@@ -11,7 +11,8 @@
     {{-- Hero --}}
     <section class="relative overflow-hidden bg-forest text-white">
         @if ($hero = site_image('image_hero'))
-            <img src="{{ $hero }}" alt="" class="absolute inset-0 h-full w-full object-cover" fetchpriority="high">
+            <img src="{{ $hero }}" @if ($srcset = site_image_srcset('image_hero')) srcset="{{ $srcset }}" sizes="100vw" @endif
+                 alt="" class="absolute inset-0 h-full w-full object-cover" fetchpriority="high">
             {{-- Darken the photo so the headline reads (forest at 85% → 45%). --}}
             <div class="absolute inset-0 bg-gradient-to-r from-forest/90 via-forest/70 to-forest/40" aria-hidden="true"></div>
         @else

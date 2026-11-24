@@ -37,7 +37,7 @@ class AdminPanelProvider extends PanelProvider
             ->navigationGroups(['Orders', 'Plants', 'Content', 'Settings'])
             // Self-hosted Inter (same as the public site) instead of a font CDN.
             ->font('Inter Variable', provider: \Filament\FontProviders\LocalFontProvider::class)
-            ->renderHook('panels::head.end', fn () => \Illuminate\Support\Facades\Vite::withEntryPoints(['resources/css/admin-fonts.css'])->toHtml()
+            ->renderHook('panels::head.end', fn () => \Illuminate\Support\Facades\Vite::withEntryPoints(['resources/css/admin.css'])->toHtml()
                 // On phones, start with the menu closed so the orders show first (Filament defaults to open).
                 .'<script>try{if(window.innerWidth<1024)localStorage.setItem("isOpen","false")}catch(e){}</script>')
             ->renderHook('panels::user-menu.before', fn () => view('filament.view-site-link'))

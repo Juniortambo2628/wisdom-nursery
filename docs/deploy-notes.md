@@ -54,6 +54,14 @@ will not enable SSH on this account, the options in order of preference:
 2. FTP upload (`lftp mirror`) plus a protected one-time deploy URL that runs the artisan steps.
    This works but is less safe; we would build it only if 1 is refused.
 
+## Web server notes
+
+- Staging answers over HTTP/3, which on this host means **LiteSpeed**. `public/.htaccess` therefore uses
+  plain directives only (no `<If>` blocks): `ExpiresByType` caching and `mod_deflate`.
+- Each deploy ships `public/.htaccess` with the release. If cPanel's MultiPHP Manager ever writes a PHP
+  handler block into the document root's `.htaccess`, the next deploy replaces it; set the PHP version with
+  **Select PHP Version** (CloudLinux), which does not use `.htaccess`.
+
 ## Open items
 
 - [x] SSH access and port confirmed (24 Nov)

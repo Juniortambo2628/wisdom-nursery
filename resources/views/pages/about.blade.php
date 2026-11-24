@@ -8,7 +8,7 @@
         <p class="text-lg text-ink/70 lg:pb-3">{{ setting('about_text', setting('story_text')) }}</p>
     </section>
     <div class="container-page mt-10 lg:mt-14">
-        <x-photo :src="site_image('image_about_banner')" label="Group photo: whole team in new uniforms at the nursery entrance" class="aspect-[16/10] w-full rounded-image-lg sm:aspect-[2.2/1]" />
+        <x-photo :src="site_image('image_about_banner')" :srcset="site_image_srcset('image_about_banner')" label="Group photo: whole team in new uniforms at the nursery entrance" class="aspect-[16/10] w-full rounded-image-lg sm:aspect-[2.2/1]" />
     </div>
 
     <section class="container-page py-20 lg:py-28">

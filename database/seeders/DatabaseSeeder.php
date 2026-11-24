@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
         TeamSeeder::class,
         GallerySeeder::class,
         SitePhotosSeeder::class,
+        ResponsivePhotosSeeder::class,
         TestimonialSeeder::class,
     ];
 

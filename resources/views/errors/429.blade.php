@@ -1,0 +1,5 @@
+@extends('errors.layout')
+@section('title', 'Too many tries')
+@section('code', 'Slow down')
+@section('heading', 'Too many tries in a row.')
+@section('message', 'Please wait a minute and try again. If you are trying to pay, check your phone for the M-Pesa prompt first.')
