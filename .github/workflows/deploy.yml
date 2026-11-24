@@ -53,8 +53,9 @@ jobs:
       group: deploy-${{ github.ref_name }}
       cancel-in-progress: false
     env:
-      DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
-      PHP_BIN: ${{ vars.PHP_BIN || 'php' }}
+      # Read from the environment's variables (preferred) or, if saved there instead, its secrets.
+      DEPLOY_PATH: ${{ vars.DEPLOY_PATH || secrets.DEPLOY_PATH }}
+      PHP_BIN: ${{ vars.PHP_BIN || secrets.PHP_BIN || 'php' }}
       RELEASE: ${{ github.sha }}
     steps:
       - name: Only main or staging deploy
@@ -65,7 +66,7 @@ jobs:
 
       - name: Check configuration
         run: |
-          test -n "$DEPLOY_PATH" || { echo "Set the DEPLOY_PATH variable on this environment"; exit 1; }
+          test -n "$DEPLOY_PATH" || { echo "DEPLOY_PATH is empty. Add it under Settings > Environments > ${{ github.ref_name == 'main' && 'production' || 'staging' }} > Environment variables (not a repository variable)."; exit 1; }
           case "$DEPLOY_PATH" in *nursery*) ;; *) echo "DEPLOY_PATH must contain 'nursery'"; exit 1;; esac
 
       - uses: actions/checkout@v4
