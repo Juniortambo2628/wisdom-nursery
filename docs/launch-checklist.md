@@ -79,6 +79,7 @@ Site settings (or Content), on **staging first** so the client can check it ther
 - [ ] Page source has the GA4 tag (production only); no `noindex`
 - [ ] `/sitemap.xml` lists the plants; Google Search Console: add the domain property, submit the sitemap
 - [ ] Every page at 375px on a real Android phone and an iPhone: home, plants, a plant, cart, checkout, contact
+- [ ] Dashboard → Settings → **Site health** is all green (cron, queue, alerts, M-Pesa live, SMS live, email, backups)
 - [ ] Backups: next day, `ls ~/nursery.wisdomcapital.co.ke/shared/storage/app/private/*/` shows a database backup
 
 ## 8. Link from wisdomcapital.co.ke (proposal 08, "included")

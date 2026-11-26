@@ -148,14 +148,22 @@ alerts (SMS, WhatsApp, email). Switch off **Receives alerts** for someone on lea
 **Settings → Alert log** lists every alert and SMS the site sent, with *sent*, *failed* or
 *skipped*. If someone says they didn't get an alert, look here first.
 
-## 8. Good habits
+## 8. Site health
+
+Menu → **Settings → Site health** checks, every time you open it, that the website's machinery
+works: the scheduled jobs (cron), the alert queue, recent failed alerts, who receives alerts,
+M-Pesa, SMS, WhatsApp, email and backups. **Red** needs action now, **amber** is worth a look.
+A number on the menu item means something needs attention. If something stays red, contact
+OKJTechnologies.
+
+## 9. Good habits
 
 - Update stock when plants are sold at the nursery, so the website doesn't sell what's gone.
 - Check **Payments to check** and **Quote requests** every morning.
 - SMS costs about KSh 1 each, paid to Africa's Talking: keep the account topped up.
 - Don't share dashboard logins or the M-Pesa details.
 
-## 9. What OKJTechnologies looks after (SLA 9.2)
+## 10. What OKJTechnologies looks after (SLA 9.2)
 
 Fixing faults, up to 2 hours a month of small content updates, checking that the site,
 checkout and alerts work, weekly backups (kept 4 weeks), security updates, and the monthly

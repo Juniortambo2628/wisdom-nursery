@@ -51,3 +51,16 @@ it('labels plant availability for the shop list', function () {
         ->and(Plant::factory()->outOfStock()->create()->availabilityLabel())->toBe('Out of stock')
         ->and(Plant::factory()->create(['stock_qty' => 0])->isBuyable())->toBeFalse();
 });
+
+it('fills the launch guides as drafts without overwriting edited ones', function () {
+    $this->seed(\Database\Seeders\CategorySeeder::class);
+    $this->seed(\Database\Seeders\PostSeeder::class);
+    Post::where('slug', 'repotting-without-stress')->update(['body' => '<p>Written by the team.</p>']);
+
+    $this->seed(\Database\Seeders\GuideDraftsSeeder::class);
+
+    expect(Post::where('slug', 'how-to-plant-a-tree-seedling')->value('title'))->toBe('How to plant a tree seedling')
+        ->and(Post::where('slug', 'how-to-plant-a-tree-seedling')->value('body'))->toContain('graft joint')
+        ->and(Post::where('slug', 'repotting-without-stress')->value('body'))->toBe('<p>Written by the team.</p>')
+        ->and(Post::published()->count())->toBe(0);
+});

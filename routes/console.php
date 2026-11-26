@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schedule;
 
 /*
@@ -8,6 +9,10 @@ use Illuminate\Support\Facades\Schedule;
  *
  *   * * * * * cd <DEPLOY_PATH>/current && php artisan schedule:run >> /dev/null 2>&1
  */
+
+// Heartbeat: proves the cron job runs (Settings → Site health).
+Schedule::call(fn () => Cache::forever('health:scheduler', now()->toIso8601String()))
+    ->everyMinute()->name('heartbeat');
 
 // Queue: alerts, SMS and emails. Each run stops when the queue is empty or
 // after 50s, so it never overlaps the next minute's run.
