@@ -44,3 +44,4 @@ Route::post('/plants/{plant:slug}/notify', [StockAlertController::class, 'store'
 
 Route::get('/robots.txt', [\App\Http\Controllers\SeoController::class, 'robots']);
 Route::get('/sitemap.xml', [\App\Http\Controllers\SeoController::class, 'sitemap'])->name('sitemap');
+Route::get('/health', \App\Http\Controllers\HealthController::class)->middleware('throttle:30,1')->name('health');

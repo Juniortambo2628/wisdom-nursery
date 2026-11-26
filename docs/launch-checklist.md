@@ -42,10 +42,14 @@ Site settings (or Content), on **staging first** so the client can check it ther
 - [ ] Select PHP Version: **8.4** for the domain, same extensions as staging
 - [ ] SSL/TLS Status → Run AutoSSL; `nursery.` and `www.nursery.` both valid
 - [ ] MySQL: new database `<user>_nursery` and user `<user>_nurseryprd` (separate from staging and from Wisdom Capital), ALL PRIVILEGES
-- [ ] `~/nursery.wisdomcapital.co.ke/shared/.env` from the staging one, changing:
-  `APP_ENV=production`, new `APP_KEY`, `APP_URL=https://nursery.wisdomcapital.co.ke`, the production database, `CACHE_PREFIX=wn_`,
-  `MPESA_ENV=production` + live keys + `MPESA_TYPE`/`MPESA_SHORTCODE`/`MPESA_PARTY_B`, a **new** `MPESA_CALLBACK_SECRET`,
-  `AT_ENV=production` + live username/key/sender ID, real `MAIL_*`, `NURSERY_WHATSAPP`, `GA4_MEASUREMENT_ID`, `BACKUP_NOTIFY_EMAIL`. Then `chmod 600 .env`
+- [ ] Production `.env` (cPanel Terminal). The script copies staging's, switches to production, generates a new
+  `APP_KEY` and `MPESA_CALLBACK_SECRET`, and asks for the production database details:
+  ```bash
+  bash ~/staging.nursery.wisdomcapital.co.ke/current/deploy/make-production-env.sh
+  ```
+  Then edit `~/nursery.wisdomcapital.co.ke/shared/.env` for the live values: `MPESA_ENV=production` + live keys +
+  `MPESA_TYPE`/`MPESA_SHORTCODE`/`MPESA_PARTY_B`, `AT_ENV=production` + live username/key/sender ID, real `MAIL_*`,
+  `GA4_MEASUREMENT_ID`, `BACKUP_NOTIFY_EMAIL`. (Live keys can go in on launch day; it runs on sandbox until then.)
 - [ ] Cron Jobs: a second entry, every minute:
   `cd /home/<user>/nursery.wisdomcapital.co.ke/current && php artisan schedule:run >> /dev/null 2>&1`
 
@@ -57,11 +61,18 @@ Site settings (or Content), on **staging first** so the client can check it ther
 
 ## 5. First production run
 
-- [ ] `cd ~/nursery.wisdomcapital.co.ke/current && php artisan make:filament-user` for each staff member
-- [ ] Copy the content confirmed on staging: Site settings, delivery areas, alert recipients, team, testimonials, stock counts
-  (production starts from the same seeded catalogue and photos; only staff edits need re-entering)
+Content is entered **once, on staging**, where the client approves it. At launch it is copied across:
+
+- [ ] Copy staging's content and uploaded photos to production and clear the test orders (cPanel Terminal):
+  ```bash
+  bash ~/nursery.wisdomcapital.co.ke/current/deploy/promote-staging-content.sh
+  ```
+  It backs up production first, copies the staging database and photos, deletes test orders, payments, quotes,
+  messages and logs, and refreshes caches. Staging is not changed. It refuses to run once production has paid orders.
+  The first real order becomes WN-1001. Staff logins come across too.
 - [ ] Settings → Alert recipients → **Send test** for each person; check Settings → Alert log shows `sent`
 - [ ] Mail test: `php artisan tinker --execute="Mail::raw('Production mail test', fn (\$m) => \$m->to('you@example.com')->subject('Test'));"`
+- [ ] Settings → **Site health**: all green
 
 ## 6. Live M-Pesa test (proposal 07, week 3)
 
@@ -84,6 +95,18 @@ The same flow already passed on staging in the Daraja sandbox with Africa's Talk
 - [ ] Every page at 375px on a real Android phone and an iPhone: home, plants, a plant, cart, checkout, contact
 - [ ] Dashboard → Settings → **Site health** is all green (cron, queue, alerts, M-Pesa live, SMS live, email, backups)
 - [ ] Backups: next day, `ls ~/nursery.wisdomcapital.co.ke/shared/storage/app/private/*/` shows a database backup
+
+## 7b. Uptime monitoring (SLA 9.2 and 9.4)
+
+`/health` answers **200 `{"status":"ok"}`** only when the database responds *and* the cron job
+ran in the last 10 minutes; otherwise **503**. So one monitor catches the site being down, the
+database failing, and the scheduled jobs (alerts, backups, M-Pesa checks) silently stopping.
+
+- [ ] uptimerobot.com (free) → **New monitor** → type **HTTP(s)**, URL `https://nursery.wisdomcapital.co.ke/health`,
+  interval 5 minutes → alert contacts: your phone (app or SMS) and email
+- [ ] Optional: a **Keyword** monitor on `https://nursery.wisdomcapital.co.ke/` for the word `Every plant gets` (catches a broken home page)
+- [ ] The same for staging while it is in use: `https://staging.nursery.wisdomcapital.co.ke/health`
+- [ ] Monthly report: UptimeRobot's uptime percentage goes into the monthly visitor report (SLA 9.4 target: 99%)
 
 ## 8. Link from wisdomcapital.co.ke (proposal 08, "included")
 
