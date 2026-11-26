@@ -25,6 +25,8 @@ Likely `{{DOMAIN}} = nursery.wisdomcapital.co.ke`; to be confirmed.
 
 ## Notes
 
+- **Sandbox end-to-end passed on staging (26 Nov, Kevin):** Daraja sandbox STK → callback → order paid, alerts through the queue to the Africa's Talking simulator; cron and `backup:run --only-db` work on the server.
+
 - **Week 3 (24 Nov):** back-in-stock SMS for "Notify me", WhatsApp catalogue export, 375px QA fixes, `docs/launch-checklist.md`, `docs/handover.md`. Waiting on client content and live keys for the live M-Pesa test and launch.
 
 - **Renamed to Wisdom Propagation Nursery** (Aldo, 24 Nov). Domain unchanged.
@@ -108,5 +110,5 @@ Likely `{{DOMAIN}} = nursery.wisdomcapital.co.ke`; to be confirmed.
 ## Milestones
 
 - [x] Week 1: pipeline + staging live; design system; public pages; importer
-- [~] Week 2: cart, checkout, M-Pesa sandbox, quotes, alerts, Filament → built and tested 24 Nov; needs Daraja sandbox keys and Africa's Talking keys on staging for an end-to-end run
+- [x] Week 2: cart, checkout, M-Pesa sandbox, quotes, alerts, Filament; sandbox end-to-end passed on staging 26 Nov
 - [~] Week 3: tests (65), 375px QA, handover and launch checklist done; live M-Pesa test, content swap and production launch wait on client content and live keys

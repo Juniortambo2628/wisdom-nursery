@@ -65,6 +65,9 @@ Site settings (or Content), on **staging first** so the client can check it ther
 
 ## 6. Live M-Pesa test (proposal 07, week 3)
 
+The same flow already passed on staging in the Daraja sandbox with Africa's Talking's simulator (26 Nov); this repeats it with real money and real SMS.
+
+
 - [ ] Temporarily set one plant to KSh 10 (or add a "Test plant", hidden after)
 - [ ] Buy it on a phone with collection: STK prompt arrives → enter PIN → page switches to **Payment received** with the receipt
 - [ ] Check: order is **Paid** in the dashboard, stock went down by one, team got SMS/WhatsApp/email, customer got the confirmation SMS

@@ -62,6 +62,10 @@ will not enable SSH on this account, the options in order of preference:
   handler block into the document root's `.htaccess`, the next deploy replaces it; set the PHP version with
   **Select PHP Version** (CloudLinux), which does not use `.htaccess`.
 
+## Verified on staging
+
+- 26 Nov: deploy pipeline, cron (`schedule:run`), queue, database backups (`mysqldump` available), Daraja sandbox STK and callback, Africa's Talking sandbox SMS.
+
 ## Open items
 
 - [x] SSH access and port confirmed (24 Nov)
