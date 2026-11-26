@@ -23,7 +23,7 @@ Site settings (or Content), on **staging first** so the client can check it ther
 - [ ] Stock counts for every plant, especially the four grafted fruit varieties (currently 0)
 - [ ] Remaining catalogue items: the rest of the grafted fruit list, orange Pixies, vegetable seedlings, with prices
 - [ ] Real customer testimonials (the old database's ones were test data and are not used)
-- [ ] The original logo file (the header shows a text placeholder)
+- [x] Logo: final light and dark versions received 26 Nov and in use (header, footer, dashboard, favicon, app icons, share image, QR labels)
 - [ ] Six grower guides: final copy (Content → Grower tips; they are drafts until "Publish on" is set)
 - [ ] M-Pesa till or paybill number (Site settings → Ordering) and the alert recipients' phones and emails (Settings → Alert recipients)
 

@@ -28,7 +28,7 @@ phone. Where we suggest wording, reply **"approved"** or send corrections.
 - [ ] **Our story**: two or three sentences, who started it, where, and what makes your plants different
 - [ ] **Team**: name, role and a portrait (in uniform, plain background, phone camera is fine) for each person to show
 - [ ] **One or two real customer quotes** with their name and town, if you have customers happy to be quoted
-- [ ] **Logo**: the original file (PNG or SVG), since the copy on wisdomcapital.co.ke no longer loads
+- [x] **Logo**: received 26 Nov (light and dark versions), nothing more needed
 
 ## 4. Suggested wording: reply "approved" or correct
 
