@@ -1,10 +1,12 @@
 @props(['dark' => false])
-{{-- Placeholder until the original logo file arrives (proposal 06). --}}
+{{-- Three-tree mark from the client's logo, with the name set in the site's type. --}}
 <a href="{{ route('home') }}" {{ $attributes->class([
-    'inline-flex min-h-10 items-center gap-2 rounded-lg border border-dashed px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] sm:px-4',
-    'border-forest/30 text-forest' => ! $dark,
-    'border-white/30 text-white' => $dark,
-]) }}>
-    <x-glyph name="leaf" class="h-4 w-4" />
-    <span>Wisdom Propagation Nursery</span>
+    'inline-flex min-h-10 shrink-0 items-center gap-2.5 sm:gap-3',
+    'text-forest' => ! $dark,
+    'text-white' => $dark,
+]) }} aria-label="Wisdom Propagation Nursery, home">
+    <img src="{{ asset($dark ? 'images/logo-mark-white.png' : 'images/logo-mark.png') }}" alt="" width="34" height="40" class="h-9 w-auto sm:h-10">
+    <span class="font-display text-[15px] leading-[1.05] sm:text-lg">
+        Wisdom<br class="sm:hidden"> Propagation<br> Nursery
+    </span>
 </a>

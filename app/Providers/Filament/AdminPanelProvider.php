@@ -28,6 +28,10 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->brandName('Wisdom Propagation Nursery')
+            ->brandLogo(fn () => view('filament.brand', ['dark' => false]))
+            ->darkModeBrandLogo(fn () => view('filament.brand', ['dark' => true]))
+            ->brandLogoHeight('2.5rem')
+            ->favicon(asset('favicon-32x32.png'))
             ->colors([
                 'primary' => Color::hex('#2D6A3E'), // leaf
                 'success' => Color::hex('#3D9B35'),

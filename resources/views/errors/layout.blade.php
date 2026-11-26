@@ -7,12 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
     <title>@yield('title') · Wisdom Propagation Nursery</title>
+    @include('partials.head-icons')
     @vite(['resources/css/app.css'])
 </head>
 <body class="flex min-h-screen flex-col bg-mist">
     <header class="container-page flex h-[72px] items-center lg:h-24">
-        <a href="{{ url('/') }}" class="inline-flex min-h-10 items-center gap-2 rounded-lg border border-dashed border-forest/30 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-forest sm:px-4">
-            Wisdom Propagation Nursery
+        <a href="{{ url('/') }}" class="inline-flex min-h-10 items-center gap-3 text-forest" aria-label="Wisdom Propagation Nursery, home">
+            <img src="{{ asset('images/logo-mark.png') }}" alt="" width="34" height="40" class="h-10 w-auto">
+            <span class="font-display text-lg leading-[1.05]">Wisdom Propagation<br>Nursery</span>
         </a>
     </header>
     <main class="container-page flex flex-1 items-center py-16">

@@ -28,6 +28,8 @@ class QrLabels
             'qr' => $qr->render($url),
         ]);
 
-        return Pdf::loadView('pdf.qr-labels', ['labels' => $labels])->setPaper('a4')->output();
+        $mark = 'data:image/png;base64,'.base64_encode(file_get_contents(public_path('images/logo-mark.png')));
+
+        return Pdf::loadView('pdf.qr-labels', ['labels' => $labels, 'mark' => $mark])->setPaper('a4')->output();
     }
 }

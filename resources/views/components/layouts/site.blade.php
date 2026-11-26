@@ -35,9 +35,9 @@
     <meta property="og:title" content="{{ $pageTitle }}">
     <meta property="og:description" content="{{ $metaDescription }}">
     <meta property="og:url" content="{{ url()->current() }}">
-    @if ($ogImage)
-        <meta property="og:image" content="{{ $ogImage }}">
-    @endif
+    <meta property="og:image" content="{{ $ogImage ?? asset('images/og-default.jpg') }}">
+    <meta name="twitter:card" content="summary_large_image">
+    @include('partials.head-icons')
     <meta name="theme-color" content="#123524">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')
