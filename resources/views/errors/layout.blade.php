@@ -12,12 +12,8 @@
 </head>
 <body class="flex min-h-screen flex-col bg-mist">
     <header class="container-page flex h-[72px] items-center lg:h-24">
-        <a href="{{ url('/') }}" class="inline-flex min-h-10 items-center gap-3 text-forest" aria-label="Wisdom Propagation Nursery, home">
-            <img src="{{ asset('images/logo-mark.png') }}" alt="" width="40" height="40" class="h-11 w-11">
-            <span class="flex flex-col">
-                <span class="font-display text-lg leading-tight">Wisdom Propagation</span>
-                <span class="mt-0.5 text-[11px] font-medium uppercase leading-none tracking-[0.42em] opacity-80">Nursery</span>
-            </span>
+        <a href="{{ url('/') }}" class="inline-flex min-h-10 items-center" aria-label="Wisdom Propagation Nursery, home">
+            <img src="{{ asset('images/logo-horizontal.png') }}" alt="Wisdom Propagation Nursery" width="541" height="168" class="h-14 w-auto">
         </a>
     </header>
     <main class="container-page flex flex-1 items-center py-16">
