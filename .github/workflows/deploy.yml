@@ -130,6 +130,13 @@ jobs:
             IdentitiesOnly yes
             StrictHostKeyChecking yes
             ServerAliveInterval 30
+            ConnectTimeout 30
+            ConnectionAttempts 3
+            # One shared connection for every step: shared-host firewalls can
+            # throttle several new SSH connections from the same address.
+            ControlMaster auto
+            ControlPath ~/.ssh/cm-%r@%h-%p
+            ControlPersist 10m
           EOF
 
       - name: Check the server connection

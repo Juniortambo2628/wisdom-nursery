@@ -10,8 +10,9 @@ class WhatsApp
 {
     public static function link(?string $text = null): ?string
     {
-        $number = preg_replace('/\D/', '', (string) config('nursery.whatsapp'));
-        if ($number === '') {
+        // Only a real Kenyan mobile number (2547XXXXXXXX / 2541XXXXXXXX); a placeholder hides the links.
+        $number = Phone::normalise((string) config('nursery.whatsapp'));
+        if ($number === null) {
             return null;
         }
 

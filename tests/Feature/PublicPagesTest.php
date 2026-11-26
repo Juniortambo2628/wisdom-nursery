@@ -75,3 +75,10 @@ it('sends baseline security headers', function () {
         ->assertHeader('X-Frame-Options', 'SAMEORIGIN')
         ->assertHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
 });
+
+it('hides WhatsApp links while the number is a placeholder', function () {
+    config()->set('nursery.whatsapp', '2547XXXXXXXX');
+    expect(\App\Support\WhatsApp::link('Hi'))->toBeNull();
+    config()->set('nursery.whatsapp', '0712 345 678');
+    expect(\App\Support\WhatsApp::link('Hi'))->toBe('https://wa.me/254712345678?text=Hi');
+});
