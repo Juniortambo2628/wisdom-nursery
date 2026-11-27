@@ -12,7 +12,7 @@
         </x-slot:action>
     </x-section-heading>
     @if ($gallery->isEmpty())
-        <p class="mt-8 text-ink/60">Photos are on their way.</p>
+        <p class="mt-8 text-ink/70">Photos are on their way.</p>
     @else
         <ul class="mt-10 grid grid-flow-dense auto-rows-[140px] grid-cols-2 gap-4 sm:auto-rows-[200px] lg:auto-rows-[220px] lg:grid-cols-4">
             @foreach ($gallery as $image)

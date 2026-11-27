@@ -4,7 +4,7 @@
         <div>
             <h2 class="text-3xl sm:text-4xl lg:text-5xl">Come and see us</h2>
             <ul class="mt-6 space-y-3 text-ink/80">
-                <li class="flex gap-3"><x-glyph name="pin" class="mt-0.5 h-5 w-5 shrink-0 text-leaf" /> <span>{{ setting('address') }}@if (setting('directions'))<br><span class="text-sm text-ink/60">{{ setting('directions') }}</span>@endif</span></li>
+                <li class="flex gap-3"><x-glyph name="pin" class="mt-0.5 h-5 w-5 shrink-0 text-leaf" /> <span>{{ setting('address') }}@if (setting('directions'))<br><span class="text-sm text-ink/70">{{ setting('directions') }}</span>@endif</span></li>
                 <li class="flex gap-3"><x-glyph name="clock" class="mt-0.5 h-5 w-5 shrink-0 text-leaf" /> {{ setting('hours') }}</li>
                 <li class="flex gap-3"><x-glyph name="phone" class="mt-0.5 h-5 w-5 shrink-0 text-leaf" /> <span><x-phone-numbers separator="<br>" link-class="hover:text-forest" /><br>{{ setting('email') }}</span></li>
             </ul>

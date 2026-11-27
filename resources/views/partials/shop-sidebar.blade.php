@@ -1,12 +1,12 @@
 {{-- Our plants: sticky cart + quote list. Expects $cartLines, $cartWhatsapp, $quoteLines. --}}
-<aside class="space-y-5 lg:sticky lg:top-32" aria-label="Your cart and quote list">
+<aside class="space-y-5 self-start lg:sticky lg:top-32 lg:max-h-[calc(100vh-9rem)] lg:overflow-y-auto" aria-label="Your cart and quote list">
     <section class="card overflow-hidden border-t-4 border-leaf p-6">
         <div class="flex items-baseline justify-between">
             <h2 class="text-2xl">Your cart</h2>
-            <span class="text-sm text-ink/60">{{ $count = $cartLines->sum('qty') }} {{ Str::plural('item', $count) }}</span>
+            <span class="text-sm text-ink/70">{{ $count = $cartLines->sum('qty') }} {{ Str::plural('item', $count) }}</span>
         </div>
         @if ($cartLines->isEmpty())
-            <p class="mt-4 text-sm text-ink/60">Your cart is empty. Add plants from the list to pay with M-Pesa.</p>
+            <p class="mt-4 text-sm text-ink/70">Your cart is empty. Add plants from the list to pay with M-Pesa.</p>
         @else
             <ul class="mt-4 divide-y divide-ink/10 text-[15px]">
                 @foreach ($cartLines as $line)
@@ -21,15 +21,15 @@
             </div>
             <a href="{{ route('checkout.show') }}" class="btn-primary mt-5 w-full">Checkout · <x-mpesa-badge /></a>
             @if ($cartWhatsapp)
-                <a href="{{ $cartWhatsapp }}" target="_blank" rel="noopener" class="mt-1 block py-2.5 text-center text-sm text-ink/60 hover:text-leaf">or send this cart on WhatsApp</a>
+                <a href="{{ $cartWhatsapp }}" target="_blank" rel="noopener" class="mt-1 block py-2.5 text-center text-sm text-ink/70 hover:text-leaf">or send this cart on WhatsApp</a>
             @endif
         @endif
     </section>
 
     <section class="rounded-card bg-sage p-6 ring-1 ring-ink/5">
-        <h2 class="text-2xl">Quote list <span class="font-sans text-sm text-ink/60">for bulk orders</span></h2>
+        <h2 class="text-2xl">Quote list <span class="font-sans text-sm text-ink/70">for bulk orders</span></h2>
         @if ($quoteLines->isEmpty())
-            <p class="mt-3 text-sm text-ink/60">Buying in bulk? Add plants to a quote list and we'll reply with prices and a ready date.</p>
+            <p class="mt-3 text-sm text-ink/70">Buying in bulk? Add plants to a quote list and we'll reply with prices and a ready date.</p>
         @else
             <ul class="mt-4 space-y-3">
                 @foreach ($quoteLines as $line)

@@ -8,7 +8,7 @@
                 <x-photo :src="$line->plant?->primaryImage?->url()" label="Img" class="h-14 w-14 shrink-0 rounded-xl text-[9px]" />
                 <div class="min-w-0 flex-1">
                     <p class="font-semibold">{{ $line->label }}</p>
-                    <p class="text-sm text-ink/60">Qty {{ $line->qty }}
+                    <p class="text-sm text-ink/70">Qty {{ $line->qty }}
                         @if ($line->plant?->isComingSoon()) · <span class="text-clay">{{ $line->plant->availabilityLabel() }}</span>@endif
                     </p>
                 </div>
@@ -17,7 +17,7 @@
         @endforeach
     </ul>
     <div class="space-y-3 border-t border-ink/10 pt-5">
-        <div class="flex justify-between text-ink/70"><span>{{ $fulfilmentLabel }}</span><span>{{ $fee ? ksh($fee) : 'Free' }}</span></div>
+        <div class="flex justify-between text-ink/80"><span>{{ $fulfilmentLabel }}</span><span>{{ $fee ? ksh($fee) : 'Free' }}</span></div>
         <div class="flex justify-between text-xl font-semibold"><span>Total</span><span class="text-forest">{{ ksh($total) }}</span></div>
     </div>
     {{ $slot }}

@@ -18,7 +18,7 @@
     /* Page container: full width with 16px gutters on phones, 1440px / 72px side padding on desktop. */
     .container-page { @apply mx-auto w-full max-w-page px-4 sm:px-8 lg:px-gutter; }
 
-    .eyebrow { @apply text-xs font-semibold uppercase tracking-[0.14em] text-fern; }
+    .eyebrow { @apply text-[13px] font-bold uppercase tracking-[0.14em] text-leaf; }
 
     .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-leaf disabled:cursor-not-allowed disabled:opacity-60; }
     .btn-primary { @apply btn bg-leaf text-white hover:bg-forest; }

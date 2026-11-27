@@ -89,7 +89,8 @@ it('fills the client\'s details without overwriting what staff changed', functio
         ->and(Setting::get('image_story_main'))->toBe('site/nursery-48.webp')
         ->and(\App\Models\TeamMember::where('name', '[Name]')->count())->toBe(0)
         ->and(\App\Models\TeamMember::where('role', 'like', 'In-charge, %')->count())->toBe(5)
-        ->and(\App\Models\TeamMember::count())->toBe(14);
+        ->and(\App\Models\TeamMember::count())->toBe(20) // 14 from the staff list + 6 more in the team photos
+        ->and(\App\Models\TeamMember::whereNull('photo_path')->pluck('name')->all())->toBe(['Jackline Nduku']);
     \Illuminate\Support\Facades\Storage::disk('public')->assertExists('site/nursery-36.webp');
 });
 

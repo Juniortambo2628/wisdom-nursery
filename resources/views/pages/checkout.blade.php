@@ -26,17 +26,17 @@
                             <label class="{{ $card }}">
                                 <input type="radio" name="fulfilment" value="collect" class="sr-only" x-model="fulfilment">
                                 <span class="block font-semibold">Collect at the nursery</span>
-                                <span class="mt-1 block text-sm text-ink/60">Free · {{ setting('collection_note') }}</span>
+                                <span class="mt-1 block text-sm text-ink/70">Free · {{ setting('collection_note') }}</span>
                             </label>
                             @if ($areas->isNotEmpty())
                                 <label class="{{ $card }}">
                                     <input type="radio" name="fulfilment" value="delivery" class="sr-only" x-model="fulfilment">
                                     <span class="block font-semibold">Deliver to me</span>
-                                    <span class="mt-1 block text-sm text-ink/60">From {{ ksh($areas->min('fee')) }} · {{ $areas->pluck('name')->take(3)->implode(', ') }}{{ $areas->count() > 3 ? '…' : '' }}</span>
+                                    <span class="mt-1 block text-sm text-ink/70">From {{ ksh($areas->min('fee')) }} · {{ $areas->pluck('name')->take(3)->implode(', ') }}{{ $areas->count() > 3 ? '…' : '' }}</span>
                                 </label>
                             @else
-                                <div class="rounded-2xl border-2 border-dashed border-ink/10 p-4 text-sm text-ink/60">
-                                    <span class="block font-semibold text-ink/70">Deliver to me</span>
+                                <div class="rounded-2xl border-2 border-dashed border-ink/10 p-4 text-sm text-ink/70">
+                                    <span class="block font-semibold text-ink/80">Deliver to me</span>
                                     Ask us on WhatsApp about delivery to your area.
                                 </div>
                             @endif
@@ -67,13 +67,13 @@
                         <x-field name="mpesa_phone" label="M-Pesa phone number" type="tel" required placeholder="07XX XXX XXX" class="flex-1" x-model="mpesa" @input="mpesaTouched = true" />
                         <button class="btn-mpesa text-base sm:mt-7 sm:min-w-44" x-text="'Pay ' + ksh(total)">Pay {{ ksh($subtotal) }}</button>
                     </div>
-                    <p class="mt-4 text-sm text-ink/60">You'll get an M-Pesa prompt on this phone. Enter your PIN to pay. No card needed.</p>
+                    <p class="mt-4 text-sm text-ink/70">You'll get an M-Pesa prompt on this phone. Enter your PIN to pay. No card needed.</p>
                 </section>
             </div>
 
             <x-order-summary :lines="$lines" :total="$subtotal" class="self-start lg:sticky lg:top-32">
-                <p class="mt-2 text-right text-sm text-ink/60" x-cloak x-show="fee > 0">Delivery: <span x-text="ksh(fee)"></span> · Total <span class="font-semibold text-forest" x-text="ksh(total)"></span></p>
-                <p class="mt-6 rounded-xl bg-mist p-4 text-sm text-ink/70">Buying 100 or more? <a href="{{ route('quote.show') }}" class="font-semibold text-forest">Request a bulk quote</a> for better prices.</p>
+                <p class="mt-2 text-right text-sm text-ink/70" x-cloak x-show="fee > 0">Delivery: <span x-text="ksh(fee)"></span> · Total <span class="font-semibold text-forest" x-text="ksh(total)"></span></p>
+                <p class="mt-6 rounded-xl bg-mist p-4 text-sm text-ink/80">Buying 100 or more? <a href="{{ route('quote.show') }}" class="font-semibold text-forest">Request a bulk quote</a> for better prices.</p>
             </x-order-summary>
         </form>
     </div>

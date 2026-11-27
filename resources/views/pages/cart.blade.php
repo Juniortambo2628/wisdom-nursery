@@ -6,7 +6,7 @@
         @if ($lines->isEmpty())
             <div class="card mt-8 max-w-xl p-8">
                 <p class="font-display text-2xl">Your cart is empty.</p>
-                <p class="mt-2 text-ink/70">Pick plants from the list and pay with M-Pesa, or send us a list for a bulk quote.</p>
+                <p class="mt-2 text-ink/80">Pick plants from the list and pay with M-Pesa, or send us a list for a bulk quote.</p>
                 <div class="mt-6 flex flex-wrap gap-3">
                     <a href="{{ route('plants.index') }}" class="btn-primary">Shop plants</a>
                     <a href="{{ route('quote.show') }}" class="btn-outline">Request a quote</a>
@@ -20,7 +20,7 @@
                             <x-photo :src="$line->plant->primaryImage?->url()" label="Img" class="h-16 w-16 shrink-0 rounded-xl text-[9px]" />
                             <div class="min-w-0 flex-1">
                                 <a href="{{ route('plants.show', $line->plant) }}" class="font-semibold hover:text-leaf">{{ $line->label }}</a>
-                                <p class="text-sm text-ink/60">{{ ksh($line->unitPrice) }} each
+                                <p class="text-sm text-ink/70">{{ ksh($line->unitPrice) }} each
                                     @if ($line->plant->isComingSoon()) · <span class="text-clay">{{ $line->plant->availabilityLabel() }}</span>@endif
                                 </p>
                             </div>
@@ -37,12 +37,12 @@
                 </section>
                 <section class="card self-start p-6 sm:p-8">
                     <div class="flex justify-between text-xl font-semibold"><span>Subtotal</span><span class="text-forest">{{ ksh($subtotal) }}</span></div>
-                    <p class="mt-2 text-sm text-ink/60">Collection is free. Delivery fees are shown at the next step.</p>
+                    <p class="mt-2 text-sm text-ink/70">Collection is free. Delivery fees are shown at the next step.</p>
                     <a href="{{ route('checkout.show') }}" class="btn-primary mt-6 w-full">Checkout · <x-mpesa-badge /></a>
                     @if ($whatsapp)
-                        <a href="{{ $whatsapp }}" target="_blank" rel="noopener" class="mt-1 block py-2.5 text-center text-sm text-ink/60 hover:text-leaf">or send this cart on WhatsApp</a>
+                        <a href="{{ $whatsapp }}" target="_blank" rel="noopener" class="mt-1 block py-2.5 text-center text-sm text-ink/70 hover:text-leaf">or send this cart on WhatsApp</a>
                     @endif
-                    <p class="mt-6 rounded-xl bg-mist p-4 text-sm text-ink/70">Buying 100 or more? <a href="{{ route('quote.show') }}" class="font-semibold text-forest">Request a bulk quote</a> for better prices.</p>
+                    <p class="mt-6 rounded-xl bg-mist p-4 text-sm text-ink/80">Buying 100 or more? <a href="{{ route('quote.show') }}" class="font-semibold text-forest">Request a bulk quote</a> for better prices.</p>
                 </section>
             </div>
         @endif

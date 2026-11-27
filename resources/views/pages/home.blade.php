@@ -38,7 +38,7 @@
         <dl class="grid grid-cols-2 overflow-hidden rounded-card bg-white shadow-lift ring-1 ring-ink/5 lg:grid-cols-4">
             @foreach (range(1, 4) as $i)
                 <div class="flex flex-col-reverse border-ink/10 p-5 sm:p-7 [&:nth-child(odd)]:border-r lg:[&:not(:last-child)]:border-r [&:nth-child(-n+2)]:border-b lg:[&:nth-child(-n+2)]:border-b-0">
-                    <dt class="mt-1 text-sm text-ink/60">{{ setting("stat_{$i}_label") }}</dt>
+                    <dt class="mt-1 text-sm text-ink/70">{{ setting("stat_{$i}_label") }}</dt>
                     <dd class="font-display text-3xl text-forest sm:text-4xl">{{ setting("stat_{$i}_value") }}</dd>
                 </div>
             @endforeach
@@ -56,7 +56,7 @@
         <div>
             <p class="eyebrow">Our story</p>
             <h2 class="mt-4 text-3xl sm:text-4xl lg:text-5xl">{{ setting('story_title') }}</h2>
-            <p class="mt-5 max-w-xl text-lg text-ink/70">{{ setting('story_text') }}</p>
+            <p class="mt-5 max-w-xl text-lg text-ink/80">{{ setting('story_text') }}</p>
             <a href="{{ route('about') }}" class="btn-outline mt-8 border-forest text-forest">Meet the team</a>
         </div>
     </section>
@@ -73,11 +73,11 @@
                         <x-photo :src="$category->image_path ? Storage::disk('public')->url($category->image_path) : null" :label="$category->name" class="aspect-[4/3] w-full rounded-image transition group-hover:opacity-90" />
                         <div class="mt-4 flex items-baseline justify-between gap-3">
                             <h3 class="text-xl group-hover:text-leaf">{{ $category->name }}</h3>
-                            <span class="shrink-0 text-sm text-ink/60">
+                            <span class="shrink-0 text-sm text-ink/70">
                                 @if ($category->plants_min_price) From {{ ksh($category->plants_min_price) }} @else Ask us @endif
                             </span>
                         </div>
-                        <p class="mt-1.5 text-sm text-ink/60">{{ $category->summary }}</p>
+                        <p class="mt-1.5 text-sm text-ink/70">{{ $category->summary }}</p>
                     </a>
                 @endforeach
             </div>
@@ -88,7 +88,7 @@
     @if ($popular->isNotEmpty())
         <section class="container-page py-20 lg:py-28">
             <x-section-heading eyebrow="Shop online" title="Popular this season">
-                <x-slot:action><p class="flex items-center gap-2 text-sm text-ink/70"><x-mpesa-badge /> Checkout in under a minute</p></x-slot:action>
+                <x-slot:action><p class="flex items-center gap-2 text-sm text-ink/80"><x-mpesa-badge /> Checkout in under a minute</p></x-slot:action>
             </x-section-heading>
             <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                 @foreach ($popular as $plant)
@@ -121,7 +121,7 @@
             <div>
                 <p class="eyebrow">Farms, schools, estates &amp; landscapers</p>
                 <h2 class="mt-4 text-3xl sm:text-4xl lg:text-5xl">Planting 1,000 trees or more? Get a quote.</h2>
-                <p class="mt-5 max-w-lg text-lg text-ink/70">Tell us what you need and where. We reply with prices and a ready date, usually the same day. We can also raise seedlings from your own seed.</p>
+                <p class="mt-5 max-w-lg text-lg text-ink/80">Tell us what you need and where. We reply with prices and a ready date, usually the same day. We can also raise seedlings from your own seed.</p>
                 <ul class="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-forest">
                     <li class="flex items-center gap-1.5"><x-glyph name="check" class="h-4 w-4" /> Contract propagation</li>
                     <li class="flex items-center gap-1.5"><x-glyph name="check" class="h-4 w-4" /> Delivery in crates</li>
@@ -154,7 +154,7 @@
                 <figure>
                     <span class="font-display text-6xl leading-none text-leaf" aria-hidden="true">“</span>
                     <blockquote class="mt-2 font-display text-2xl text-forest sm:text-3xl">{{ $testimonial->quote }}</blockquote>
-                    <figcaption class="mt-5 text-sm text-ink/70"><strong class="font-semibold text-ink">{{ $testimonial->author }}</strong>@if ($testimonial->context), {{ $testimonial->context }}@endif</figcaption>
+                    <figcaption class="mt-5 text-sm text-ink/80"><strong class="font-semibold text-ink">{{ $testimonial->author }}</strong>@if ($testimonial->context), {{ $testimonial->context }}@endif</figcaption>
                 </figure>
             @endif
             @if ($partners->isNotEmpty())

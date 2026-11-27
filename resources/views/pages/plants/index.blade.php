@@ -1,25 +1,20 @@
 <x-layouts.site title="Our plants" active="plants"
     description="See what's growing at Wisdom Propagation Nursery now, with prices and availability. Buy online with M-Pesa, or request a quote for bulk orders.">
-    <section class="container-page grid items-center gap-10 py-12 lg:grid-cols-2 lg:py-20">
-        <div>
-            <p class="eyebrow">Availability · Updated {{ $updatedAt ? \Illuminate\Support\Carbon::parse($updatedAt)->format('j M Y') : '[date]' }}</p>
-            <h1 class="mt-4 text-5xl sm:text-6xl lg:text-7xl">What's growing now</h1>
-            <p class="mt-5 max-w-lg text-lg text-ink/70">Buy online and pay with M-Pesa, or add large quantities to a quote list and we'll reply with prices and a ready date.</p>
-        </div>
-        @php
-            // A category shows one of its own plants (popular ones first); "All" shows the nursery photo.
-            $heroPlant = $activeCategory ? $plants->first(fn ($p) => $p->primaryImage) : null;
-        @endphp
-        @if ($heroPlant)
-            <x-photo :src="$heroPlant->primaryImage->url()" :label="$heroPlant->name" class="hidden aspect-[2/1] w-full rounded-image-lg sm:flex" />
-        @else
-            <x-photo :src="site_image('image_shop_banner')" :srcset="site_image_srcset('image_shop_banner')" sizes="(min-width: 1024px) 50vw, 100vw" label="Wide photo: rows of seedlings under the shade net" class="hidden aspect-[2/1] w-full rounded-image-lg sm:flex" />
-        @endif
-    </section>
+    @php
+        // A category shows one of its own plants (popular ones first); "All" shows the nursery photo.
+        $heroPlant = $activeCategory ? $plants->first(fn ($p) => $p->primaryImage) : null;
+    @endphp
+    <x-page-hero
+        :eyebrow="'Availability · Updated '.($updatedAt ? \Illuminate\Support\Carbon::parse($updatedAt)->format('j M Y') : '[date]')"
+        :title="$activeCategory ? $activeCategory->name : 'What’s growing now'"
+        :image="$heroPlant ? $heroPlant->primaryImage->url() : site_image('image_shop_banner')"
+        :srcset="$heroPlant ? null : site_image_srcset('image_shop_banner')"
+        intro="Buy online and pay with M-Pesa, or add large quantities to a quote list and we'll reply with prices and a ready date." />
 
-    <section class="container-page grid gap-8 pb-20 lg:grid-cols-[1fr_380px] lg:pb-28">
+    <section class="container-page grid gap-8 pb-20 pt-8 lg:grid-cols-[1fr_380px] lg:pb-28 lg:pt-12">
         <div class="min-w-0">
-            <form method="GET" action="{{ route('plants.index') }}" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            {{-- Categories, search and the grid/list toggle stay under the header while scrolling. --}}
+            <form method="GET" action="{{ route('plants.index') }}" class="sticky top-[72px] z-20 -mx-4 flex flex-col gap-3 border-b border-ink/10 bg-mist/95 px-4 py-3 backdrop-blur sm:-mx-8 sm:px-8 lg:top-24 lg:mx-0 lg:flex-row lg:items-center lg:justify-between lg:gap-4 lg:px-0 lg:py-4">
                 <nav aria-label="Plant categories" class="scrollbar-none -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
                     @php $pill = 'inline-flex min-h-10 shrink-0 items-center rounded-full border px-4 py-2 text-sm transition'; @endphp
                     <a href="{{ route('plants.index', array_filter(['q' => $search, 'view' => $view === 'list' ? 'list' : null])) }}" @class([$pill, 'border-forest bg-forest text-white' => ! $activeCategory, 'border-ink/15 bg-white hover:border-leaf' => $activeCategory]) @if (! $activeCategory) aria-current="page" @endif>All</a>
@@ -43,8 +38,8 @@
                     $toggle = 'grid h-11 w-11 place-items-center rounded-full transition';
                 @endphp
                 <div class="flex shrink-0 rounded-full border border-ink/15 bg-white p-0.5" role="group" aria-label="Show plants as">
-                    <a href="{{ $viewUrl('grid') }}" @class([$toggle, 'bg-forest text-white' => $view === 'grid', 'text-ink/60 hover:text-leaf' => $view !== 'grid']) @if ($view === 'grid') aria-current="true" @endif aria-label="Grid view" title="Grid view"><x-glyph name="grid" class="h-5 w-5" /></a>
-                    <a href="{{ $viewUrl('list') }}" @class([$toggle, 'bg-forest text-white' => $view === 'list', 'text-ink/60 hover:text-leaf' => $view !== 'list']) @if ($view === 'list') aria-current="true" @endif aria-label="List view" title="List view"><x-glyph name="list" class="h-5 w-5" /></a>
+                    <a href="{{ $viewUrl('grid') }}" @class([$toggle, 'bg-forest text-white' => $view === 'grid', 'text-ink/70 hover:text-leaf' => $view !== 'grid']) @if ($view === 'grid') aria-current="true" @endif aria-label="Grid view" title="Grid view"><x-glyph name="grid" class="h-5 w-5" /></a>
+                    <a href="{{ $viewUrl('list') }}" @class([$toggle, 'bg-forest text-white' => $view === 'list', 'text-ink/70 hover:text-leaf' => $view !== 'list']) @if ($view === 'list') aria-current="true" @endif aria-label="List view" title="List view"><x-glyph name="list" class="h-5 w-5" /></a>
                 </div>
                 </div>
             </form>
@@ -52,7 +47,7 @@
             @if ($plants->isEmpty())
                 <div class="card mt-6 p-10 text-center">
                     <p class="font-display text-2xl">No plants found{{ $search ? " for “{$search}”" : '' }}.</p>
-                    <p class="mt-2 text-ink/60">We grow to order. <a href="{{ route('quote.show') }}" class="font-semibold text-leaf underline">Tell us what you need</a>.</p>
+                    <p class="mt-2 text-ink/70">We grow to order. <a href="{{ route('quote.show') }}" class="font-semibold text-leaf underline">Tell us what you need</a>.</p>
                 </div>
             @elseif ($view === 'grid')
                 <ul class="mt-6 grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-3">
@@ -67,7 +62,7 @@
                                     <a href="{{ route('plants.show', $plant) }}" class="hover:text-leaf">{{ $plant->name }}</a>
                                 </h2>
                                 @if ($plant->botanical_name)<p class="truncate text-sm italic text-ink/50">{{ $plant->botanical_name }}</p>@endif
-                                <p class="mt-1 text-sm text-ink/60">{{ $plant->category->name }} · {{ $plant->sold_as->label() }}</p>
+                                <p class="mt-1 text-sm text-ink/70">{{ $plant->category->name }} · {{ $plant->sold_as->label() }}</p>
                                 <p class="mt-3 font-semibold">{{ ksh($plant->price) }}</p>
                                 <div class="mt-auto pt-4 [&>div]:items-stretch">
                                     <x-plant-action :plant="$plant" :in-cart="$cart->has($plant)" :in-quote="$quoteList->has($plant)" />
@@ -79,7 +74,7 @@
             @else
                 <div class="card mt-6 overflow-hidden">
                     <table class="w-full text-left">
-                        <thead class="hidden border-b border-ink/10 text-xs font-semibold uppercase tracking-[0.12em] text-ink/60 md:table-header-group">
+                        <thead class="hidden border-b border-ink/10 text-xs font-semibold uppercase tracking-[0.12em] text-ink/70 md:table-header-group">
                             <tr>
                                 <th scope="col" class="py-4 pl-5 pr-3" colspan="2">Plant</th>
                                 <th scope="col" class="px-3 py-4">Type</th>
@@ -100,7 +95,7 @@
                                     <td class="md:py-4 md:pr-3">
                                         <a href="{{ route('plants.show', $plant) }}" class="-my-2 inline-block py-2.5 font-semibold hover:text-leaf">{{ $plant->name }}</a>
                                         @if ($plant->botanical_name)<p class="text-sm italic text-ink/50">{{ $plant->botanical_name }}</p>@endif
-                                        <p class="text-sm text-ink/60 md:hidden">{{ $plant->category->name }} · {{ $plant->sold_as->label() }}</p>
+                                        <p class="text-sm text-ink/70 md:hidden">{{ $plant->category->name }} · {{ $plant->sold_as->label() }}</p>
                                     </td>
                                     <td class="hidden px-3 py-4 text-ink/80 md:table-cell">{{ $plant->category->name }}</td>
                                     <td class="hidden px-3 py-4 text-ink/80 md:table-cell">{{ $plant->sold_as->label() }}</td>
@@ -118,7 +113,7 @@
                     </table>
                 </div>
             @endif
-            <p class="mt-5 text-ink/70">Don't see it? We grow to order. <a href="{{ route('quote.show') }}" class="font-semibold text-forest underline underline-offset-2">Tell us what you need →</a></p>
+            <p class="mt-5 text-ink/80">Don't see it? We grow to order. <a href="{{ route('quote.show') }}" class="font-semibold text-forest underline underline-offset-2">Tell us what you need →</a></p>
         </div>
 
         @include('partials.shop-sidebar')

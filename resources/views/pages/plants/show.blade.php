@@ -28,7 +28,7 @@
     @endpush
 
     <div class="container-page py-8 lg:py-12">
-        <nav aria-label="Breadcrumb" class="text-sm text-ink/60">
+        <nav aria-label="Breadcrumb" class="text-sm text-ink/70">
             <ol class="flex flex-wrap gap-1.5">
                 <li><a href="{{ route('home') }}" class="hover:text-leaf">Home</a> /</li>
                 <li><a href="{{ route('plants.index') }}" class="hover:text-leaf">Our plants</a> /</li>
@@ -73,15 +73,15 @@
                 </p>
                 <h1 class="mt-3 text-4xl sm:text-5xl lg:text-6xl">{{ $plant->name }}</h1>
                 @if ($plant->botanical_name)
-                    <p class="mt-3 font-display text-xl italic text-ink/70">{{ $plant->botanical_name }}</p>
+                    <p class="mt-3 font-display text-xl italic text-ink/80">{{ $plant->botanical_name }}</p>
                 @endif
                 @if ($plant->description)
-                    <div class="mt-5 max-w-xl text-lg text-ink/70">{!! nl2br(e($plant->description)) !!}</div>
+                    <div class="mt-5 max-w-xl text-lg text-ink/80">{!! nl2br(e($plant->description)) !!}</div>
                 @endif
 
                 <p class="mt-7 flex flex-wrap items-baseline gap-x-3 gap-y-1">
                     <span class="whitespace-nowrap font-display text-4xl text-forest sm:text-5xl">{{ ksh($plant->price) }}</span>
-                    <span class="text-ink/60">{{ $soldAsNoun }}</span>
+                    <span class="text-ink/70">{{ $soldAsNoun }}</span>
                 </p>
 
                 @if ($plant->isBuyable())
@@ -141,7 +141,7 @@
                     <a href="{{ $whatsapp }}" target="_blank" rel="noopener" class="btn mt-3 w-full border border-forest text-base text-forest hover:bg-mist"><x-glyph name="chat" class="h-5 w-5" /> Order this on WhatsApp</a>
                 @endif
 
-                <p class="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-ink/70">
+                <p class="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-ink/80">
                     <x-mpesa-badge /> Pay on your phone <span aria-hidden="true">·</span> Collect, or delivery to {{ setting('delivery_areas_summary', '[areas]') }}
                 </p>
 
@@ -154,7 +154,7 @@
                 @if ($facts)
                     <dl class="mt-7 grid grid-cols-2 gap-x-6 gap-y-5 rounded-card bg-sage/70 p-6">
                         @foreach ($facts as $label => $value)
-                            <div><dt class="text-sm text-ink/60">{{ $label }}</dt><dd class="mt-0.5 font-semibold">{{ $value }}</dd></div>
+                            <div><dt class="text-sm text-ink/70">{{ $label }}</dt><dd class="mt-0.5 font-semibold">{{ $value }}</dd></div>
                         @endforeach
                     </dl>
                 @endif
@@ -166,15 +166,15 @@
         <div class="container-page grid gap-10 md:grid-cols-3">
             <div>
                 <h2 class="text-2xl">Planting &amp; care</h2>
-                <p class="mt-3 text-ink/70">{{ setting('care_text', '[Potting, watering, feeding and common problems.]') }} <a href="{{ route('posts.index') }}" class="font-semibold text-leaf hover:underline">Grower tips</a></p>
+                <p class="mt-3 text-ink/80">{{ setting('care_text', '[Potting, watering, feeding and common problems.]') }} <a href="{{ route('posts.index') }}" class="font-semibold text-leaf hover:underline">Grower tips</a></p>
             </div>
             <div>
                 <h2 class="text-2xl">Delivery &amp; collection</h2>
-                <p class="mt-3 text-ink/70">{{ setting('delivery_text', '[Delivery areas, fees and how long plants keep after collection.]') }}</p>
+                <p class="mt-3 text-ink/80">{{ setting('delivery_text', '[Delivery areas, fees and how long plants keep after collection.]') }}</p>
             </div>
             <div>
                 <h2 class="text-2xl">Questions?</h2>
-                <p class="mt-3 text-ink/70">Our agronomist answers on WhatsApp, {{ setting('agronomist_hours', '[days & hours]') }}.</p>
+                <p class="mt-3 text-ink/80">Our agronomist answers on WhatsApp, {{ setting('agronomist_hours', '[days & hours]') }}.</p>
             </div>
         </div>
     </section>

@@ -13,7 +13,7 @@ it('renders every public page', function (string $url, string $sees) {
     $this->get($url)->assertOk()->assertSee($sees, false);
 })->with([
     'home' => ['/', 'Every plant gets a'],
-    'our plants' => ['/plants', "What's growing now"],
+    'our plants' => ['/plants', 'What’s growing now'],
     'category filter' => ['/plants?category=palms', 'Our plants'],
     'plant page' => ['/plants/swiss-cheese-plant', 'Monstera deliciosa'],
     'about' => ['/about', 'The people behind the plants.'],

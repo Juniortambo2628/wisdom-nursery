@@ -104,7 +104,7 @@
         <div class="mt-auto space-y-3">
             <a href="{{ route('quote.show') }}" class="btn-dark w-full">Request a quote{{ $quoteCount ? " ($quoteCount)" : '' }}</a>
             @if ($phones)
-                <p class="text-center text-sm text-ink/60">Call / WhatsApp<br><x-phone-numbers separator="<br>" link-class="font-semibold text-forest" /></p>
+                <p class="text-center text-sm text-ink/70">Call / WhatsApp<br><x-phone-numbers separator="<br>" link-class="font-semibold text-forest" /></p>
             @endif
         </div>
     </nav>
