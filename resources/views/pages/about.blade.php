@@ -33,7 +33,7 @@
         <ul class="mt-10 grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4" data-reveal data-reveal-stagger>
             @foreach ($team as $member)
                 <li>
-                    <x-photo :src="$member->photo_path ? Storage::disk('public')->url($member->photo_path) : null" label="Portrait in uniform" class="aspect-[9/10] w-full rounded-image" />
+                    <x-photo :src="$member->photo_path ? Storage::disk('public')->url($member->photo_path) : null" :srcset="media_srcset($member->photo_path)" sizes="(min-width: 1024px) 25vw, 50vw" label="Portrait in uniform" class="aspect-[9/10] w-full rounded-image" />
                     <h3 class="mt-4 text-xl sm:text-2xl">{{ $member->name }}</h3>
                     <p class="text-sm text-ink/70 sm:text-base">{{ $member->role }}</p>
                 </li>

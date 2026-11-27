@@ -36,10 +36,7 @@ if (! function_exists('site_image_srcset')) {
         if (! $path) {
             return null;
         }
-        $small = preg_replace('/(\.\w+)$/', '-sm$1', $path);
-        $disk = \Illuminate\Support\Facades\Storage::disk('public');
-
-        return $disk->exists($small) ? $disk->url($small).' 900w, '.$disk->url($path).' 1920w' : null;
+        return media_srcset($path);
     }
 }
 
@@ -71,5 +68,30 @@ if (! function_exists('site_phones')) {
             })
             ->values()
             ->all();
+    }
+}
+
+if (! function_exists('media_srcset')) {
+    /** srcset for any public-disk photo with the optimiser's -thumb / -sm copies, so small tiles load small files. */
+    function media_srcset(?string $path): ?string
+    {
+        if (blank($path)) {
+            return null;
+        }
+        $disk = \Illuminate\Support\Facades\Storage::disk('public');
+        $sources = [];
+        foreach (\App\Support\ImageOptimizer::VARIANTS as $name => $width) {
+            $variant = \App\Support\ImageOptimizer::variant($path, $name);
+            if ($disk->exists($variant)) {
+                $sources[$width] = $disk->url($variant).' '.$width.'w';
+            }
+        }
+        if (! $sources) {
+            return null;
+        }
+        ksort($sources);
+        $sources[] = $disk->url($path).' '.\App\Support\ImageOptimizer::MAX.'w';
+
+        return implode(', ', $sources);
     }
 }

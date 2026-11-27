@@ -20,7 +20,7 @@
                     :class="active === {{ $i }} ? 'lg:grow-[4]' : 'lg:grow'"
                     @mouseenter="active = {{ $i }}" @focusin="active = {{ $i }}">
                     @if ($service['image'])
-                        <img src="{{ $service['image'] }}" alt="" loading="lazy" class="absolute inset-0 h-full w-full object-cover">
+                        <img src="{{ $service['image'] }}" @if ($service['srcset']) srcset="{{ $service['srcset'] }}" sizes="(min-width: 1024px) 45vw, 100vw" @endif alt="" loading="lazy" class="absolute inset-0 h-full w-full object-cover">
                     @endif
                     <div class="absolute inset-0 bg-gradient-to-t from-forest via-forest/50 to-forest/10" aria-hidden="true"></div>
 

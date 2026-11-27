@@ -129,7 +129,7 @@ class SiteSettings extends Page implements HasForms
                             ->mapWithKeys(fn ($i) => ["service_{$i}_image" => ($i).'. '.(setting("service_{$i}_title") ?: "Service {$i}")])->all(),
                     ])->map(fn ($slots, $heading) => Forms\Components\Section::make($heading)->collapsible()->columns(['default' => 1, 'sm' => 2, 'lg' => 3])
                         ->schema(collect($slots)->map(fn ($label, $key) => \App\Filament\Forms\MediaPicker::attach(Forms\Components\FileUpload::make($key)->label($label)
-                            ->image()->imageEditor()->disk('public')->directory('site')->maxSize(6144)))->values()->all()))->values()->all(),
+                            ->image()->disk('public')->directory('site')->maxSize(12288)))->values()->all()))->values()->all(),
                 ]),
                 Forms\Components\Tabs\Tab::make('Services')->schema(collect(range(1, 5))->map(fn ($i) => Forms\Components\Fieldset::make("Service {$i} (photo: Photos tab)")->columns(3)->schema([
                     $t("service_{$i}_title", 'Name'),

@@ -72,7 +72,7 @@
             <div class="mt-10 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-5" data-reveal data-reveal-stagger>
                 @foreach ($categories as $category)
                     <a href="{{ route('plants.index', ['category' => $category->slug]) }}" class="group">
-                        <x-photo :src="$category->image_path ? Storage::disk('public')->url($category->image_path) : null" :label="$category->name" class="aspect-[4/3] w-full rounded-image transition group-hover:opacity-90" />
+                        <x-photo :src="$category->image_path ? Storage::disk('public')->url($category->image_path) : null" :srcset="media_srcset($category->image_path)" sizes="(min-width: 1024px) 20vw, (min-width: 640px) 50vw, 100vw" :label="$category->name" class="aspect-[4/3] w-full rounded-image transition group-hover:opacity-90" />
                         <div class="mt-4 flex items-baseline justify-between gap-3">
                             <h3 class="text-xl group-hover:text-leaf">{{ $category->name }}</h3>
                             <span class="shrink-0 text-sm text-ink/70">
@@ -142,7 +142,7 @@
             </x-section-heading>
             <div class="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:grid-rows-2" data-reveal data-reveal-stagger>
                 @foreach ($gallery as $image)
-                    <x-photo :src="$image->path ? Storage::disk('public')->url($image->path) : null" :label="$image->caption"
+                    <x-photo :src="$image->path ? Storage::disk('public')->url($image->path) : null" :srcset="media_srcset($image->path)" :sizes="$loop->first ? '(min-width: 1024px) 50vw, 100vw' : '(min-width: 1024px) 25vw, 50vw'" :label="$image->caption"
                         @class(['w-full rounded-image', 'col-span-2 row-span-2 aspect-square lg:aspect-auto lg:h-full' => $loop->first, 'aspect-[4/3]' => ! $loop->first]) />
                 @endforeach
             </div>

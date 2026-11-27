@@ -54,7 +54,7 @@
                     @foreach ($plants as $plant)
                         <li class="card flex min-w-0 flex-col overflow-hidden">
                             <a href="{{ route('plants.show', $plant) }}" class="block">
-                                <x-photo :src="$plant->primaryImage?->url()" :label="$plant->primaryImage ? '' : 'Photo soon'" class="aspect-[4/3] w-full text-[10px]" />
+                                <x-photo :src="$plant->primaryImage?->url()" :srcset="media_srcset($plant->primaryImage?->path)" sizes="(min-width: 1280px) 20vw, (min-width: 1024px) 30vw, 50vw" :label="$plant->primaryImage ? '' : 'Photo soon'" class="aspect-[4/3] w-full text-[10px]" />
                             </a>
                             <div class="flex flex-1 flex-col p-3 sm:p-5">
                                 <x-availability :plant="$plant" />
@@ -89,7 +89,7 @@
                                 <tr class="grid grid-cols-[80px_1fr] gap-x-4 gap-y-2 p-4 md:table-row md:p-0">
                                     <td class="row-span-3 md:w-32 md:py-4 md:pl-5 md:pr-4">
                                         <a href="{{ route('plants.show', $plant) }}" class="block">
-                                            <x-photo :src="$plant->primaryImage?->url()" :label="$plant->primaryImage ? '' : 'Photo soon'" class="h-20 w-20 rounded-xl text-[10px] md:h-24 md:w-24" />
+                                            <x-photo :src="$plant->primaryImage?->url()" :srcset="media_srcset($plant->primaryImage?->path)" sizes="96px" :label="$plant->primaryImage ? '' : 'Photo soon'" class="h-20 w-20 rounded-xl text-[10px] md:h-24 md:w-24" />
                                         </a>
                                     </td>
                                     <td class="md:py-4 md:pr-3">

@@ -18,7 +18,7 @@
             @foreach ($gallery as $image)
                 <li x-show="filter === 'all' || filter === '{{ $image->category }}'"
                     @class(['col-span-2 row-span-2' => $loop->index % 5 === 0])>
-                    <x-photo :src="$image->path ? Storage::disk('public')->url($image->path) : null" :label="$image->caption"
+                    <x-photo :src="$image->path ? Storage::disk('public')->url($image->path) : null" :srcset="media_srcset($image->path)" :sizes="$loop->index % 5 === 0 ? '(min-width: 1024px) 50vw, 100vw' : '(min-width: 1024px) 25vw, 50vw'" :label="$image->caption"
                         class="h-full w-full rounded-image" />
                 </li>
             @endforeach

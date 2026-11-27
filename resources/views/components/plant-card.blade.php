@@ -1,7 +1,7 @@
 @props(['plant'])
 <article class="card flex flex-col overflow-hidden">
     <a href="{{ route('plants.show', $plant) }}" class="block">
-        <x-photo :src="$plant->primaryImage?->url()" :label="$plant->name.' photo'" class="aspect-[4/3] w-full" />
+        <x-photo :src="$plant->primaryImage?->url()" :srcset="media_srcset($plant->primaryImage?->path)" sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" :label="$plant->name.' photo'" class="aspect-[4/3] w-full" />
     </a>
     <div class="flex flex-1 flex-col p-5">
         <p @class([

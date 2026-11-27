@@ -58,7 +58,7 @@ class PlantResource extends Resource
             Forms\Components\Section::make('Photos')->schema([
                 Forms\Components\Repeater::make('images')->relationship()->orderColumn('sort_order')->grid(3)->defaultItems(0)
                     ->schema([
-                        \App\Filament\Forms\MediaPicker::attach(Forms\Components\FileUpload::make('path')->hiddenLabel()->image()->imageEditor()->disk('public')->directory('plants')->maxSize(4096)->required()),
+                        \App\Filament\Forms\MediaPicker::attach(Forms\Components\FileUpload::make('path')->hiddenLabel()->image()->disk('public')->directory('plants')->maxSize(12288)->required()),
                         Forms\Components\TextInput::make('alt')->placeholder('What the photo shows'),
                     ]),
             ]),

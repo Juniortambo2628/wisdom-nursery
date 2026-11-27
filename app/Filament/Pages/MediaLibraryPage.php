@@ -35,8 +35,8 @@ class MediaLibraryPage extends Page
             Action::make('upload')->label('Upload photos')->icon('heroicon-o-arrow-up-tray')
                 ->modalDescription('Photos added here can then be chosen in any photo box with "Choose from library".')
                 ->form([
-                    FileUpload::make('files')->hiddenLabel()->multiple()->image()->imageEditor()
-                        ->disk('public')->directory('library')->maxSize(6144)->maxFiles(20)->required(),
+                    \App\Support\ImageOptimizer::onUpload(FileUpload::make('files')->hiddenLabel()->multiple()->image()
+                        ->disk('public')->directory('library')->maxSize(12288)->maxFiles(20)->required()),
                 ])
                 ->action(fn (array $data) => Notification::make()->title(count($data['files']).' photo(s) added to the library')->success()->send()),
         ];
@@ -54,7 +54,7 @@ class MediaLibraryPage extends Page
         abort_unless($images->contains($path), 404);
 
         $disk = Storage::disk('public');
-        $disk->delete([$path, preg_replace('/(\.\w+)$/', '-sm$1', $path)]);
+        $disk->delete([$path, preg_replace('/(\.\w+)$/', '-sm$1', $path), \App\Support\ImageOptimizer::variant($path, 'sm'), \App\Support\ImageOptimizer::variant($path, 'thumb')]);
         Notification::make()->title('Photo deleted')->success()->send();
     }
 

@@ -33,14 +33,14 @@ class MediaLibrary
 
         return collect($disk->allFiles())
             ->filter(fn ($p) => in_array(strtolower(pathinfo($p, PATHINFO_EXTENSION)), self::EXTENSIONS, true))
-            ->reject(fn ($p) => str_starts_with($p, 'livewire-tmp/') || preg_match('/-sm\.\w+$/', $p)) // phone copies stay hidden
+            ->reject(fn ($p) => str_starts_with($p, 'livewire-tmp/') || preg_match('/-(sm|thumb)\.\w+$/', $p)) // phone and thumbnail copies stay hidden
             ->map(function ($p) use ($disk) {
-                $small = preg_replace('/(\.\w+)$/', '-sm$1', $p);
+                $thumb = collect([ImageOptimizer::variant($p, 'thumb'), ImageOptimizer::variant($p, 'sm')])->first(fn ($v) => $disk->exists($v));
 
                 return [
                     'path' => $p,
                     'url' => $disk->url($p),
-                    'thumb' => $disk->exists($small) ? $disk->url($small) : $disk->url($p),
+                    'thumb' => $disk->url($thumb ?? $p),
                     'name' => basename($p),
                     'folder' => str_contains($p, '/') ? strstr($p, '/', true) : '',
                     'size' => $disk->size($p),

@@ -55,6 +55,7 @@ class PageController extends Controller
             'title' => setting("service_{$i}_title"),
             'text' => setting("service_{$i}_text"),
             'image' => site_image("service_{$i}_image"),
+            'srcset' => site_image_srcset("service_{$i}_image"),
             'url' => $link[0],
             'action' => $link[1],
         ])->filter(fn ($s) => filled($s['title']))->values();

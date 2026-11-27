@@ -25,7 +25,7 @@ class GalleryImageResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            \App\Filament\Forms\MediaPicker::attach(Forms\Components\FileUpload::make('path')->label('Photo')->image()->imageEditor()->disk('public')->directory('gallery')->columnSpanFull()),
+            \App\Filament\Forms\MediaPicker::attach(Forms\Components\FileUpload::make('path')->label('Photo')->image()->disk('public')->directory('gallery')->columnSpanFull()),
             Forms\Components\TextInput::make('caption')->required(),
             Forms\Components\Select::make('category')->options(GalleryImage::CATEGORIES)->required(),
             Forms\Components\Toggle::make('is_active')->label('Show on site')->default(true),

@@ -125,3 +125,32 @@ it('offers Choose from library on every photo box', function () {
     Livewire::test(\App\Filament\Pages\SiteSettings::class)
         ->assertFormComponentActionExists('image_hero', 'chooseFromLibrary');
 });
+
+it('compresses photos: resized, converted to WebP, with phone and thumbnail copies, references updated', function () {
+    $disk = \Illuminate\Support\Facades\Storage::disk('public');
+    $img = imagecreatetruecolor(3000, 2000);
+    imagefill($img, 0, 0, imagecolorallocate($img, 40, 120, 60));
+    ob_start(); imagejpeg($img, null, 95); $disk->put('site/big-photo.jpg', ob_get_clean());
+    \App\Models\Setting::put('image_hero', 'site/big-photo.jpg');
+
+    $this->artisan('nursery:optimize-images')->assertSuccessful();
+
+    $disk->assertMissing('site/big-photo.jpg');
+    $disk->assertExists(['site/big-photo.webp', 'site/big-photo-sm.webp', 'site/big-photo-thumb.webp']);
+    expect(getimagesizefromstring($disk->get('site/big-photo.webp'))[0])->toBe(1920)
+        ->and(getimagesizefromstring($disk->get('site/big-photo-thumb.webp'))[0])->toBe(400)
+        ->and(\App\Models\Setting::get('image_hero'))->toBe('site/big-photo.webp')
+        ->and(media_srcset('site/big-photo.webp'))->toContain('big-photo-thumb.webp 400w');
+});
+
+it('picks a library photo with one tap', function () {
+    \Illuminate\Support\Facades\Storage::disk('public')->put('library/pick-me.webp', 'x');
+
+    Livewire::test(\App\Filament\Pages\SiteSettings::class)
+        ->mountFormComponentAction('image_contact_banner', 'chooseFromLibrary')
+        ->callMountedFormComponentAction(['path' => 'library/pick-me.webp'])
+        ->assertHasNoFormComponentActionErrors()
+        ->call('save');
+
+    expect(\App\Models\Setting::get('image_contact_banner'))->toBe('library/pick-me.webp');
+});
