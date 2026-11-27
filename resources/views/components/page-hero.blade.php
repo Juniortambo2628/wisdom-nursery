@@ -14,9 +14,9 @@
     @endif
     <div class="container-page relative flex flex-col items-center py-16 text-center sm:py-24 lg:py-32" data-reveal data-reveal-stagger>
         @if ($eyebrow)
-            <p class="text-sm font-bold uppercase tracking-[0.18em] text-moss sm:text-base">{{ $eyebrow }}</p>
+            <p class="hero-pill">{{ $eyebrow }}</p>
         @endif
-        <h1 class="mt-4 max-w-4xl text-[40px] leading-[1.05] text-white sm:text-6xl lg:text-[84px] lg:leading-[1.02]">{{ $title }}</h1>
+        <h1 class="mt-5 max-w-4xl text-[40px] leading-[1.05] text-white sm:text-6xl lg:text-[84px] lg:leading-[1.02]">{{ $title }}</h1>
         @if ($intro)
             <p class="mt-6 max-w-3xl text-lg font-medium leading-relaxed text-white sm:text-xl lg:text-2xl lg:leading-relaxed">{{ $intro }}</p>
         @endif

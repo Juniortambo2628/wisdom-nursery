@@ -20,7 +20,7 @@
         @endif
         <div class="container-page relative flex flex-col items-center pb-28 pt-40 text-center sm:pb-36 sm:pt-32 lg:pb-44 lg:pt-44" data-reveal data-reveal-stagger>
             <p class="text-xl font-semibold uppercase leading-snug tracking-[0.2em] text-white sm:whitespace-nowrap sm:text-[22px] sm:tracking-[0.24em] md:text-[28px] lg:text-[36px]">Wisdom Propagation Nursery</p>
-            <p class="eyebrow mt-3 text-moss">Hardened in a semi-arid climate · Since {{ setting('since_year', '[Year]') }}</p>
+            <p class="hero-pill mt-5">Hardened in a semi-arid climate</p>
             <h1 class="mt-6 max-w-4xl text-[44px] leading-[1.02] text-white sm:text-6xl lg:text-[88px]">
                 Every plant gets a <em class="font-normal italic text-moss">strong</em> start.
             </h1>

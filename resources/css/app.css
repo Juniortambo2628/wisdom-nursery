@@ -29,6 +29,10 @@
     .container-page { @apply mx-auto w-full max-w-page px-4 sm:px-8 lg:px-gutter; }
 
     .eyebrow { @apply text-[13px] font-bold uppercase tracking-[0.14em] text-leaf; }
+    /* Subtitle over a hero photo: a frosted glass pill with a small green dot. Static (not sticky),
+       so the blur is drawn once rather than on every scroll frame. */
+    .hero-pill { @apply inline-flex max-w-full items-center gap-2.5 rounded-full border border-white/30 bg-white/15 px-3.5 py-2 text-center text-[11px] font-bold uppercase leading-snug tracking-[0.1em] text-white sm:tracking-[0.16em] shadow-lg shadow-black/15 backdrop-blur-md sm:px-5 sm:text-sm; }
+    .hero-pill::before { content: ''; @apply h-2 w-2 shrink-0 rounded-full bg-moss; }
 
     .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-leaf disabled:cursor-not-allowed disabled:opacity-60; }
     .btn-primary { @apply btn bg-leaf text-white hover:bg-forest; }

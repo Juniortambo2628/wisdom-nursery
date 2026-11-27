@@ -72,7 +72,6 @@ class SiteSettings extends Page implements HasForms
                     $a('care_text', 'Planting & care text (plant pages)'),
                 ]),
                 Forms\Components\Tabs\Tab::make('Home page')->columns(2)->schema([
-                    $t('since_year', 'Since (year)'),
                     $t('site_tagline', 'Tagline'),
                     $t('story_title', 'Our story heading')->columnSpanFull(),
                     $a('story_text', 'Our story'),
