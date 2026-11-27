@@ -1,4 +1,5 @@
 @props(['dark' => false])
-<a href="{{ route('home') }}" {{ $attributes->class('inline-flex min-h-10 shrink-0 items-center') }} aria-label="Wisdom Propagation Nursery, home">
-    <img src="{{ asset($dark ? 'images/logo-horizontal-white.png' : 'images/logo-horizontal.png') }}" alt="Wisdom Propagation Nursery" width="541" height="168" class="h-14 w-auto sm:h-16 lg:h-[76px]">
+{{-- The official logo has dark green lettering, so on dark backgrounds it sits on a white panel. --}}
+<a href="{{ route('home') }}" {{ $attributes->class(['inline-flex shrink-0 items-center','rounded-2xl bg-white p-3' => $dark]) }} aria-label="Wisdom Nursery, home">
+    <img src="{{ asset('images/logo.png') }}" alt="Wisdom Nursery" width="290" height="320" @class(['w-auto','h-24' => $dark,'h-16 lg:h-20' => ! $dark])>
 </a>

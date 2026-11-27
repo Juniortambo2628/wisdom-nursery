@@ -13,7 +13,7 @@
 <body class="flex min-h-screen flex-col bg-mist">
     <header class="container-page flex h-[72px] items-center lg:h-24">
         <a href="{{ url('/') }}" class="inline-flex min-h-10 items-center" aria-label="Wisdom Propagation Nursery, home">
-            <img src="{{ asset('images/logo-horizontal.png') }}" alt="Wisdom Propagation Nursery" width="541" height="168" class="h-14 w-auto">
+            <img src="{{ asset('images/logo.png') }}" alt="Wisdom Nursery" width="290" height="320" class="h-20 w-auto">
         </a>
     </header>
     <main class="container-page flex flex-1 items-center py-16">

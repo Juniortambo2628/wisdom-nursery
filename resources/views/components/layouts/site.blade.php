@@ -125,7 +125,7 @@
     <footer class="bg-deep text-white/80">
         <div class="container-page grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:py-16">
             <div>
-                <x-logo dark class="[&_img]:h-16 sm:[&_img]:h-20" />
+                <x-logo dark />
                 <p class="mt-5 max-w-xs text-[15px] leading-relaxed">Fruit trees, seedlings, ornamentals and indoor plants, grown by the Wisdom Capital family.</p>
                 @if ($till = setting('till_number'))
                     <p class="mt-4 flex items-center gap-2 text-sm"><x-mpesa-badge /> Till / Paybill {{ $till }}</p>
