@@ -1,5 +1,5 @@
 <x-layouts.site title="Grower tips" active="tips" description="Plant care and tree planting guides from the Wisdom Propagation Nursery team.">
-    <x-page-hero eyebrow="Grower tips" title="Grow it well." :image="site_image('image_step_1')"
+    <x-page-hero eyebrow="Grower tips" title="Grow it well." :image="site_image('image_tips_banner') ?? site_image('image_step_1')" :srcset="site_image_srcset('image_tips_banner')"
         intro="Plant care and tree planting guides from our growers." />
     <section class="container-page py-16 lg:py-24">
         @if ($posts->isEmpty())

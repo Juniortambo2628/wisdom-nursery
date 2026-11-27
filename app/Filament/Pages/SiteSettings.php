@@ -94,6 +94,7 @@ class SiteSettings extends Page implements HasForms
                     'image_shop_banner' => 'Our plants: page header photo',
                     'image_about_banner' => 'About: page header photo',
                     'image_gallery_banner' => 'Gallery: page header photo',
+                    'image_tips_banner' => 'Grower tips: page header photo',
                     'image_facility_1' => 'Facilities 1',
                     'image_facility_2' => 'Facilities 2',
                     'image_facility_wide' => 'Facilities: wide photo',
