@@ -41,7 +41,8 @@ class DatabaseSeeder extends Seeder
         NarrativeSeeder::class,
         OrnamentalCypressSeeder::class,
         NarrativeClimateSeeder::class,
-        OptimizeImagesSeeder::class, // keep last: compresses every photo the seeders above added
+        OptimizeImagesSeeder::class, // compresses every photo the seeders above added
+        GeneratedImagesSeeder::class, // ships with its own small copies
     ];
 
     public function run(): void

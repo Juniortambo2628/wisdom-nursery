@@ -144,3 +144,17 @@ it('replaces the first, Kitui-heavy wording on sites where it already ran', func
     expect(Setting::get('advantage_title'))->toBe('Raised tough in a semi-arid climate.')
         ->and(Setting::get('story_title'))->toBe('Toughened by the climate, ready for your land.');
 });
+
+it('uses the generated images for the tips, services and categories, keeping dashboard uploads', function () {
+    \Illuminate\Support\Facades\Storage::fake('public');
+    $this->seed(\Database\Seeders\CategorySeeder::class);
+    \App\Models\Category::where('slug', 'indoor-plants')->update(['image_path' => 'categories/uploaded-by-staff.jpg']);
+    $this->seed();
+
+    expect(Post::where('slug', 'watering-how-much-and-how-often')->value('image_path'))->toBe('site/tip-watering.webp')
+        ->and(Setting::get('image_services_banner'))->toBe('site/header-services.webp')
+        ->and(Setting::get('service_3_image'))->toBe('site/service-agronomy.webp')
+        ->and(Category::where('slug', 'fruit-trees')->value('image_path'))->toBe('site/category-fruit-trees.webp')
+        ->and(Category::where('slug', 'indoor-plants')->value('image_path'))->toBe('categories/uploaded-by-staff.jpg');
+    \Illuminate\Support\Facades\Storage::disk('public')->assertExists('site/tip-watering-thumb.webp');
+});
