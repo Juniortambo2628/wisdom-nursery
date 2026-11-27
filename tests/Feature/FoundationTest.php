@@ -23,7 +23,7 @@ it('runs every content seeder once and is safe to re-run on each deploy', functi
         ->and(Plant::count())->toBe(50)                       // 33 from Wisdom Capital + 4 grafted fruit + 13 vegetable trays
         ->and(Plant::where('is_featured', true)->count())->toBe(4)
         ->and(Plant::has('images')->count())->toBe(33)
-        ->and(Setting::get('image_hero'))->toBe('site/nursery-24.webp')
+        ->and(Setting::get('image_hero'))->toBe('site/nursery-45.webp') // current photos (27 Nov), not the old site's
         ->and(\App\Models\GalleryImage::whereNull('path')->count())->toBe(0);
 });
 
@@ -86,9 +86,29 @@ it('fills the client\'s details without overwriting what staff changed', functio
         ->and(Setting::get('about_text'))->toStartWith('Operating from Kitui Central')
         ->and(Setting::get('till_number'))->toBe('303030')
         ->and(Setting::get('mpesa_account'))->toBe('2043089423')
-        ->and(Setting::get('image_story_main'))->toBe('site/nursery-34.webp')
+        ->and(Setting::get('image_story_main'))->toBe('site/nursery-48.webp')
         ->and(\App\Models\TeamMember::where('name', '[Name]')->count())->toBe(0)
         ->and(\App\Models\TeamMember::where('role', 'like', 'In-charge, %')->count())->toBe(5)
         ->and(\App\Models\TeamMember::count())->toBe(14);
     \Illuminate\Support\Facades\Storage::disk('public')->assertExists('site/nursery-36.webp');
+});
+
+it('swaps the old site photos for the current ones but keeps staff uploads and product photos', function () {
+    \Illuminate\Support\Facades\Storage::fake('public');
+    $this->seed(\Database\Seeders\CategorySeeder::class);
+    $this->seed(\Database\Seeders\SettingsSeeder::class);
+    $this->seed(\Database\Seeders\SitePhotosSeeder::class);
+    Setting::put('image_story_small', 'site/01JSTAFFUPLOAD.jpg'); // uploaded in Site settings → Photos
+    $this->seed(\Database\Seeders\PlantImportSeeder::class);
+    $productPhotos = \App\Models\PlantImage::pluck('path')->all();
+
+    $this->seed(\Database\Seeders\PhotoRefreshSeeder::class);
+
+    expect(Setting::get('image_hero'))->toBe('site/nursery-45.webp')
+        ->and(Setting::get('image_story_small'))->toBe('site/01JSTAFFUPLOAD.jpg')
+        ->and(\App\Models\Category::where('slug', 'tree-seedlings')->value('image_path'))->toBe('site/nursery-43.webp')
+        ->and(\App\Models\GalleryImage::where('path', 'site/nursery-24.webp')->exists())->toBeFalse()
+        ->and(\App\Models\GalleryImage::where('path', 'site/nursery-48.webp')->exists())->toBeTrue()
+        ->and(\App\Models\PlantImage::pluck('path')->all())->toBe($productPhotos);
+    \Illuminate\Support\Facades\Storage::disk('public')->assertExists(['site/nursery-45.webp', 'site/nursery-45-sm.webp']);
 });

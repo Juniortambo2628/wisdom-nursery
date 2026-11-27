@@ -13,19 +13,19 @@
         @if ($hero = site_image('image_hero'))
             <img src="{{ $hero }}" @if ($srcset = site_image_srcset('image_hero')) srcset="{{ $srcset }}" sizes="100vw" @endif
                  alt="" class="absolute inset-0 h-full w-full object-cover" fetchpriority="high">
-            {{-- Darken the photo so the headline reads (forest at 85% → 45%). --}}
-            <div class="absolute inset-0 bg-gradient-to-r from-forest/90 via-forest/70 to-forest/40" aria-hidden="true"></div>
+            {{-- Darken the photo evenly so the centred headline reads. --}}
+            <div class="absolute inset-0 bg-gradient-to-b from-forest/80 via-forest/65 to-forest/85" aria-hidden="true"></div>
         @else
             <x-photo label="Full-screen photo: team in uniforms" dark class="absolute inset-0 h-full w-full items-start pt-6 text-[11px] sm:items-center sm:pt-0 sm:text-transparent" />
         @endif
-        <div class="container-page relative pb-28 pt-40 sm:pb-36 sm:pt-32 lg:pb-44 lg:pt-44">
-            <p class="max-w-3xl text-xl font-semibold uppercase leading-snug tracking-[0.2em] text-white sm:text-2xl sm:tracking-[0.24em] lg:text-[34px]">Wisdom Propagation Nursery</p>
+        <div class="container-page relative flex flex-col items-center pb-28 pt-40 text-center sm:pb-36 sm:pt-32 lg:pb-44 lg:pt-44">
+            <p class="text-xl font-semibold uppercase leading-snug tracking-[0.2em] text-white sm:whitespace-nowrap sm:text-[22px] sm:tracking-[0.24em] md:text-[28px] lg:text-[36px]">Wisdom Propagation Nursery</p>
             <p class="eyebrow mt-3 text-moss">Kitui, Kenya · Since {{ setting('since_year', '[Year]') }}</p>
-            <h1 class="mt-6 max-w-3xl text-[44px] leading-[1.02] text-white sm:text-6xl lg:text-[88px]">
+            <h1 class="mt-6 max-w-4xl text-[44px] leading-[1.02] text-white sm:text-6xl lg:text-[88px]">
                 Every plant gets a <em class="font-normal italic text-moss">strong</em> start.
             </h1>
-            <p class="mt-6 max-w-xl text-lg text-white/85">Fruit trees, seedlings, ornamentals and indoor plants from the Wisdom Capital family, for homes, offices, farms and planting projects.</p>
-            <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            <p class="mt-6 max-w-2xl text-lg text-white/85">Fruit trees, seedlings, ornamentals and indoor plants from the Wisdom Capital family, for homes, offices, farms and planting projects.</p>
+            <div class="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:justify-center">
                 <a href="{{ route('plants.index') }}" class="btn bg-white text-forest hover:bg-mist">Shop plants</a>
                 <a href="#quote" class="btn border border-white/60 text-white hover:bg-white/10">Request a bulk quote</a>
                 <p class="hidden items-center gap-2 text-sm text-white/85 sm:ml-3 sm:flex"><x-mpesa-badge /> Pay on your phone</p>
