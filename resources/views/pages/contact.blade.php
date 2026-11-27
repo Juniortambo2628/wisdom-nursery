@@ -19,7 +19,7 @@
     @endpush
     <x-page-hero eyebrow="Contact & visit" title="Talk to the growers." :image="site_image('image_story_main')"
         intro="Visit us in Kitui, call, WhatsApp or send a message.">
-        <div class="flex flex-wrap gap-3">
+        <div class="flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row sm:flex-wrap">
             @if ($whatsapp)<a href="{{ $whatsapp }}" target="_blank" rel="noopener" class="btn-mpesa"><x-glyph name="chat" class="h-5 w-5" /> WhatsApp us</a>@endif
             @foreach (site_phones() as $p)
                 @if ($p['tel'])<a href="tel:{{ $p['tel'] }}" class="btn-outline"><x-glyph name="phone" class="h-5 w-5" /> Call {{ $p['label'] ? $p['label'].': ' : '' }}{{ $p['number'] }}</a>@endif

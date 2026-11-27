@@ -8,7 +8,7 @@
 @php
     $nav = [
         'home' => ['Home', route('home')],
-        'about' => ['About', route('about')],
+        'about' => ['About us', route('about')],
         'plants' => ['Our plants', route('plants.index')],
         'how' => ['How we grow', route('how-we-grow')],
         'gallery' => ['Gallery', route('gallery')],
@@ -47,7 +47,7 @@
         <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','{{ config('nursery.ga4_id') }}');</script>
     @endif
 </head>
-<body class="min-h-screen bg-mist" x-data="{ menu: false }" :class="menu && 'overflow-hidden lg:overflow-auto'">
+<body class="min-h-screen bg-mist" x-data="{ menu: false }" :class="menu && 'overflow-hidden xl:overflow-auto'">
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-white focus:px-4 focus:py-2">Skip to content</a>
 
     {{-- Top strip --}}
@@ -62,25 +62,25 @@
     <header class="sticky top-0 z-30 border-b border-ink/10 bg-mist/95 backdrop-blur">
         <div class="container-page flex h-[72px] items-center justify-between gap-4 lg:h-24">
             <x-logo />
-            <nav aria-label="Main" class="hidden items-center gap-8 lg:flex">
+            <nav aria-label="Main" class="hidden items-center gap-6 xl:flex 2xl:gap-8">
                 @foreach ($nav as $key => [$label, $href])
                     <a href="{{ $href }}" @if ($active === $key) aria-current="page" @endif
                        @class([
-                           'border-b-2 py-1 text-[15px] transition',
+                           'whitespace-nowrap border-b-2 py-1 text-[15px] transition',
                            'border-leaf text-leaf' => $active === $key,
                            'border-transparent text-ink hover:text-leaf' => $active !== $key,
                        ])>{{ $label }}</a>
                 @endforeach
             </nav>
             <div class="flex items-center gap-3">
-                <a href="{{ route('quote.show') }}" class="btn hidden border border-forest px-4 py-2 text-forest hover:bg-forest hover:text-white lg:inline-flex">Request a quote</a>
+                <a href="{{ route('quote.show') }}" class="btn hidden border border-forest px-4 py-2 text-forest hover:bg-forest hover:text-white sm:inline-flex">Request a quote</a>
                 <a href="{{ route('cart.show') }}" class="relative grid h-12 w-12 place-items-center rounded-full border border-ink/10 bg-white text-forest hover:border-leaf" aria-label="Cart, {{ $cartCount }} {{ \Illuminate\Support\Str::plural('item', $cartCount) }}">
                     <x-glyph name="cart" />
                     @if ($cartCount > 0)
                         <span class="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-clay px-1 text-[11px] font-bold text-white">{{ $cartCount }}</span>
                     @endif
                 </a>
-                <button type="button" class="grid h-12 w-10 place-items-center text-forest lg:hidden" @click="menu = true" aria-label="Open menu" :aria-expanded="menu">
+                <button type="button" class="grid h-12 w-10 place-items-center text-forest xl:hidden" @click="menu = true" aria-label="Open menu" :aria-expanded="menu">
                     <x-glyph name="menu" class="h-6 w-6" />
                 </button>
             </div>
@@ -88,10 +88,10 @@
     </header>
 
     {{-- Mobile menu --}}
-    <div x-cloak x-show="menu" x-transition.opacity class="fixed inset-0 z-40 bg-ink/40 lg:hidden" @click="menu = false"></div>
+    <div x-cloak x-show="menu" x-transition.opacity class="fixed inset-0 z-40 bg-ink/40 xl:hidden" @click="menu = false"></div>
     <nav x-cloak x-show="menu" x-transition:enter="transition" x-transition:enter-start="translate-x-full" x-transition:leave="transition" x-transition:leave-end="translate-x-full"
          @keydown.escape.window="menu = false" aria-label="Mobile"
-         class="fixed inset-y-0 right-0 z-50 flex w-[85%] max-w-sm flex-col bg-mist p-6 shadow-xl lg:hidden">
+         class="fixed inset-y-0 right-0 z-50 flex w-[85%] max-w-sm flex-col bg-mist p-6 shadow-xl xl:hidden">
         <div class="flex items-center justify-between">
             <x-logo />
             <button type="button" class="grid h-11 w-11 place-items-center text-forest" @click="menu = false" aria-label="Close menu"><x-glyph name="close" class="h-6 w-6" /></button>
