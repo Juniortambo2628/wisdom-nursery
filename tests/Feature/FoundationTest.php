@@ -83,7 +83,7 @@ it('fills the client\'s details without overwriting what staff changed', functio
     $this->seed();
 
     expect(Setting::get('address'))->toBe('Edited by staff')
-        ->and(Setting::get('about_text'))->toStartWith('Operating from Kitui Central')
+        ->and(Setting::get('about_text'))->toContain('farmer cooperatives, agrovets') // client's About text, reworded for the Kitui-advantage story
         ->and(Setting::get('till_number'))->toBe('303030')
         ->and(Setting::get('mpesa_account'))->toBe('2043089423')
         ->and(Setting::get('image_story_main'))->toBe('site/nursery-48.webp')
@@ -112,4 +112,18 @@ it('swaps the old site photos for the current ones but keeps staff uploads and p
         ->and(\App\Models\GalleryImage::where('path', 'site/nursery-48.webp')->exists())->toBeTrue()
         ->and(\App\Models\PlantImage::pluck('path')->all())->toBe($productPhotos);
     \Illuminate\Support\Facades\Storage::disk('public')->assertExists(['site/nursery-45.webp', 'site/nursery-45-sm.webp']);
+});
+
+it('tells why Kitui-grown plants do better, without overwriting staff edits', function () {
+    \Illuminate\Support\Facades\Storage::fake('public');
+    $this->seed(\Database\Seeders\SettingsSeeder::class);
+    Setting::put('how_we_grow_1', 'Written by staff');
+    $this->seed();
+
+    expect(Setting::get('how_we_grow_1'))->toBe('Written by staff')
+        ->and(Setting::get('about_text'))->toContain('semi-arid conditions of Kitui')
+        ->and(Setting::get('story_title'))->toBe('Toughened in Kitui, ready for your land.')
+        ->and(Setting::get('advantage_1_title'))->toBe('Deeper, denser roots');
+    $this->get('/')->assertSee('Why Kitui-grown')->assertSee('If it thrives in Kitui, it is ready for your land.');
+    $this->get('/about')->assertSee('Raised tough in semi-arid Kitui.');
 });

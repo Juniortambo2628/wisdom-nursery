@@ -14,7 +14,7 @@
     <section class="container-page grid gap-8 pb-20 pt-8 lg:grid-cols-[1fr_380px] lg:pb-28 lg:pt-12">
         <div class="min-w-0">
             {{-- Categories, search and the grid/list toggle stay under the header while scrolling. --}}
-            <form method="GET" action="{{ route('plants.index') }}" class="sticky top-[72px] z-20 -mx-4 flex flex-col gap-3 border-b border-ink/10 bg-mist/95 px-4 py-3 backdrop-blur sm:-mx-8 sm:px-8 lg:top-24 lg:mx-0 lg:flex-row lg:items-center lg:justify-between lg:gap-4 lg:px-0 lg:py-4">
+            <form method="GET" action="{{ route('plants.index') }}" class="sticky top-[72px] z-20 -mx-4 flex flex-col gap-3 border-b border-ink/10 bg-mist px-4 py-3 sm:-mx-8 sm:px-8 lg:top-24 lg:mx-0 lg:flex-row lg:items-center lg:justify-between lg:gap-4 lg:px-0 lg:py-4">
                 <nav aria-label="Plant categories" class="scrollbar-none -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
                     @php $pill = 'inline-flex min-h-10 shrink-0 items-center rounded-full border px-4 py-2 text-sm transition'; @endphp
                     <a href="{{ route('plants.index', array_filter(['q' => $search, 'view' => $view === 'list' ? 'list' : null])) }}" @class([$pill, 'border-forest bg-forest text-white' => ! $activeCategory, 'border-ink/15 bg-white hover:border-leaf' => $activeCategory]) @if (! $activeCategory) aria-current="page" @endif>All</a>

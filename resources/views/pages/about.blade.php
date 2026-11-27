@@ -4,6 +4,8 @@
         :image="site_image('image_about_banner')" :srcset="site_image_srcset('image_about_banner')"
         :intro="setting('about_text', setting('story_text'))" />
 
+    @include('partials.kitui-advantage')
+
     @php
         $focus = collect(range(1, 4))
             ->map(fn ($i) => ['title' => setting("about_focus_{$i}_title"), 'text' => setting("about_focus_{$i}_text")])

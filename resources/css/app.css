@@ -10,10 +10,15 @@
 @layer base {
     html { @apply bg-mist text-ink antialiased; -webkit-tap-highlight-color: transparent; }
 
-    /* Scroll animations (resources/js/reveal.js): hidden until they animate in. Only when
-       the layout's inline script set .reveal-ready (motion allowed, JavaScript running). */
-    .reveal-ready [data-reveal]:not([data-reveal-stagger]),
-    .reveal-ready [data-reveal-stagger] > * { opacity: 0; }
+    /* Scroll animations (resources/js/reveal.js): hidden until shown, then a CSS transition on
+       opacity and transform only (cheap for the browser). Only when the layout's inline script
+       set .reveal-ready (motion allowed, JavaScript running). */
+    .reveal-ready [data-reveal]:not([data-reveal-stagger]):not(.is-revealed),
+    .reveal-ready [data-reveal-stagger] > :not(.is-revealed) { opacity: 0; transform: translate3d(0, 24px, 0); }
+    .reveal-ready .reveal-anim {
+        transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        transition-delay: var(--reveal-delay, 0ms);
+    }
     body { @apply font-sans; }
     h1, h2, h3, h4 { @apply font-display font-normal text-ink; letter-spacing: -0.01em; }
     [x-cloak] { display: none !important; }

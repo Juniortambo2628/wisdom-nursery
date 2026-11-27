@@ -82,6 +82,16 @@ class SiteSettings extends Page implements HasForms
                     $t('stat_4_value', 'Stat 4 number'), $t('stat_4_label', 'Stat 4 label'),
                     $t('how_we_grow_1', 'Step 1: Seed'), $t('how_we_grow_2', 'Step 2: Germination'),
                     $t('how_we_grow_3', 'Step 3: Hardening'), $t('how_we_grow_4', 'Step 4: Dispatch'),
+                    Forms\Components\Fieldset::make('Why Kitui-grown (home and About pages)')->columns(2)->columnSpanFull()->schema([
+                        $t('advantage_eyebrow', 'Small label'),
+                        $t('advantage_title', 'Heading'),
+                        Forms\Components\Textarea::make('advantage_lead')->label('Intro')->rows(3)->columnSpanFull(),
+                        ...collect(range(1, 4))->flatMap(fn ($i) => [
+                            $t("advantage_{$i}_title", "Benefit {$i} heading"),
+                            Forms\Components\Textarea::make("advantage_{$i}_text")->label("Benefit {$i} text")->rows(2),
+                        ])->all(),
+                        $t('advantage_closing', 'Closing line')->columnSpanFull(),
+                    ]),
                 ]),
                 Forms\Components\Tabs\Tab::make('Photos')->schema([
                     Forms\Components\Placeholder::make('photos_help')->hiddenLabel()->content(

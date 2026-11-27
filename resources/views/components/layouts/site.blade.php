@@ -17,7 +17,7 @@
         'contact' => ['Contact', route('contact')],
     ];
     $pageTitle = $title ? $title.' · Wisdom Propagation Nursery' : 'Wisdom Propagation Nursery · '.setting('site_tagline', 'Every plant gets a strong start');
-    $metaDescription = $description ?? 'Fruit trees, vegetable seedlings, ornamentals, indoor plants and tree seedlings from Wisdom Propagation Nursery, part of the Wisdom Capital family. Pay with M-Pesa, collect or get it delivered.';
+    $metaDescription = $description ?? 'Fruit trees, vegetable seedlings, ornamentals and tree seedlings hardened in semi-arid Kitui, Kenya, so they establish faster after planting. From Wisdom Propagation Nursery, part of the Wisdom Capital family. Pay with M-Pesa, collect or get it delivered.';
     $whatsapp = \App\Support\WhatsApp::link('Hello Wisdom Propagation Nursery');
     $phones = site_phones();
 @endphp
@@ -67,7 +67,7 @@
     </div>
 
     {{-- Header --}}
-    <header class="sticky top-0 z-30 border-b border-ink/10 bg-mist/95 backdrop-blur">
+    <header class="sticky top-0 z-30 border-b border-ink/10 bg-mist">
         <div class="container-page flex h-[72px] items-center justify-between gap-4 lg:h-24">
             <x-logo />
             <nav aria-label="Main" class="hidden items-center gap-6 xl:flex 2xl:gap-8">
