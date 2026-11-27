@@ -25,7 +25,7 @@ class NotifyBackInStock implements ShouldQueue
             return; // sold out again before the queue ran
         }
 
-        $text = "Good news: {$this->plant->name} is back in stock at Wisdom Propagation Nursery, "
+        $text = "Good news: {$this->plant->name} is back in stock at Wisdom Nursery, "
             .ksh($this->plant->price).'. Order: '.route('plants.show', $this->plant);
 
         StockAlert::where('plant_id', $this->plant->id)->whereNull('notified_at')->each(function (StockAlert $alert) use ($text) {

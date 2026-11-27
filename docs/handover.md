@@ -1,4 +1,4 @@
-# Running the Wisdom Propagation Nursery website
+# Running the Wisdom Nursery website
 
 A guide for the nursery team: orders, plants, prices, stock, quotes, photos and alerts.
 Everything is done in the **dashboard**: **https://nursery.wisdomcapital.co.ke/admin**

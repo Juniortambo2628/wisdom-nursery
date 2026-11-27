@@ -16,9 +16,9 @@
         'tips' => ['Grower tips', route('posts.index')],
         'contact' => ['Contact', route('contact')],
     ];
-    $pageTitle = $title ? $title.' · Wisdom Propagation Nursery' : 'Wisdom Propagation Nursery · '.setting('site_tagline', 'Every plant gets a strong start');
-    $metaDescription = $description ?? 'Fruit trees, vegetable seedlings, ornamentals and tree seedlings hardened in a semi-arid climate, so they establish faster after planting. From Wisdom Propagation Nursery, part of the Wisdom Capital family. Pay with M-Pesa, collect or get it delivered.';
-    $whatsapp = \App\Support\WhatsApp::link('Hello Wisdom Propagation Nursery');
+    $pageTitle = $title ? $title.' · Wisdom Nursery' : 'Wisdom Nursery · '.setting('site_tagline', 'Every plant gets a strong start');
+    $metaDescription = $description ?? 'Wisdom Nursery in Kitui County: quality ornamental plants, grafted fruit trees and horticultural seedlings, with reliable year-round supply for customers across Kenya. Pay with M-Pesa, collect or get it delivered.';
+    $whatsapp = \App\Support\WhatsApp::link('Hello Wisdom Nursery');
     $phones = site_phones();
 @endphp
 <!DOCTYPE html>
@@ -33,7 +33,7 @@
         <meta name="robots" content="noindex, nofollow">
     @endif
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Wisdom Propagation Nursery">
+    <meta property="og:site_name" content="Wisdom Nursery">
     <meta property="og:title" content="{{ $pageTitle }}">
     <meta property="og:description" content="{{ $metaDescription }}">
     <meta property="og:url" content="{{ url()->current() }}">
@@ -135,7 +135,10 @@
         <div class="container-page grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:py-16">
             <div>
                 <x-logo dark />
-                <p class="mt-5 max-w-xs text-[15px] leading-relaxed">Fruit trees, seedlings, ornamentals and indoor plants, grown by the Wisdom Capital family.</p>
+                <p class="mt-5 max-w-xs text-[15px] leading-relaxed">{{ setting('hero_pill', 'Quality Ornamental Plants, Grafted Fruit Trees and Horticultural Seedlings') }}</p>
+                @if ($closing = setting('commitment_closing'))
+                    <p class="mt-3 max-w-xs text-sm italic text-moss">{{ \Illuminate\Support\Str::after($closing, '– ') }}</p>
+                @endif
                 @if ($till = setting('till_number'))
                     <p class="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm"><x-mpesa-badge /> <span><x-mpesa-payto :till="$till" /></span></p>
                 @endif
@@ -174,7 +177,7 @@
             </div>
         </div>
         <div class="container-page flex flex-col gap-2 border-t border-white/10 py-6 text-sm text-white/60 sm:flex-row sm:justify-between">
-            <p>© {{ date('Y') }} Wisdom Propagation Nursery, a Wisdom Capital company</p>
+            <p>© {{ date('Y') }} Wisdom Nursery, a Wisdom Capital company</p>
             <p>Wisdom Chicken · Wisdom Feeds · Uki Honey</p>
         </div>
     </footer>

@@ -19,12 +19,21 @@
             <x-photo label="Full-screen photo: team in uniforms" dark class="absolute inset-0 h-full w-full items-start pt-6 text-[11px] sm:items-center sm:pt-0 sm:text-transparent" />
         @endif
         <div class="container-page relative flex flex-col items-center pb-28 pt-40 text-center sm:pb-36 sm:pt-32 lg:pb-44 lg:pt-44" data-reveal data-reveal-stagger>
-            <p class="text-xl font-semibold uppercase leading-snug tracking-[0.2em] text-white sm:whitespace-nowrap sm:text-[22px] sm:tracking-[0.24em] md:text-[28px] lg:text-[36px]">Wisdom Propagation Nursery</p>
-            <p class="hero-pill mt-5">Hardened in a semi-arid climate</p>
-            <h1 class="mt-6 max-w-4xl text-[44px] leading-[1.02] text-white sm:text-6xl lg:text-[88px]">
-                Every plant gets a <em class="font-normal italic text-moss">strong</em> start.
+            <p class="text-xl font-semibold uppercase leading-snug tracking-[0.2em] text-white sm:whitespace-nowrap sm:text-[22px] sm:tracking-[0.24em] md:text-[28px] lg:text-[36px]">Wisdom Nursery</p>
+            @php
+                // Tagline "Growing Green. Cultivating Prosperity.": the second sentence is set in green italic.
+                $tagline = setting('site_tagline', 'Growing Green. Cultivating Prosperity.');
+                [$tagFirst, $tagSecond] = array_pad(preg_split('/(?<=\.)\s+/', $tagline, 2), 2, null);
+            @endphp
+            @if ($pill = setting('hero_pill'))
+                <p class="hero-pill mt-5">{{ $pill }}</p>
+            @endif
+            <h1 class="mt-6 max-w-5xl text-[44px] leading-[1.02] text-white sm:text-6xl lg:text-[84px]">
+                {{ $tagFirst }}@if ($tagSecond) <em class="font-normal italic text-moss">{{ $tagSecond }}</em>@endif
             </h1>
-            <p class="mt-6 max-w-2xl text-lg text-white/85">Fruit trees, seedlings and ornamentals raised under strong sun and dry air, so they arrive tougher and establish faster on your farm, compound or project.</p>
+            @if (($intro = setting('hero_intro')) && ! str_starts_with($intro, '['))
+                <p class="mt-6 max-w-3xl text-lg text-white/90 sm:text-xl">{{ $intro }}</p>
+            @endif
             <div class="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:justify-center">
                 <a href="{{ route('plants.index') }}" class="btn bg-white text-forest hover:bg-mist">Shop plants</a>
                 <a href="#quote" class="btn border border-white/60 text-white hover:bg-white/10">Request a bulk quote</a>
@@ -148,6 +157,8 @@
             </div>
         </div>
     </section>
+
+    @include('partials.commitment')
 
     {{-- Testimonials + partners --}}
     @if ($testimonials->isNotEmpty() || $partners->isNotEmpty())

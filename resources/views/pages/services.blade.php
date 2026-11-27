@@ -1,8 +1,8 @@
 <x-layouts.site title="Our services" active="services"
-    description="Seed propagation, cuttings propagation, agronomy support, crop information, and ornamentals and garden plants from Wisdom Propagation Nursery, raised and hardened in a semi-arid climate so they establish faster.">
+    description="Seed propagation, cuttings propagation, agronomy support, crop information, and ornamentals and garden plants from Wisdom Nursery in Kitui County.">
     <x-page-hero eyebrow="Our services" title="From seed to a thriving planting."
         :image="site_image('image_services_banner') ?? site_image('image_step_3')" :srcset="site_image_srcset('image_services_banner')"
-        intro="Plants raised and hardened in a semi-arid climate so they establish faster, backed by quality planting materials, clear stock readiness and practical growing support." />
+        intro="We are committed to quality propagation, a diverse product range, dependable supply and customer satisfaction." />
 
     <section class="container-page py-16 lg:py-24">
         <x-section-heading eyebrow="What we do" title="Five ways we help you grow">

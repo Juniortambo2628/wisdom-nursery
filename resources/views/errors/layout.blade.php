@@ -1,18 +1,18 @@
 {{-- Error pages: no database or settings calls, so they still render when the database is the problem. --}}
-@php $whatsapp = \App\Support\WhatsApp::link('Hello Wisdom Propagation Nursery'); @endphp
+@php $whatsapp = \App\Support\WhatsApp::link('Hello Wisdom Nursery'); @endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
-    <title>@yield('title') · Wisdom Propagation Nursery</title>
+    <title>@yield('title') · Wisdom Nursery</title>
     @include('partials.head-icons')
     @vite(['resources/css/app.css'])
 </head>
 <body class="flex min-h-screen flex-col bg-mist">
     <header class="container-page flex h-[72px] items-center lg:h-24">
-        <a href="{{ url('/') }}" class="inline-flex min-h-10 items-center" aria-label="Wisdom Propagation Nursery, home">
+        <a href="{{ url('/') }}" class="inline-flex min-h-10 items-center" aria-label="Wisdom Nursery, home">
             <img src="{{ asset('images/logo.png') }}" alt="Wisdom Nursery" width="290" height="320" class="h-20 w-auto">
         </a>
     </header>

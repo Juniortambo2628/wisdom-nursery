@@ -1,4 +1,4 @@
-# Wisdom Propagation Nursery: what we still need from you
+# Wisdom Nursery: what we still need from you
 
 The website is built and on the preview link. These details turn the [bracketed] placeholders
 into your real information. Reply on WhatsApp in any order; photos can be sent straight from a

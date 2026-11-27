@@ -43,6 +43,8 @@ class DatabaseSeeder extends Seeder
         NarrativeClimateSeeder::class,
         OptimizeImagesSeeder::class, // compresses every photo the seeders above added
         GeneratedImagesSeeder::class, // ships with its own small copies
+        ClientCopySeeder::class,
+        BriefPlantsSeeder::class,
     ];
 
     public function run(): void

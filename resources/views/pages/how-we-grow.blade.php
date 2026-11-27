@@ -1,5 +1,5 @@
 <x-layouts.site title="How we grow" active="how"
-    description="How Wisdom Propagation Nursery raises its plants, from seed to dispatch.">
+    description="How Wisdom Nursery raises its plants, from seed to dispatch.">
     @php
         $steps = [
             ['Seed', setting('how_we_grow_1'), 'Sowing in clean trays'],

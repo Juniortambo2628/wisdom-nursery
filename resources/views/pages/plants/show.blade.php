@@ -21,7 +21,7 @@
     if ($plant->botanical_name) { $schema['alternateName'] = $plant->botanical_name; }
 @endphp
 <x-layouts.site :title="$plant->name" active="plants"
-    :description="$plant->name.' from Wisdom Propagation Nursery, '.ksh($plant->price).' '.$soldAsNoun.'. Pay with M-Pesa, collect or get it delivered.'"
+    :description="$plant->name.' from Wisdom Nursery, '.ksh($plant->price).' '.$soldAsNoun.'. Pay with M-Pesa, collect or get it delivered.'"
     :og-image="$images->first()?->url()">
     @push('head')
         <script type="application/ld+json">{!! json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>

@@ -72,7 +72,9 @@ class SiteSettings extends Page implements HasForms
                     $a('care_text', 'Planting & care text (plant pages)'),
                 ]),
                 Forms\Components\Tabs\Tab::make('Home page')->columns(2)->schema([
-                    $t('site_tagline', 'Tagline'),
+                    $t('site_tagline', 'Tagline (large headline, e.g. Growing Green. Cultivating Prosperity.)'),
+                    $t('hero_pill', 'Subtitle (in the pill above the headline; also in the footer)'),
+                    $a('hero_intro', 'Intro under the headline'),
                     $t('story_title', 'Our story heading')->columnSpanFull(),
                     $a('story_text', 'Our story'),
                     $t('stat_1_value', 'Stat 1 number'), $t('stat_1_label', 'Stat 1 label'),
@@ -81,13 +83,13 @@ class SiteSettings extends Page implements HasForms
                     $t('stat_4_value', 'Stat 4 number'), $t('stat_4_label', 'Stat 4 label'),
                     $t('how_we_grow_1', 'Step 1: Seed'), $t('how_we_grow_2', 'Step 2: Germination'),
                     $t('how_we_grow_3', 'Step 3: Hardening'), $t('how_we_grow_4', 'Step 4: Dispatch'),
-                    Forms\Components\Fieldset::make('Why our plants last (home and About pages)')->columns(2)->columnSpanFull()->schema([
+                    Forms\Components\Fieldset::make('Why Choose Wisdom Nursery? (home and About pages)')->columns(2)->columnSpanFull()->schema([
                         $t('advantage_eyebrow', 'Small label'),
                         $t('advantage_title', 'Heading'),
                         Forms\Components\Textarea::make('advantage_lead')->label('Intro')->rows(3)->columnSpanFull(),
-                        ...collect(range(1, 4))->flatMap(fn ($i) => [
-                            $t("advantage_{$i}_title", "Benefit {$i} heading"),
-                            Forms\Components\Textarea::make("advantage_{$i}_text")->label("Benefit {$i} text")->rows(2),
+                        ...collect(range(1, 5))->flatMap(fn ($i) => [
+                            $t("advantage_{$i}_title", "Point {$i} heading"),
+                            Forms\Components\Textarea::make("advantage_{$i}_text")->label("Point {$i} text")->rows(2),
                         ])->all(),
                         $t('advantage_closing', 'Closing line')->columnSpanFull(),
                     ]),
@@ -137,6 +139,11 @@ class SiteSettings extends Page implements HasForms
                 ]))->all()),
                 Forms\Components\Tabs\Tab::make('About')->columns(2)->schema([
                     $a('about_text', 'About us'),
+                    Forms\Components\Fieldset::make('Our Commitment (home and About pages)')->columns(1)->columnSpanFull()->schema([
+                        $t('commitment_title', 'Heading'),
+                        Forms\Components\Textarea::make('commitment_text')->label('Text (a blank line starts a new paragraph)')->rows(6),
+                        $t('commitment_closing', 'Closing line'),
+                    ]),
                     $a('facilities_text', 'Facilities'),
                     Forms\Components\Textarea::make('facility_units')->label('Nursery units (one per line)')->rows(5)
                         ->helperText('Listed under "Our facilities", e.g. Kilimanjaro Greenhouse.'),

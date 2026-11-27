@@ -39,7 +39,7 @@
                         <div class="flex flex-col gap-6 rounded-2xl bg-mist p-5 sm:flex-row sm:items-center sm:p-6">
                             <div class="mx-auto w-36 shrink-0 rounded-[22px] border-[6px] border-forest bg-white p-3 text-[10px] leading-tight sm:mx-0" aria-hidden="true">
                                 <p class="font-bold">M-PESA</p>
-                                <p class="mt-1">Pay {{ ksh($order->total) }} to WISDOM PROPAGATION NURSERY?</p>
+                                <p class="mt-1">Pay {{ ksh($order->total) }} to WISDOM NURSERY?</p>
                                 <p class="mt-2">Enter M-PESA PIN</p>
                                 <div class="mt-1 h-4 rounded border border-ink/20"></div>
                                 <div class="mt-2 flex gap-1"><span class="flex-1 rounded bg-ink/10 py-0.5 text-center">Cancel</span><span class="flex-1 rounded bg-mpesa py-0.5 text-center text-white">OK</span></div>

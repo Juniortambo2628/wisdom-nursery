@@ -116,7 +116,7 @@ the Wisdom Capital site's code**; ask its maintainer, or with the client's go-ah
 `public_html/.htaccess`:
 
 ```apache
-# Wisdom Propagation Nursery moved to its own site
+# Wisdom Nursery moved to its own site
 RewriteEngine On
 RewriteRule ^wisdom-nursery\.html$ https://nursery.wisdomcapital.co.ke/ [R=301,L]
 ```
@@ -127,7 +127,7 @@ RewriteRule ^wisdom-nursery\.html$ https://nursery.wisdomcapital.co.ke/ [R=301,L
 
 ## 9. Google Business Profile and WhatsApp catalogue (proposal 08, "included")
 
-- [ ] Google Business Profile "Wisdom Propagation Nursery": category *Plant nursery*, address and pin, hours, phone,
+- [ ] Google Business Profile "Wisdom Nursery": category *Plant nursery*, address and pin, hours, phone,
   website `https://nursery.wisdomcapital.co.ke`, photos from the site; verify (postcard, phone or video)
 - [ ] WhatsApp Business catalogue: Dashboard → Plants → **Export for WhatsApp catalogue** → upload the CSV in
   Meta Commerce Manager → Catalogue → Data sources; link the catalogue to the WhatsApp Business number.

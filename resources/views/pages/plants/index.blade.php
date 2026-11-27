@@ -1,5 +1,5 @@
 <x-layouts.site title="Our plants" active="plants"
-    description="See what's growing at Wisdom Propagation Nursery now, with prices and availability. Buy online with M-Pesa, or request a quote for bulk orders.">
+    description="See what's growing at Wisdom Nursery now, with prices and availability. Buy online with M-Pesa, or request a quote for bulk orders.">
     @php
         // A category shows one of its own plants (popular ones first); "All" shows the nursery photo.
         $heroPlant = $activeCategory ? $plants->first(fn ($p) => $p->primaryImage) : null;

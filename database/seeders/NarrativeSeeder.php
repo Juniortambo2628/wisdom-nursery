@@ -27,7 +27,7 @@ class NarrativeSeeder extends Seeder
     private const STORY = 'We raise our plants in a semi-arid climate, where strong sun, heat and long dry spells toughen every seedling from the start. The result is stock with deeper roots and hardier growth that establishes faster and survives better after planting, for growers, cooperatives, institutions and landscaping projects.';
 
     /** key => [new value, earlier values this project seeded that it may replace] */
-    private function values(): array
+    public function values(): array
     {
         return [
             'about_text' => [self::ABOUT, [self::OLD_ABOUT, self::V1_ABOUT]],

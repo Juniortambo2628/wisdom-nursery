@@ -1,5 +1,5 @@
 <x-layouts.site title="About us" active="about"
-    description="The people and the place behind Wisdom Propagation Nursery, part of the Wisdom Capital family.">
+    description="The people and the place behind Wisdom Nursery, part of the Wisdom Capital family.">
     <x-page-hero eyebrow="About us" title="The people behind the plants."
         :image="site_image('image_about_banner')" :srcset="site_image_srcset('image_about_banner')"
         :intro="setting('about_text', setting('story_text'))" />
@@ -40,6 +40,8 @@
             @endforeach
         </ul>
     </section>
+
+    @include('partials.commitment')
 
     @include('partials.facilities')
 

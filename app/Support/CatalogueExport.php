@@ -24,13 +24,13 @@ class CatalogueExport
                 fputcsv($out, [
                     $p->slug,
                     mb_substr($p->name, 0, 150),
-                    mb_substr($p->description ?: "{$p->name} from Wisdom Propagation Nursery ({$p->category->name}).", 0, 5000),
+                    mb_substr($p->description ?: "{$p->name} from Wisdom Nursery ({$p->category->name}).", 0, 5000),
                     $p->isBuyable() ? ($p->isComingSoon() ? 'preorder' : 'in stock') : 'out of stock',
                     'new',
                     $p->price.'.00 KES',
                     route('plants.show', $p),
                     $p->primaryImage->url(),
-                    'Wisdom Propagation Nursery',
+                    'Wisdom Nursery',
                 ]);
             });
 

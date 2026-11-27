@@ -2,7 +2,7 @@
     $schema = array_filter([
         '@context' => 'https://schema.org',
         '@type' => 'GardenStore',
-        'name' => 'Wisdom Propagation Nursery',
+        'name' => 'Wisdom Nursery',
         'parentOrganization' => ['@type' => 'Organization', 'name' => 'Wisdom Capital Limited'],
         'url' => route('home'),
         'telephone' => collect(site_phones())->first(fn ($p) => $p['tel'])['number'] ?? null,
@@ -11,9 +11,9 @@
         'geo' => setting('latitude') ? ['@type' => 'GeoCoordinates', 'latitude' => setting('latitude'), 'longitude' => setting('longitude')] : null,
         'paymentAccepted' => 'M-Pesa',
     ]);
-    $whatsapp = \App\Support\WhatsApp::link('Hello Wisdom Propagation Nursery');
+    $whatsapp = \App\Support\WhatsApp::link('Hello Wisdom Nursery');
 @endphp
-<x-layouts.site title="Contact and visit" active="contact" description="Visit Wisdom Propagation Nursery, call or WhatsApp us, or send a message.">
+<x-layouts.site title="Contact and visit" active="contact" description="Visit Wisdom Nursery, call or WhatsApp us, or send a message.">
     @push('head')
         <script type="application/ld+json">{!! json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
     @endpush

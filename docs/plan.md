@@ -29,7 +29,7 @@ Likely `{{DOMAIN}} = nursery.wisdomcapital.co.ke`; to be confirmed.
 
 - **Week 3 (24 Nov):** back-in-stock SMS for "Notify me", WhatsApp catalogue export, 375px QA fixes, `docs/launch-checklist.md`, `docs/handover.md`. Waiting on client content and live keys for the live M-Pesa test and launch.
 
-- **Renamed to Wisdom Propagation Nursery** (Aldo, 24 Nov). Domain unchanged.
+- **Renamed to Wisdom Nursery** (Aldo, 24 Nov). Domain unchanged.
 - **Real photos** from the old nursery page are in place (plants, hero, story, steps, facilities, gallery); env-4 (children) deliberately excluded. Staff can swap any of them in Site settings → Photos.
 
 - **Pages built 24 Nov** from the concepts deck (Concept B). Decisions agreed with Kevin: shared Blade

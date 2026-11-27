@@ -20,7 +20,7 @@ it('runs every content seeder once and is safe to re-run on each deploy', functi
         ->and(Setting::get('phone'))->toBe('+254 700 000 000')
         ->and(Setting::get('seeded:CategorySeeder'))->not->toBeNull()
         ->and(Setting::get('seeded:PlantImportSeeder'))->not->toBeNull()
-        ->and(Plant::count())->toBe(52)                       // 33 from Wisdom Capital + 4 grafted fruit + 13 vegetable trays + 2 cypress (hidden until priced)
+        ->and(Plant::count())->toBe(58)                       // 33 from Wisdom Capital + 4 grafted fruit + 13 vegetable trays + 2 cypress + 6 from the brief (hidden until priced)
         ->and(Plant::where('is_featured', true)->count())->toBe(4)
         ->and(Plant::has('images')->count())->toBe(35)
         ->and(Setting::get('image_hero'))->toBe('site/nursery-45.webp') // current photos (27 Nov), not the old site's
@@ -83,7 +83,7 @@ it('fills the client\'s details without overwriting what staff changed', functio
     $this->seed();
 
     expect(Setting::get('address'))->toBe('Edited by staff')
-        ->and(Setting::get('about_text'))->toContain('farmer cooperatives, agrovets') // client's About text, reworded for the Kitui-advantage story
+        ->and(Setting::get('about_text'))->toStartWith('Located in the warm, fertile heart of Kitui County') // the client's brief
         ->and(Setting::get('till_number'))->toBe('303030')
         ->and(Setting::get('mpesa_account'))->toBe('2043089423')
         ->and(Setting::get('image_story_main'))->toBe('site/nursery-48.webp')
@@ -114,22 +114,20 @@ it('swaps the old site photos for the current ones but keeps staff uploads and p
     \Illuminate\Support\Facades\Storage::disk('public')->assertExists(['site/nursery-45.webp', 'site/nursery-45-sm.webp']);
 });
 
-it('tells why Kitui-grown plants do better, without overwriting staff edits', function () {
+it('uses the client\'s own wording, without overwriting staff edits', function () {
     \Illuminate\Support\Facades\Storage::fake('public');
     $this->seed(\Database\Seeders\SettingsSeeder::class);
     Setting::put('how_we_grow_1', 'Written by staff');
     $this->seed();
 
     expect(Setting::get('how_we_grow_1'))->toBe('Written by staff')
-        ->and(Setting::get('about_text'))->toContain('in Kitui, Kenya, raises plants in a semi-arid climate')
-        ->and(Setting::get('story_title'))->toBe('Toughened by the climate, ready for your land.')
-        ->and(Setting::get('advantage_1_title'))->toBe('Deeper, denser roots');
-    $this->get('/')->assertSee('Why our plants last')->assertSee('If it thrives in our climate, it is ready for your land.');
-    $this->get('/about')->assertSee('Raised tough in a semi-arid climate.');
-
-    // Kitui is named only where the location matters: the home page names the climate, not the place.
-    $text = str_replace(Setting::get('address'), '', strip_tags($this->get('/')->getContent())); // the address itself is fine
-    expect(substr_count($text, 'Kitui'))->toBe(0);
+        ->and(Setting::get('site_tagline'))->toBe('Growing Green. Cultivating Prosperity.')
+        ->and(Setting::get('advantage_5_title'))->toBe('Serving Kenya and Beyond')
+        ->and(Plant::where('slug', 'bougainvillea')->value('is_active'))->toBeFalse();
+    $this->get('/')->assertSee('Growing Green.')->assertSee('Why Choose Wisdom Nursery?')->assertSee('Our Commitment')
+        ->assertSee('Quality Ornamental Plants, Grafted Fruit Trees and Horticultural Seedlings')
+        ->assertDontSee('Wisdom Propagation')->assertDontSee('Bougainvillea');
+    $this->get('/about')->assertSee('Located in the warm, fertile heart of Kitui County');
 });
 
 it('replaces the first, Kitui-heavy wording on sites where it already ran', function () {

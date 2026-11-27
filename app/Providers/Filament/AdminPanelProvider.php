@@ -27,7 +27,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->brandName('Wisdom Propagation Nursery')
+            ->brandName('Wisdom Nursery')
             ->brandLogo(fn () => view('filament.brand', ['dark' => false]))
             ->darkModeBrandLogo(fn () => view('filament.brand', ['dark' => true]))
             ->brandLogoHeight('3rem')
