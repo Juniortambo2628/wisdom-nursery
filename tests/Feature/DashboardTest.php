@@ -94,3 +94,14 @@ it('saves several phone numbers from Site settings, the first as the main one', 
         ['number' => '0733 111 222', 'label' => null],
     ])->and(\App\Models\Setting::get('phone'))->toBe('0712 345 678');
 });
+
+it('has an upload slot in Site settings for every photo the pages show', function () {
+    $used = collect(\Illuminate\Support\Facades\File::allFiles(resource_path('views')))
+        ->flatMap(fn ($f) => preg_match_all("/site_image\\('([a-z0-9_]+)'\\)/", $f->getContents(), $m) ? $m[1] : [])
+        ->merge(['image_step_2', 'service_1_image', 'service_5_image'])->unique();
+
+    $component = Livewire::test(\App\Filament\Pages\SiteSettings::class);
+    foreach ($used as $key) {
+        $component->assertFormFieldExists($key);
+    }
+});

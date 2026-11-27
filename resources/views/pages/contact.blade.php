@@ -17,7 +17,7 @@
     @push('head')
         <script type="application/ld+json">{!! json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
     @endpush
-    <x-page-hero eyebrow="Contact & visit" title="Talk to the growers." :image="site_image('image_story_main')"
+    <x-page-hero eyebrow="Contact & visit" title="Talk to the growers." :image="site_image('image_contact_banner') ?? site_image('image_story_main')" :srcset="site_image_srcset('image_contact_banner')"
         intro="Visit us in Kitui, call, WhatsApp or send a message.">
         <div class="flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row sm:flex-wrap">
             @if ($whatsapp)<a href="{{ $whatsapp }}" target="_blank" rel="noopener" class="btn-mpesa"><x-glyph name="chat" class="h-5 w-5" /> WhatsApp us</a>@endif

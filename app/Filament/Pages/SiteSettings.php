@@ -83,28 +83,47 @@ class SiteSettings extends Page implements HasForms
                     $t('how_we_grow_1', 'Step 1: Seed'), $t('how_we_grow_2', 'Step 2: Germination'),
                     $t('how_we_grow_3', 'Step 3: Hardening'), $t('how_we_grow_4', 'Step 4: Dispatch'),
                 ]),
-                Forms\Components\Tabs\Tab::make('Photos')->columns(3)->schema(collect([
-                    'image_hero' => 'Home: large top photo',
-                    'image_story_main' => 'Home: our story (large)',
-                    'image_story_small' => 'Home: our story (small)',
-                    'image_step_1' => 'How we grow 1: Seed',
-                    'image_step_2' => 'How we grow 2: Germination',
-                    'image_step_3' => 'How we grow 3: Hardening',
-                    'image_step_4' => 'How we grow 4: Dispatch',
-                    'image_shop_banner' => 'Our plants: page header photo',
-                    'image_about_banner' => 'About: page header photo',
-                    'image_gallery_banner' => 'Gallery: page header photo',
-                    'image_tips_banner' => 'Grower tips: page header photo',
-                    'image_facility_1' => 'Facilities 1',
-                    'image_facility_2' => 'Facilities 2',
-                    'image_facility_wide' => 'Facilities: wide photo',
-                ])->map(fn ($label, $key) => Forms\Components\FileUpload::make($key)->label($label)
-                    ->image()->imageEditor()->disk('public')->directory('site')->maxSize(6144))->values()->all()),
-                Forms\Components\Tabs\Tab::make('Services')->schema(collect(range(1, 5))->map(fn ($i) => Forms\Components\Fieldset::make("Service {$i}")->columns(3)->schema([
+                Forms\Components\Tabs\Tab::make('Photos')->schema([
+                    Forms\Components\Placeholder::make('photos_help')->hiddenLabel()->content(
+                        'Tap a box to upload a photo (from a phone is fine), then press Save at the bottom. Landscape photos suit the wide slots. '
+                        .'Other photos are changed where they appear: plant photos in Plants, category cards in Plants → Categories, '
+                        .'portraits in Content → Team, and the gallery in Content → Gallery.'),
+                    ...collect([
+                        'Page headers (wide photo behind the page title)' => [
+                            'image_hero' => 'Home page',
+                            'image_about_banner' => 'About us',
+                            'image_services_banner' => 'Services',
+                            'image_shop_banner' => 'Our plants (when no category is chosen)',
+                            'image_how_banner' => 'How we grow',
+                            'image_gallery_banner' => 'Gallery',
+                            'image_tips_banner' => 'Grower tips',
+                            'image_contact_banner' => 'Contact',
+                            'image_quote_banner' => 'Request a quote',
+                        ],
+                        'Home page: our story' => [
+                            'image_story_main' => 'Large photo',
+                            'image_story_small' => 'Small photo',
+                        ],
+                        'How we grow: the four steps (home page and How we grow page)' => [
+                            'image_step_1' => '1. Seed',
+                            'image_step_2' => '2. Germination',
+                            'image_step_3' => '3. Hardening',
+                            'image_step_4' => '4. Dispatch',
+                        ],
+                        'Our facilities (About us page)' => [
+                            'image_facility_1' => 'Photo 1',
+                            'image_facility_2' => 'Photo 2',
+                            'image_facility_wide' => 'Wide photo',
+                        ],
+                        'Services page: the five cards (tall photos work best)' => collect(range(1, 5))
+                            ->mapWithKeys(fn ($i) => ["service_{$i}_image" => ($i).'. '.(setting("service_{$i}_title") ?: "Service {$i}")])->all(),
+                    ])->map(fn ($slots, $heading) => Forms\Components\Section::make($heading)->collapsible()->columns(['default' => 1, 'sm' => 2, 'lg' => 3])
+                        ->schema(collect($slots)->map(fn ($label, $key) => Forms\Components\FileUpload::make($key)->label($label)
+                            ->image()->imageEditor()->disk('public')->directory('site')->maxSize(6144))->values()->all()))->values()->all(),
+                ]),
+                Forms\Components\Tabs\Tab::make('Services')->schema(collect(range(1, 5))->map(fn ($i) => Forms\Components\Fieldset::make("Service {$i} (photo: Photos tab)")->columns(3)->schema([
                     $t("service_{$i}_title", 'Name'),
                     Forms\Components\Textarea::make("service_{$i}_text")->label('Description')->rows(3)->columnSpan(2),
-                    Forms\Components\FileUpload::make("service_{$i}_image")->label('Photo')->image()->imageEditor()
-                        ->disk('public')->directory('site')->maxSize(6144)->columnSpanFull(),
                 ]))->all()),
                 Forms\Components\Tabs\Tab::make('About')->columns(2)->schema([
                     $a('about_text', 'About us'),

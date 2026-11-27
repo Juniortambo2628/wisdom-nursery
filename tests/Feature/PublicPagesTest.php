@@ -136,3 +136,7 @@ it('shows the five services, each linking somewhere useful', function () {
         ->assertSee('category=fruit-trees', false)->assertSee(route('posts.index'), false);
     $this->get('/')->assertSee('>Services</a>', false);
 });
+
+it('shows the client testimonial on the home page', function () {
+    $this->get('/')->assertSee('saving us costly replacements')->assertSee('Faith W.')->assertDontSee('[Customer testimonial]');
+});

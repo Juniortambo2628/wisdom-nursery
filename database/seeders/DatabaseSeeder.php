@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
         HeroPhotoSeeder::class,
         ServicesSeeder::class,
         TipsBannerSeeder::class,
+        PageHeaderPhotosSeeder::class,
     ];
 
     public function run(): void

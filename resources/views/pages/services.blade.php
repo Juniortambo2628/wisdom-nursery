@@ -1,7 +1,7 @@
 <x-layouts.site title="Our services" active="services"
     description="Seed propagation, cuttings propagation, agronomy support, crop information, and ornamentals and garden plants from Wisdom Propagation Nursery in Kitui.">
     <x-page-hero eyebrow="Our services" title="From seed to a thriving planting."
-        :image="site_image('image_step_3')"
+        :image="site_image('image_services_banner') ?? site_image('image_step_3')" :srcset="site_image_srcset('image_services_banner')"
         intro="Quality planting materials, clear stock readiness and practical growing support, grown in Kitui for farmers, institutions and landscaping projects." />
 
     <section class="container-page py-16 lg:py-24">

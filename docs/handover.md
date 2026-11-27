@@ -123,10 +123,10 @@ Menu → **Settings → Site settings**, tabs:
 - **Contact**: phone numbers (up to four, each with an optional label such as *Orders* or *Office*; tap **Add another number**, drag to reorder, the first is the main one), email, address, opening hours, Google Maps link, social media.
 - **Ordering**: the M-Pesa till or paybill number shown to customers (and, for a paybill, its account number), collection note, delivery text.
 - **Home page**: the story, the four numbers, the "How we grow" steps.
-- **Photos**: every large photo on the site. Tap one to upload a replacement (photos from a
+- **Photos**: every photo on the site's pages, in groups: the page headers (one per page), the home page story, the four How we grow steps, the facilities and the five Services cards. Tap one to upload a replacement (photos from a phone are fine; landscape for the wide ones). Change them whenever you like.
   phone are fine; keep them landscape for the wide ones). Change them whenever you like.
 - **About**: about text, facilities text, the nursery units (one per line), and the four *What we grow* boxes.
-- **Services**: the name, description and photo of each of the five services on the Our services page.
+- **Services**: the name and description of each of the five services on the Our services page (their photos are in the Photos tab).
 
 Press **Save** at the bottom.
 

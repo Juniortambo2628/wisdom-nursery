@@ -1,5 +1,5 @@
 <x-layouts.site title="Request a quote" description="Bulk orders for farms, schools, estates and landscapers. Tell us what you need and we'll reply with prices and a ready date.">
-    <x-page-hero eyebrow="Farms, schools, estates & landscapers" title="Request a quote" :image="site_image('image_step_4')"
+    <x-page-hero eyebrow="Farms, schools, estates & landscapers" title="Request a quote" :image="site_image('image_quote_banner') ?? site_image('image_step_4')" :srcset="site_image_srcset('image_quote_banner')"
         intro="Tell us what you need and where. We reply with prices and a ready date, usually the same day. We can also raise seedlings from your own seed." />
     <section class="container-page grid gap-10 py-16 lg:grid-cols-2 lg:py-24">
         <div>
