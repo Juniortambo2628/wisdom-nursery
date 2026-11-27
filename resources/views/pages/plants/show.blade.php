@@ -142,7 +142,7 @@
                 @endif
 
                 <p class="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-ink/70">
-                    <x-mpesa-badge /> Pay on your phone <span aria-hidden="true">·</span> Collect or delivery in {{ setting('delivery_areas_summary', '[areas]') }}
+                    <x-mpesa-badge /> Pay on your phone <span aria-hidden="true">·</span> Collect, or delivery to {{ setting('delivery_areas_summary', '[areas]') }}
                 </p>
 
                 @php

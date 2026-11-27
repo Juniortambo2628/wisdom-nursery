@@ -107,3 +107,24 @@ it('shows a placeholder number as text, not a call link', function () {
     expect(site_phones()[0])->toMatchArray(['number' => '[+254 7XX XXX XXX]', 'tel' => null]);
     $this->get('/contact')->assertSee('[+254 7XX XXX XXX]', false)->assertDontSee('href="tel:', false);
 });
+
+it('shows a plant from the chosen category in the plants page photo', function () {
+    $plant = Plant::whereHas('category', fn ($q) => $q->where('slug', 'tree-seedlings'))->has('images')->ordered()->first();
+    expect($plant)->not->toBeNull();
+
+    $this->get('/plants?category=tree-seedlings')->assertSee($plant->primaryImage->url(), false);
+    $this->get('/plants')->assertSee(site_image('image_shop_banner'), false);
+});
+
+it('has a Home link and shows the paybill with its account number', function () {
+    $this->get('/about')->assertSee('>Home</a>', false)
+        ->assertSee('Paybill <strong>303030</strong>, account <strong>2043089423</strong>', false)
+        ->assertSee('What we grow')->assertSee('Kilimanjaro Greenhouse')->assertSee('Jacob Malonza');
+});
+
+it('shows plants as a grid by default, with a list view to switch to', function () {
+    $this->get('/plants')->assertOk()
+        ->assertSee('aria-label="Grid view"', false)->assertDontSee('<table', false)->assertSee('Swiss Cheese Plant');
+    $this->get('/plants?view=list')->assertOk()->assertSee('<table', false)->assertSee('Swiss Cheese Plant')
+        ->assertSee('category=indoor-plants&amp;view=list', false); // the choice stays on category links
+});

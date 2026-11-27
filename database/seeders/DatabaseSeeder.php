@@ -29,6 +29,8 @@ class DatabaseSeeder extends Seeder
         ResponsivePhotosSeeder::class,
         GuideDraftsSeeder::class,
         TestimonialSeeder::class,
+        VegetableTraySeeder::class,
+        ClientContentSeeder::class,
     ];
 
     public function run(): void

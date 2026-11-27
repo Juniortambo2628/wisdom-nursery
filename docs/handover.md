@@ -121,11 +121,11 @@ shows how many.
 Menu → **Settings → Site settings**, tabs:
 
 - **Contact**: phone numbers (up to four, each with an optional label such as *Orders* or *Office*; tap **Add another number**, drag to reorder, the first is the main one), email, address, opening hours, Google Maps link, social media.
-- **Ordering**: the M-Pesa till number shown to customers, collection note, delivery text.
+- **Ordering**: the M-Pesa till or paybill number shown to customers (and, for a paybill, its account number), collection note, delivery text.
 - **Home page**: the story, the four numbers, the "How we grow" steps.
 - **Photos**: every large photo on the site. Tap one to upload a replacement (photos from a
   phone are fine; keep them landscape for the wide ones). Change them whenever you like.
-- **About**: about text and facilities.
+- **About**: about text, facilities text, the nursery units (one per line), and the four *What we grow* boxes.
 
 Press **Save** at the bottom.
 

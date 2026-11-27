@@ -20,7 +20,7 @@ it('runs every content seeder once and is safe to re-run on each deploy', functi
         ->and(Setting::get('phone'))->toBe('+254 700 000 000')
         ->and(Setting::get('seeded:CategorySeeder'))->not->toBeNull()
         ->and(Setting::get('seeded:PlantImportSeeder'))->not->toBeNull()
-        ->and(Plant::count())->toBe(37)                       // 33 from Wisdom Capital + 4 grafted fruit
+        ->and(Plant::count())->toBe(50)                       // 33 from Wisdom Capital + 4 grafted fruit + 13 vegetable trays
         ->and(Plant::where('is_featured', true)->count())->toBe(4)
         ->and(Plant::has('images')->count())->toBe(33)
         ->and(Setting::get('image_hero'))->toBe('site/nursery-24.webp')
@@ -63,4 +63,32 @@ it('fills the launch guides as drafts without overwriting edited ones', function
         ->and(Post::where('slug', 'how-to-plant-a-tree-seedling')->value('body'))->toContain('graft joint')
         ->and(Post::where('slug', 'repotting-without-stress')->value('body'))->toBe('<p>Written by the team.</p>')
         ->and(Post::published()->count())->toBe(0);
+});
+
+it('adds the vegetable trays with the client\'s prices, not yet in stock', function () {
+    \Illuminate\Support\Facades\Storage::fake('public');
+    $this->seed();
+
+    $veg = Plant::whereHas('category', fn ($q) => $q->where('slug', 'vegetable-seedlings'))->get();
+    expect($veg)->toHaveCount(13)
+        ->and($veg->firstWhere('name', 'Tomato Ansal F1')->price)->toBe(1900)
+        ->and($veg->firstWhere('name', 'Onion')->price)->toBe(1600)
+        ->and($veg->every(fn ($p) => $p->sold_as === \App\Enums\SoldAs::Tray && $p->stock_qty === 0))->toBeTrue();
+});
+
+it('fills the client\'s details without overwriting what staff changed', function () {
+    \Illuminate\Support\Facades\Storage::fake('public');
+    $this->seed(\Database\Seeders\SettingsSeeder::class);
+    Setting::put('address', 'Edited by staff');
+    $this->seed();
+
+    expect(Setting::get('address'))->toBe('Edited by staff')
+        ->and(Setting::get('about_text'))->toStartWith('Operating from Kitui Central')
+        ->and(Setting::get('till_number'))->toBe('303030')
+        ->and(Setting::get('mpesa_account'))->toBe('2043089423')
+        ->and(Setting::get('image_story_main'))->toBe('site/nursery-34.webp')
+        ->and(\App\Models\TeamMember::where('name', '[Name]')->count())->toBe(0)
+        ->and(\App\Models\TeamMember::where('role', 'like', 'In-charge, %')->count())->toBe(5)
+        ->and(\App\Models\TeamMember::count())->toBe(14);
+    \Illuminate\Support\Facades\Storage::disk('public')->assertExists('site/nursery-36.webp');
 });

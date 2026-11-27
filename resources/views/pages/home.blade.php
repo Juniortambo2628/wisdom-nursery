@@ -1,4 +1,4 @@
-<x-layouts.site>
+<x-layouts.site active="home">
     @php
         $steps = [
             ['Seed', setting('how_we_grow_1'), 'Sowing in clean trays'],
@@ -19,8 +19,9 @@
             <x-photo label="Full-screen photo: team in uniforms" dark class="absolute inset-0 h-full w-full items-start pt-6 text-[11px] sm:items-center sm:pt-0 sm:text-transparent" />
         @endif
         <div class="container-page relative pb-28 pt-40 sm:pb-36 sm:pt-32 lg:pb-44 lg:pt-44">
-            <p class="eyebrow text-moss">Wisdom Propagation Nursery · Since {{ setting('since_year', '[Year]') }}</p>
-            <h1 class="mt-5 max-w-3xl text-[44px] leading-[1.02] text-white sm:text-6xl lg:text-[88px]">
+            <p class="max-w-3xl text-xl font-semibold uppercase leading-snug tracking-[0.2em] text-white sm:text-2xl sm:tracking-[0.24em] lg:text-[34px]">Wisdom Propagation Nursery</p>
+            <p class="eyebrow mt-3 text-moss">Kitui, Kenya · Since {{ setting('since_year', '[Year]') }}</p>
+            <h1 class="mt-6 max-w-3xl text-[44px] leading-[1.02] text-white sm:text-6xl lg:text-[88px]">
                 Every plant gets a <em class="font-normal italic text-moss">strong</em> start.
             </h1>
             <p class="mt-6 max-w-xl text-lg text-white/85">Fruit trees, seedlings, ornamentals and indoor plants from the Wisdom Capital family, for homes, offices, farms and planting projects.</p>

@@ -63,9 +63,10 @@ class SiteSettings extends Page implements HasForms
                     $t('social_facebook', 'Facebook')->url(), $t('social_instagram', 'Instagram')->url(), $t('social_tiktok', 'TikTok')->url(),
                 ]),
                 Forms\Components\Tabs\Tab::make('Ordering')->columns(2)->schema([
-                    $t('till_number', 'M-Pesa till / paybill shown to customers'),
+                    $t('till_number', 'M-Pesa till or paybill number shown to customers'),
+                    $t('mpesa_account', 'Paybill account number')->helperText('For a paybill only. Leave empty for a till.'),
                     $t('collection_note', 'Collection note'),
-                    $t('delivery_areas_summary', 'Delivery areas (short)')->helperText('e.g. "Kitui and Machakos"'),
+                    $t('delivery_areas_summary', 'Delivery areas (short)')->helperText('Shown as "Collect, or delivery to …", e.g. "anywhere in Kenya"'),
                     $t('agronomist_hours', 'Agronomist on WhatsApp (days & hours)'),
                     $a('delivery_text', 'Delivery & collection text'),
                     $a('care_text', 'Planting & care text (plant pages)'),
@@ -100,8 +101,13 @@ class SiteSettings extends Page implements HasForms
                 Forms\Components\Tabs\Tab::make('About')->columns(2)->schema([
                     $a('about_text', 'About us'),
                     $a('facilities_text', 'Facilities'),
-                    $t('facility_1', 'Facility 1'), $t('facility_2', 'Facility 2'),
-                    $t('facility_certification', 'Certification'),
+                    Forms\Components\Textarea::make('facility_units')->label('Nursery units (one per line)')->rows(5)
+                        ->helperText('Listed under "Our facilities", e.g. Kilimanjaro Greenhouse.'),
+                    $t('facility_certification', 'Certification (optional)'),
+                    Forms\Components\Fieldset::make('What we grow (About page, four boxes)')->columns(2)->columnSpanFull()->schema(collect(range(1, 4))->flatMap(fn ($i) => [
+                        $t("about_focus_{$i}_title", "Box {$i} heading"),
+                        Forms\Components\Textarea::make("about_focus_{$i}_text")->label("Box {$i} text")->rows(2),
+                    ])->all()),
                 ]),
             ]),
         ]);

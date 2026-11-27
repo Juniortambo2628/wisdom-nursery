@@ -4,11 +4,16 @@
             <p class="eyebrow text-moss">Our facilities</p>
             <h2 class="mt-4 text-3xl text-white sm:text-4xl lg:text-5xl">Built for healthy plants.</h2>
             <p class="mt-5 max-w-lg text-lg text-white/80">{{ setting('facilities_text') }}</p>
-            <ul class="mt-6 space-y-3">
-                @foreach (['facility_1' => '[Facility 1]', 'facility_2' => '[Facility 2]', 'facility_certification' => '[Certification, if any]'] as $key => $default)
-                    @if ($text = setting($key, $default))
-                        <li class="flex items-center gap-3"><x-glyph name="check" class="h-5 w-5 text-moss" /> {{ $text }}</li>
-                    @endif
+            @php
+                // One unit per line in Site settings → About; older data used two fixed fields.
+                $units = filled(setting('facility_units'))
+                    ? preg_split('/\R/', trim(setting('facility_units')))
+                    : [setting('facility_1', '[Facility 1]'), setting('facility_2', '[Facility 2]')];
+                $items = array_values(array_filter(array_map('trim', [...$units, (string) setting('facility_certification')])));
+            @endphp
+            <ul class="mt-6 grid gap-3 sm:grid-cols-2">
+                @foreach ($items as $text)
+                    <li class="flex items-center gap-3"><x-glyph name="check" class="h-5 w-5 shrink-0 text-moss" /> {{ $text }}</li>
                 @endforeach
             </ul>
         </div>

@@ -8,8 +8,8 @@ export const palette = {
     leaf: '#2D6A3E',   // main buttons, links, active states
     fern: '#4F8A4B',   // eyebrow labels
     moss: '#8FB36B',   // highlights on dark backgrounds
-    sage: '#DBE7CD',   // panels (bulk quote band)
-    mist: '#EEF4E6',   // soft backgrounds, in-cart states
+    sage: '#C9DBB4',   // panels (bulk quote band); darker than mist so panels stand out
+    mist: '#E4EDD9',   // page background, soft backgrounds, in-cart states
     cream: '#F8F7F1',  // page background
     ink: '#14211A',    // body text
     clay: '#B9822F',   // badges, cart count, "ready in X weeks"

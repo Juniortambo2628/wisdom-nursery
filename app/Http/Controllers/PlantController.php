@@ -17,6 +17,7 @@ class PlantController extends Controller
         $categories = Category::orderBy('sort_order')->get();
         $active = $categories->firstWhere('slug', $request->query('category'));
         $search = trim((string) $request->query('q'));
+        $view = $request->query('view') === 'list' ? 'list' : 'grid'; // grid is the default
 
         $plants = Plant::active()->with('primaryImage', 'category')
             ->when($active, fn ($q) => $q->where('category_id', $active->id))
@@ -29,6 +30,7 @@ class PlantController extends Controller
             'categories' => $categories,
             'activeCategory' => $active,
             'search' => $search,
+            'view' => $view,
             'plants' => $plants,
             'updatedAt' => Plant::active()->max('updated_at'),
             'cart' => $cart,

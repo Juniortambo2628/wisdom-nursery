@@ -16,7 +16,7 @@
         <form x-cloak x-show="notify" method="POST" action="{{ route('plants.notify', $plant) }}" class="flex gap-2">
             @csrf
             <label class="sr-only" for="notify-{{ $plant->id }}">Your phone number</label>
-            <input id="notify-{{ $plant->id }}" name="phone" type="tel" required placeholder="07XX XXX XXX" class="input w-36 py-2 text-xs">
+            <input id="notify-{{ $plant->id }}" name="phone" type="tel" required placeholder="07XX XXX XXX" class="input min-w-0 flex-1 py-2 text-xs sm:w-36 sm:flex-none">
             <button class="btn-dark btn-sm">Send</button>
         </form>
     @endif

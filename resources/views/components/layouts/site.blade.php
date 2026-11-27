@@ -1,12 +1,13 @@
 @props([
     'title' => null,
     'description' => null,
-    'active' => null,    // nav key: about | plants | how | gallery | tips | contact
+    'active' => null,    // nav key: home | about | plants | how | gallery | tips | contact
     'ogImage' => null,
     'floatingWhatsapp' => true, // hidden on checkout and payment pages, where it would cover the form
 ])
 @php
     $nav = [
+        'home' => ['Home', route('home')],
         'about' => ['About', route('about')],
         'plants' => ['Our plants', route('plants.index')],
         'how' => ['How we grow', route('how-we-grow')],
@@ -128,7 +129,7 @@
                 <x-logo dark />
                 <p class="mt-5 max-w-xs text-[15px] leading-relaxed">Fruit trees, seedlings, ornamentals and indoor plants, grown by the Wisdom Capital family.</p>
                 @if ($till = setting('till_number'))
-                    <p class="mt-4 flex items-center gap-2 text-sm"><x-mpesa-badge /> Till / Paybill {{ $till }}</p>
+                    <p class="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm"><x-mpesa-badge /> <span><x-mpesa-payto :till="$till" /></span></p>
                 @endif
             </div>
             <div>

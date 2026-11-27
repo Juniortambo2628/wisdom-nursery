@@ -47,7 +47,7 @@
                             <div role="status" aria-live="polite">
                                 <h2 class="text-2xl">Check your phone</h2>
                                 <p class="mt-2 text-ink/70">We've sent an M-Pesa prompt to {{ $mpesaPhone }}. Enter your PIN to pay. This page updates by itself once the payment goes through, and you'll get an SMS confirmation.</p>
-                                <p class="mt-3 text-sm text-ink/60">No prompt?@if ($till) Pay to Till {{ $till }} and enter the M-Pesa code below.@else Enter the M-Pesa code below once you've paid.@endif</p>
+                                <p class="mt-3 text-sm text-ink/60">No prompt?@if ($till) Pay to <x-mpesa-payto :till="$till" /> and enter the M-Pesa code below.@else Enter the M-Pesa code below once you've paid.@endif</p>
                             </div>
                         </div>
                     @else
@@ -57,7 +57,7 @@
                                 <p class="mt-2 text-ink/70">{{ $status === PaymentStatus::Cancelled ? 'The M-Pesa prompt was cancelled.' : 'M-Pesa did not complete the payment.' }} You can send the prompt again, or pay another way below.</p>
                             @else
                                 <h2 class="text-2xl">Pay {{ ksh($order->total) }} with <span class="whitespace-nowrap">M-Pesa</span></h2>
-                                <p class="mt-2 text-ink/70">@if ($till)Pay to Till <strong>{{ $till }}</strong>, then enter the M-Pesa code below.@else Pay with M-Pesa, then enter the M-Pesa code below, or order on WhatsApp.@endif</p>
+                                <p class="mt-2 text-ink/70">@if ($till)Pay to <x-mpesa-payto :till="$till" />, then enter the M-Pesa code below.@else Pay with M-Pesa, then enter the M-Pesa code below, or order on WhatsApp.@endif</p>
                             @endif
                         </div>
                         @if ($canRetry)

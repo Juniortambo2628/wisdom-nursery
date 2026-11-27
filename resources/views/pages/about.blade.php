@@ -11,6 +11,26 @@
         <x-photo :src="site_image('image_about_banner')" :srcset="site_image_srcset('image_about_banner')" label="Group photo: whole team in new uniforms at the nursery entrance" class="aspect-[16/10] w-full rounded-image-lg sm:aspect-[2.2/1]" />
     </div>
 
+    @php
+        $focus = collect(range(1, 4))
+            ->map(fn ($i) => ['title' => setting("about_focus_{$i}_title"), 'text' => setting("about_focus_{$i}_text")])
+            ->filter(fn ($f) => filled($f['title']) && filled($f['text']));
+    @endphp
+    @if ($focus->isNotEmpty())
+        <section class="container-page pt-20 lg:pt-28">
+            <x-section-heading title="What we grow" />
+            <ul class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                @foreach ($focus as $f)
+                    <li class="card p-6">
+                        <x-glyph name="leaf" class="h-6 w-6 text-leaf" />
+                        <h3 class="mt-4 text-xl">{{ $f['title'] }}</h3>
+                        <p class="mt-2 text-ink/70">{{ $f['text'] }}</p>
+                    </li>
+                @endforeach
+            </ul>
+        </section>
+    @endif
+
     <section class="container-page py-20 lg:py-28">
         <x-section-heading title="Meet the team">
             <x-slot:action><p class="text-ink/60">{{ $team->count() }} people · one nursery</p></x-slot:action>
