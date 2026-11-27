@@ -42,3 +42,34 @@ if (! function_exists('site_image_srcset')) {
         return $disk->exists($small) ? $disk->url($small).' 900w, '.$disk->url($path).' 1920w' : null;
     }
 }
+
+if (! function_exists('site_phones')) {
+    /**
+     * The nursery's phone numbers, in the order staff set them in Site settings → Contact.
+     * Each: ['number' => '0712 345 678', 'label' => 'Orders' or null, 'tel' => '0712345678' or null].
+     * `tel` is null for a [bracketed] placeholder, so it shows as text, not a call link.
+     * Falls back to the single "phone" setting used before more than one number was allowed.
+     */
+    function site_phones(): array
+    {
+        $rows = json_decode((string) setting('phones'), true);
+        if (! is_array($rows) || $rows === []) {
+            $rows = filled($single = setting('phone')) ? [['number' => $single]] : [];
+        }
+
+        return collect($rows)
+            ->filter(fn ($row) => is_array($row) && filled($row['number'] ?? null))
+            ->map(function (array $row) {
+                $number = trim($row['number']);
+                $placeholder = str_starts_with($number, '[');
+
+                return [
+                    'number' => $number,
+                    'label' => filled($row['label'] ?? null) ? trim($row['label']) : null,
+                    'tel' => $placeholder ? null : preg_replace('/[^\d+]/', '', $number),
+                ];
+            })
+            ->values()
+            ->all();
+    }
+}

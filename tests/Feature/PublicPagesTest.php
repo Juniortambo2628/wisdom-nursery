@@ -82,3 +82,28 @@ it('hides WhatsApp links while the number is a placeholder', function () {
     config()->set('nursery.whatsapp', '0712 345 678');
     expect(\App\Support\WhatsApp::link('Hi'))->toBe('https://wa.me/254712345678?text=Hi');
 });
+
+it('shows every phone number staff add, each as a call link', function () {
+    \App\Models\Setting::put('phones', json_encode([
+        ['number' => '0712 345 678', 'label' => 'Orders'],
+        ['number' => '0733 111 222', 'label' => null],
+    ]));
+
+    $this->get('/contact')->assertOk()
+        ->assertSee('href="tel:0712345678"', false)->assertSee('0712 345 678</a> (Orders)', false)
+        ->assertSee('href="tel:0733111222"', false)
+        ->assertSee('Call Orders: 0712 345 678', false)
+        ->assertSee('"telephone":"0712 345 678"', false);
+});
+
+it('still shows the single phone number saved before lists were allowed', function () {
+    \App\Models\Setting::put('phone', '0700 000 000');
+
+    expect(site_phones())->toBe([['number' => '0700 000 000', 'label' => null, 'tel' => '0700000000']]);
+    $this->get('/')->assertSee('href="tel:0700000000"', false);
+});
+
+it('shows a placeholder number as text, not a call link', function () {
+    expect(site_phones()[0])->toMatchArray(['number' => '[+254 7XX XXX XXX]', 'tel' => null]);
+    $this->get('/contact')->assertSee('[+254 7XX XXX XXX]', false)->assertDontSee('href="tel:', false);
+});

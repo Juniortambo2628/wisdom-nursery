@@ -6,7 +6,7 @@
             <ul class="mt-6 space-y-3 text-ink/80">
                 <li class="flex gap-3"><x-glyph name="pin" class="mt-0.5 h-5 w-5 shrink-0 text-leaf" /> <span>{{ setting('address') }}@if (setting('directions'))<br><span class="text-sm text-ink/60">{{ setting('directions') }}</span>@endif</span></li>
                 <li class="flex gap-3"><x-glyph name="clock" class="mt-0.5 h-5 w-5 shrink-0 text-leaf" /> {{ setting('hours') }}</li>
-                <li class="flex gap-3"><x-glyph name="phone" class="mt-0.5 h-5 w-5 shrink-0 text-leaf" /> {{ setting('phone') }} · {{ setting('email') }}</li>
+                <li class="flex gap-3"><x-glyph name="phone" class="mt-0.5 h-5 w-5 shrink-0 text-leaf" /> <span><x-phone-numbers separator="<br>" link-class="hover:text-forest" /><br>{{ setting('email') }}</span></li>
             </ul>
             @if ($embed = setting('map_embed_url'))
                 <iframe src="{{ $embed }}" title="Map to Wisdom Propagation Nursery" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="mt-8 aspect-[16/10] w-full rounded-image border-0"></iframe>

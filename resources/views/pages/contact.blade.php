@@ -5,7 +5,7 @@
         'name' => 'Wisdom Propagation Nursery',
         'parentOrganization' => ['@type' => 'Organization', 'name' => 'Wisdom Capital Limited'],
         'url' => route('home'),
-        'telephone' => str_starts_with((string) setting('phone'), '[') ? null : setting('phone'),
+        'telephone' => collect(site_phones())->first(fn ($p) => $p['tel'])['number'] ?? null,
         'address' => str_starts_with((string) setting('address'), '[') ? null : setting('address'),
         'openingHours' => str_starts_with((string) setting('hours'), '[') ? null : setting('hours'),
         'geo' => setting('latitude') ? ['@type' => 'GeoCoordinates', 'latitude' => setting('latitude'), 'longitude' => setting('longitude')] : null,
@@ -22,7 +22,9 @@
         <h1 class="mt-4 text-5xl sm:text-6xl lg:text-7xl">Talk to the growers.</h1>
         <div class="mt-8 flex flex-wrap gap-3">
             @if ($whatsapp)<a href="{{ $whatsapp }}" target="_blank" rel="noopener" class="btn-mpesa"><x-glyph name="chat" class="h-5 w-5" /> WhatsApp us</a>@endif
-            @if (($phone = setting('phone')) && ! str_starts_with($phone, '['))<a href="tel:{{ preg_replace('/[^\d+]/', '', $phone) }}" class="btn-outline"><x-glyph name="phone" class="h-5 w-5" /> Call {{ $phone }}</a>@endif
+            @foreach (site_phones() as $p)
+                @if ($p['tel'])<a href="tel:{{ $p['tel'] }}" class="btn-outline"><x-glyph name="phone" class="h-5 w-5" /> Call {{ $p['label'] ? $p['label'].': ' : '' }}{{ $p['number'] }}</a>@endif
+            @endforeach
         </div>
     </section>
     @include('partials.visit')

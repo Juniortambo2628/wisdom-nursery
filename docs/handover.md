@@ -120,7 +120,7 @@ shows how many.
 
 Menu → **Settings → Site settings**, tabs:
 
-- **Contact**: phone, email, address, opening hours, Google Maps link, social media.
+- **Contact**: phone numbers (up to four, each with an optional label such as *Orders* or *Office*; tap **Add another number**, drag to reorder, the first is the main one), email, address, opening hours, Google Maps link, social media.
 - **Ordering**: the M-Pesa till number shown to customers, collection note, delivery text.
 - **Home page**: the story, the four numbers, the "How we grow" steps.
 - **Photos**: every large photo on the site. Tap one to upload a replacement (photos from a

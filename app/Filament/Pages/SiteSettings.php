@@ -30,7 +30,10 @@ class SiteSettings extends Page implements HasForms
 
     public function mount(): void
     {
-        $this->form->fill(Setting::allValues());
+        $values = Setting::allValues();
+        // Phone numbers are a list; older data has one number in "phone".
+        $values['phones'] = collect(site_phones())->map(fn ($p) => ['number' => $p['number'], 'label' => $p['label']])->all();
+        $this->form->fill($values);
     }
 
     public function form(Form $form): Form
@@ -41,7 +44,15 @@ class SiteSettings extends Page implements HasForms
         return $form->statePath('data')->schema([
             Forms\Components\Tabs::make()->tabs([
                 Forms\Components\Tabs\Tab::make('Contact')->columns(2)->schema([
-                    $t('phone', 'Phone (shown on site)'),
+                    Forms\Components\Repeater::make('phones')->label('Phone numbers (shown on site)')
+                        ->schema([
+                            Forms\Components\TextInput::make('number')->label('Number')->type('tel')->required()->maxLength(30)->placeholder('0712 345 678'),
+                            Forms\Components\TextInput::make('label')->label('Label (optional)')->maxLength(30)->placeholder('e.g. Orders, Office, Agronomist'),
+                        ])
+                        ->columns(2)->defaultItems(1)->minItems(1)->maxItems(4)->reorderable()
+                        ->addActionLabel('Add another number')
+                        ->helperText('The first number is the main one (used for search engines). Up to four.')
+                        ->columnSpanFull(),
                     $t('email', 'Email'),
                     $t('address', 'Address'),
                     $t('hours', 'Opening hours'),
@@ -98,7 +109,13 @@ class SiteSettings extends Page implements HasForms
 
     public function save(): void
     {
-        foreach ($this->form->getState() as $key => $value) {
+        $state = $this->form->getState();
+        $phones = collect($state['phones'] ?? [])
+            ->map(fn ($p) => ['number' => trim((string) ($p['number'] ?? '')), 'label' => trim((string) ($p['label'] ?? '')) ?: null])
+            ->filter(fn ($p) => $p['number'] !== '')->values()->all();
+        $state['phones'] = json_encode($phones, JSON_UNESCAPED_UNICODE);
+        $state['phone'] = $phones[0]['number'] ?? null; // main number, kept for anything that reads one
+        foreach ($state as $key => $value) {
             Setting::put($key, $value);
         }
         Notification::make()->title('Settings saved')->success()->send();

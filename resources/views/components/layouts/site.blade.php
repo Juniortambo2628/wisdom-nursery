@@ -17,7 +17,7 @@
     $pageTitle = $title ? $title.' · Wisdom Propagation Nursery' : 'Wisdom Propagation Nursery · '.setting('site_tagline', 'Every plant gets a strong start');
     $metaDescription = $description ?? 'Fruit trees, vegetable seedlings, ornamentals, indoor plants and tree seedlings from Wisdom Propagation Nursery, part of the Wisdom Capital family. Pay with M-Pesa, collect or get it delivered.';
     $whatsapp = \App\Support\WhatsApp::link('Hello Wisdom Propagation Nursery');
-    $phone = setting('phone');
+    $phones = site_phones();
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -53,7 +53,7 @@
     <div class="hidden bg-forest text-xs text-white/85 sm:block">
         <div class="container-page flex items-center justify-between gap-4 py-2.5">
             <p>Pay with M-Pesa · Collect at the nursery or get it delivered</p>
-            <p>Call / WhatsApp {{ $phone }} · {{ setting('hours') }}</p>
+            <p>Call / WhatsApp <x-phone-numbers /> · {{ setting('hours') }}</p>
         </div>
     </div>
 
@@ -102,8 +102,8 @@
         </ul>
         <div class="mt-auto space-y-3">
             <a href="{{ route('quote.show') }}" class="btn-dark w-full">Request a quote{{ $quoteCount ? " ($quoteCount)" : '' }}</a>
-            @if ($phone)
-                <p class="text-center text-sm text-ink/60">Call / WhatsApp {{ $phone }}</p>
+            @if ($phones)
+                <p class="text-center text-sm text-ink/60">Call / WhatsApp<br><x-phone-numbers separator="<br>" link-class="font-semibold text-forest" /></p>
             @endif
         </div>
     </nav>
@@ -153,7 +153,10 @@
                 <ul class="mt-4 space-y-2.5 text-[15px]">
                     <li>{{ setting('address') }}</li>
                     <li>{{ setting('hours') }}</li>
-                    <li>{{ $phone }} · {{ setting('email') }}</li>
+                    @foreach ($phones as $p)
+                        <li>@if ($p['tel'])<a href="tel:{{ $p['tel'] }}" class="hover:text-white">{{ $p['number'] }}</a>@else{{ $p['number'] }}@endif{{ $p['label'] ? ' ('.$p['label'].')' : '' }}</li>
+                    @endforeach
+                    <li>{{ setting('email') }}</li>
                     @php $socials = array_filter(['Facebook' => setting('social_facebook'), 'Instagram' => setting('social_instagram'), 'TikTok' => setting('social_tiktok')]); @endphp
                     @if ($socials)
                         <li>@foreach ($socials as $label => $url)<a href="{{ $url }}" class="hover:text-white" rel="noopener" target="_blank">{{ $label }}</a>@if (! $loop->last) · @endif @endforeach</li>

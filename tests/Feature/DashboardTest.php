@@ -78,3 +78,19 @@ it('prints QR labels for selected plants', function () {
 it('downloads the WhatsApp catalogue from the plant list', function () {
     Livewire::test(ListPlants::class)->callAction('whatsapp_catalogue')->assertFileDownloaded('wisdom-propagation-nursery-catalogue.csv');
 });
+
+it('saves several phone numbers from Site settings, the first as the main one', function () {
+    Livewire::test(\App\Filament\Pages\SiteSettings::class)
+        ->assertFormSet(['phones' => fn ($rows) => collect($rows)->pluck('number')->values()->all() === ['[+254 7XX XXX XXX]']])
+        ->set('data.phones', [
+            ['number' => '0712 345 678', 'label' => 'Orders'],
+            ['number' => ' 0733 111 222 ', 'label' => ''],
+        ])
+        ->call('save')
+        ->assertHasNoErrors();
+
+    expect(json_decode(\App\Models\Setting::get('phones'), true))->toBe([
+        ['number' => '0712 345 678', 'label' => 'Orders'],
+        ['number' => '0733 111 222', 'label' => null],
+    ])->and(\App\Models\Setting::get('phone'))->toBe('0712 345 678');
+});
