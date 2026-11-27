@@ -18,6 +18,7 @@ it('renders every public page', function (string $url, string $sees) {
     'plant page' => ['/plants/swiss-cheese-plant', 'Monstera deliciosa'],
     'about' => ['/about', 'The people behind the plants.'],
     'how we grow' => ['/how-we-grow', 'From seed to your farm in four steps.'],
+    'services' => ['/services', 'Five ways we help you grow'],
     'gallery' => ['/gallery', 'Gallery'],
     'grower tips' => ['/grower-tips', 'Grow it well.'],
     'contact' => ['/contact', 'Come and see us'],
@@ -127,4 +128,11 @@ it('shows plants as a grid by default, with a list view to switch to', function 
         ->assertSee('aria-label="Grid view"', false)->assertDontSee('<table', false)->assertSee('Swiss Cheese Plant');
     $this->get('/plants?view=list')->assertOk()->assertSee('<table', false)->assertSee('Swiss Cheese Plant')
         ->assertSee('category=indoor-plants&amp;view=list', false); // the choice stays on category links
+});
+
+it('shows the five services, each linking somewhere useful', function () {
+    $this->get('/services')->assertOk()
+        ->assertSeeInOrder(['Seed propagation', 'Cuttings propagation', 'Agronomy support', 'Crop information', 'Ornamentals &amp; garden'], false)
+        ->assertSee('category=fruit-trees', false)->assertSee(route('posts.index'), false);
+    $this->get('/')->assertSee('>Services</a>', false);
 });

@@ -39,6 +39,28 @@ class PageController extends Controller
         ]);
     }
 
+    /** Our services: the five services, as an expanding card row (text and photos in Site settings → Services). */
+    public function services(): View
+    {
+        $links = [
+            1 => [route('plants.index', ['category' => 'vegetable-seedlings']), 'See seedlings'],
+            2 => [route('plants.index', ['category' => 'fruit-trees']), 'See fruit trees'],
+            3 => [route('contact'), 'Talk to us'],
+            4 => [route('posts.index'), 'Read grower tips'],
+            5 => [route('plants.index', ['category' => 'ornamentals-palms']), 'See ornamentals'],
+        ];
+
+        $services = collect($links)->map(fn ($link, $i) => [
+            'title' => setting("service_{$i}_title"),
+            'text' => setting("service_{$i}_text"),
+            'image' => site_image("service_{$i}_image"),
+            'url' => $link[0],
+            'action' => $link[1],
+        ])->filter(fn ($s) => filled($s['title']))->values();
+
+        return view('pages.services', ['services' => $services]);
+    }
+
     public function howWeGrow(): View
     {
         return view('pages.how-we-grow');

@@ -1,7 +1,7 @@
 @props([
     'title' => null,
     'description' => null,
-    'active' => null,    // nav key: home | about | plants | how | gallery | tips | contact
+    'active' => null,    // nav key: home | about | services | plants | how | gallery | tips | contact
     'ogImage' => null,
     'floatingWhatsapp' => true, // hidden on checkout and payment pages, where it would cover the form
 ])
@@ -9,6 +9,7 @@
     $nav = [
         'home' => ['Home', route('home')],
         'about' => ['About us', route('about')],
+        'services' => ['Services', route('services')],
         'plants' => ['Our plants', route('plants.index')],
         'how' => ['How we grow', route('how-we-grow')],
         'gallery' => ['Gallery', route('gallery')],

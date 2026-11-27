@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
         PhotoRefreshSeeder::class,
         TeamPhotoSeeder::class,
         HeroPhotoSeeder::class,
+        ServicesSeeder::class,
     ];
 
     public function run(): void

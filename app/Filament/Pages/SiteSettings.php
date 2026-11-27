@@ -99,6 +99,12 @@ class SiteSettings extends Page implements HasForms
                     'image_facility_wide' => 'Facilities: wide photo',
                 ])->map(fn ($label, $key) => Forms\Components\FileUpload::make($key)->label($label)
                     ->image()->imageEditor()->disk('public')->directory('site')->maxSize(6144))->values()->all()),
+                Forms\Components\Tabs\Tab::make('Services')->schema(collect(range(1, 5))->map(fn ($i) => Forms\Components\Fieldset::make("Service {$i}")->columns(3)->schema([
+                    $t("service_{$i}_title", 'Name'),
+                    Forms\Components\Textarea::make("service_{$i}_text")->label('Description')->rows(3)->columnSpan(2),
+                    Forms\Components\FileUpload::make("service_{$i}_image")->label('Photo')->image()->imageEditor()
+                        ->disk('public')->directory('site')->maxSize(6144)->columnSpanFull(),
+                ]))->all()),
                 Forms\Components\Tabs\Tab::make('About')->columns(2)->schema([
                     $a('about_text', 'About us'),
                     $a('facilities_text', 'Facilities'),

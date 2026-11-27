@@ -126,6 +126,7 @@ Menu → **Settings → Site settings**, tabs:
 - **Photos**: every large photo on the site. Tap one to upload a replacement (photos from a
   phone are fine; keep them landscape for the wide ones). Change them whenever you like.
 - **About**: about text, facilities text, the nursery units (one per line), and the four *What we grow* boxes.
+- **Services**: the name, description and photo of each of the five services on the Our services page.
 
 Press **Save** at the bottom.
 

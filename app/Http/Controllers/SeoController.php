@@ -19,7 +19,7 @@ class SeoController extends Controller
 
     public function sitemap(): Response
     {
-        $urls = collect(['home', 'plants.index', 'about', 'how-we-grow', 'gallery', 'posts.index', 'contact', 'quote.show'])
+        $urls = collect(['home', 'plants.index', 'about', 'services', 'how-we-grow', 'gallery', 'posts.index', 'contact', 'quote.show'])
             ->map(fn ($r) => ['loc' => route($r), 'lastmod' => null])
             ->concat(Plant::active()->get(['slug', 'updated_at'])->map(fn ($p) => ['loc' => route('plants.show', $p), 'lastmod' => $p->updated_at]))
             ->concat(Post::published()->get(['slug', 'updated_at'])->map(fn ($p) => ['loc' => route('posts.show', $p), 'lastmod' => $p->updated_at]));
