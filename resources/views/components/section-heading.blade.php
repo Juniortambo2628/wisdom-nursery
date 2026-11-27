@@ -1,5 +1,5 @@
 @props(['eyebrow' => null, 'title', 'dark' => false, 'level' => 2])
-<div {{ $attributes->class('flex flex-wrap items-end justify-between gap-4') }}>
+<div {{ $attributes->class('flex flex-wrap items-end justify-between gap-4')->merge(['data-reveal' => true]) }}>
     <div>
         @if ($eyebrow)
             <p @class(['eyebrow mb-3', 'text-moss' => $dark])>{{ $eyebrow }}</p>

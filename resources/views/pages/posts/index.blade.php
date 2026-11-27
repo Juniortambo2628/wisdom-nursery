@@ -8,7 +8,7 @@
                 <p class="mt-2 text-ink/80">Questions in the meantime? Ask our agronomist on WhatsApp.</p>
             </div>
         @else
-            <ul class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <ul class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3" data-reveal data-reveal-stagger>
                 @foreach ($posts as $post)
                     <li class="card overflow-hidden">
                         <a href="{{ route('posts.show', $post) }}" class="group block">

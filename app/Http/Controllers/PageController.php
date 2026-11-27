@@ -26,7 +26,8 @@ class PageController extends Controller
             'categories' => $categories,
             'popular' => $popular,
             'gallery' => GalleryImage::where('is_active', true)->orderBy('sort_order')->limit(5)->get(),
-            'testimonial' => Testimonial::where('is_active', true)->orderBy('sort_order')->first(),
+            // Placeholders ([Customer …]) are left out, so the section only appears with real quotes.
+            'testimonials' => Testimonial::where('is_active', true)->where('quote', 'not like', '[%')->orderBy('sort_order')->get(),
             'partners' => Partner::orderBy('sort_order')->get(),
         ]);
     }

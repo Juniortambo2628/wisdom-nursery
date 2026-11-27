@@ -138,5 +138,5 @@ it('shows the five services, each linking somewhere useful', function () {
 });
 
 it('shows the client testimonial on the home page', function () {
-    $this->get('/')->assertSee('saving us costly replacements')->assertSee('Faith W.')->assertDontSee('[Customer testimonial]');
+    $this->get('/')->assertSee('saving us costly replacements')->assertSee('Faith W.')->assertSee('What our customers say')->assertDontSee('[Customer testimonial]');
 });

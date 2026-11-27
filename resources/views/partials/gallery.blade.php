@@ -14,7 +14,7 @@
     @if ($gallery->isEmpty())
         <p class="mt-8 text-ink/70">Photos are on their way.</p>
     @else
-        <ul class="mt-10 grid grid-flow-dense auto-rows-[140px] grid-cols-2 gap-4 sm:auto-rows-[200px] lg:auto-rows-[220px] lg:grid-cols-4">
+        <ul data-reveal data-reveal-stagger class="mt-10 grid grid-flow-dense auto-rows-[140px] grid-cols-2 gap-4 sm:auto-rows-[200px] lg:auto-rows-[220px] lg:grid-cols-4">
             @foreach ($gallery as $image)
                 <li x-show="filter === 'all' || filter === '{{ $image->category }}'"
                     @class(['col-span-2 row-span-2' => $loop->index % 5 === 0])>

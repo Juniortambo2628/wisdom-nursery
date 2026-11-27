@@ -12,7 +12,7 @@
         {{-- Even darkening (like the home hero) so centred white text reads anywhere on the photo. --}}
         <div class="absolute inset-0 bg-gradient-to-b from-forest/85 via-forest/75 to-forest/85" aria-hidden="true"></div>
     @endif
-    <div class="container-page relative flex flex-col items-center py-16 text-center sm:py-24 lg:py-32">
+    <div class="container-page relative flex flex-col items-center py-16 text-center sm:py-24 lg:py-32" data-reveal data-reveal-stagger>
         @if ($eyebrow)
             <p class="text-sm font-bold uppercase tracking-[0.18em] text-moss sm:text-base">{{ $eyebrow }}</p>
         @endif

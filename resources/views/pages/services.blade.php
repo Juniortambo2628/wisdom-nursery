@@ -14,7 +14,7 @@
             with a sideways title; hovering, focusing or tapping a strip opens it. Phones and tablets: stacked,
             every card open. Without JavaScript all cards show their text.
         --}}
-        <ul class="mt-10 flex flex-col gap-4 lg:h-[600px] lg:flex-row" x-data="{ active: 0 }">
+        <ul class="mt-10 flex flex-col gap-4 lg:h-[600px] lg:flex-row" x-data="{ active: 0 }" data-reveal data-reveal-stagger>
             @foreach ($services as $i => $service)
                 <li class="relative h-[400px] overflow-hidden rounded-image-lg bg-forest sm:h-[440px] lg:h-full lg:min-w-0 lg:basis-0 lg:transition-[flex-grow] lg:duration-500 lg:ease-out motion-reduce:transition-none"
                     :class="active === {{ $i }} ? 'lg:grow-[4]' : 'lg:grow'"

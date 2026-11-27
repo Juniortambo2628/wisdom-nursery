@@ -18,7 +18,7 @@
         @else
             <x-photo label="Full-screen photo: team in uniforms" dark class="absolute inset-0 h-full w-full items-start pt-6 text-[11px] sm:items-center sm:pt-0 sm:text-transparent" />
         @endif
-        <div class="container-page relative flex flex-col items-center pb-28 pt-40 text-center sm:pb-36 sm:pt-32 lg:pb-44 lg:pt-44">
+        <div class="container-page relative flex flex-col items-center pb-28 pt-40 text-center sm:pb-36 sm:pt-32 lg:pb-44 lg:pt-44" data-reveal data-reveal-stagger>
             <p class="text-xl font-semibold uppercase leading-snug tracking-[0.2em] text-white sm:whitespace-nowrap sm:text-[22px] sm:tracking-[0.24em] md:text-[28px] lg:text-[36px]">Wisdom Propagation Nursery</p>
             <p class="eyebrow mt-3 text-moss">Kitui, Kenya · Since {{ setting('since_year', '[Year]') }}</p>
             <h1 class="mt-6 max-w-4xl text-[44px] leading-[1.02] text-white sm:text-6xl lg:text-[88px]">
@@ -47,13 +47,13 @@
 
     {{-- Our story --}}
     <section class="container-page grid items-center gap-12 py-20 lg:grid-cols-2 lg:gap-20 lg:py-28">
-        <div class="relative pb-16 pr-16 sm:pb-24 sm:pr-24">
+        <div class="relative pb-16 pr-16 sm:pb-24 sm:pr-24" data-reveal>
             <x-photo :src="site_image('image_story_main')" label="Founder / manager portrait" class="aspect-[9/10] w-full rounded-image-lg" />
             <div class="absolute bottom-0 right-0 w-1/2 rounded-image-lg bg-mist p-2.5">
                 <x-photo :src="site_image('image_story_small')" label="Hands potting a seedling" class="aspect-square w-full rounded-image" />
             </div>
         </div>
-        <div>
+        <div data-reveal>
             <p class="eyebrow">Our story</p>
             <h2 class="mt-4 text-3xl sm:text-4xl lg:text-5xl">{{ setting('story_title') }}</h2>
             <p class="mt-5 max-w-xl text-lg text-ink/80">{{ setting('story_text') }}</p>
@@ -67,7 +67,7 @@
             <x-section-heading eyebrow="What we grow" title="Grown here, ready to plant.">
                 <x-slot:action><a href="{{ route('plants.index') }}" class="btn-outline border-forest text-forest">See all plants</a></x-slot:action>
             </x-section-heading>
-            <div class="mt-10 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-5">
+            <div class="mt-10 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-5" data-reveal data-reveal-stagger>
                 @foreach ($categories as $category)
                     <a href="{{ route('plants.index', ['category' => $category->slug]) }}" class="group">
                         <x-photo :src="$category->image_path ? Storage::disk('public')->url($category->image_path) : null" :label="$category->name" class="aspect-[4/3] w-full rounded-image transition group-hover:opacity-90" />
@@ -90,7 +90,7 @@
             <x-section-heading eyebrow="Shop online" title="Popular this season">
                 <x-slot:action><p class="flex items-center gap-2 text-sm text-ink/80"><x-mpesa-badge /> Checkout in under a minute</p></x-slot:action>
             </x-section-heading>
-            <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" data-reveal data-reveal-stagger>
                 @foreach ($popular as $plant)
                     <x-plant-card :plant="$plant" />
                 @endforeach
@@ -102,7 +102,7 @@
     <section class="bg-forest py-20 text-white lg:py-28">
         <div class="container-page">
             <x-section-heading eyebrow="How we grow" title="From seed to your farm in four steps." dark class="max-w-2xl" />
-            <ol class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <ol class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4" data-reveal data-reveal-stagger>
                 @foreach ($steps as $i => [$name, $text, $photo])
                     <li>
                         <x-photo :src="site_image('image_step_'.($i + 1))" :label="$photo" dark class="aspect-[4/3] w-full rounded-image" />
@@ -117,7 +117,7 @@
 
     {{-- Bulk quote band --}}
     <section id="quote" class="container-page scroll-mt-28 py-20 lg:py-28">
-        <div class="grid items-center gap-10 rounded-image-lg bg-sage p-6 sm:p-10 lg:grid-cols-2 lg:p-16">
+        <div class="grid items-center gap-10 rounded-image-lg bg-sage p-6 sm:p-10 lg:grid-cols-2 lg:p-16" data-reveal>
             <div>
                 <p class="eyebrow">Farms, schools, estates &amp; landscapers</p>
                 <h2 class="mt-4 text-3xl sm:text-4xl lg:text-5xl">Planting 1,000 trees or more? Get a quote.</h2>
@@ -138,7 +138,7 @@
             <x-section-heading title="At the nursery">
                 <x-slot:action><a href="{{ route('gallery') }}" class="btn-outline border-forest text-forest">Open gallery</a></x-slot:action>
             </x-section-heading>
-            <div class="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:grid-rows-2">
+            <div class="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:grid-rows-2" data-reveal data-reveal-stagger>
                 @foreach ($gallery as $image)
                     <x-photo :src="$image->path ? Storage::disk('public')->url($image->path) : null" :label="$image->caption"
                         @class(['w-full rounded-image', 'col-span-2 row-span-2 aspect-square lg:aspect-auto lg:h-full' => $loop->first, 'aspect-[4/3]' => ! $loop->first]) />
@@ -147,26 +147,67 @@
         </div>
     </section>
 
-    {{-- Testimonial + partners --}}
-    @if ($testimonial || $partners->isNotEmpty())
-        <section class="container-page grid gap-12 py-20 lg:grid-cols-2 lg:py-28">
-            @if ($testimonial)
-                <figure>
-                    <span class="font-display text-6xl leading-none text-leaf" aria-hidden="true">“</span>
-                    <blockquote class="mt-2 font-display text-2xl text-forest sm:text-3xl">{{ $testimonial->quote }}</blockquote>
-                    <figcaption class="mt-5 text-sm text-ink/80"><strong class="font-semibold text-ink">{{ $testimonial->author }}</strong>@if ($testimonial->context), {{ $testimonial->context }}@endif</figcaption>
-                </figure>
-            @endif
-            @if ($partners->isNotEmpty())
-                <div>
-                    <p class="eyebrow">Trusted by</p>
-                    <ul class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
-                        @foreach ($partners as $partner)
-                            <li><x-photo :src="$partner->logo_path ? Storage::disk('public')->url($partner->logo_path) : null" :label="$partner->name" class="h-16 w-full rounded-xl object-contain" /></li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+    {{-- Testimonials + partners --}}
+    @if ($testimonials->isNotEmpty() || $partners->isNotEmpty())
+        <section class="py-20 lg:py-28">
+            <div class="container-page">
+                @if ($testimonials->isNotEmpty())
+                    <x-section-heading eyebrow="Testimonials" title="What our customers say">
+                        <x-slot:action><a href="{{ route('quote.show') }}" class="btn-outline border-forest text-forest">Request a quote</a></x-slot:action>
+                    </x-section-heading>
+
+                    <div class="mt-10 grid gap-6 lg:grid-cols-[5fr_7fr] lg:gap-8" data-reveal data-reveal-stagger>
+                        {{-- The photo fills the quote card's height on computers (it never makes the row taller). --}}
+                        <div class="relative aspect-[4/3] overflow-hidden rounded-image-lg sm:aspect-[16/9] lg:aspect-auto lg:min-h-[420px]">
+                            <x-photo :src="site_image('image_testimonials')" :srcset="site_image_srcset('image_testimonials')" sizes="(min-width: 1024px) 40vw, 100vw"
+                                label="Customer planting or a delivery" class="absolute inset-0 h-full w-full" />
+                        </div>
+
+                        {{-- One quote at a time; arrows and dots appear once there is more than one. --}}
+                        <div class="relative flex flex-col rounded-image-lg bg-white p-7 shadow-lift ring-1 ring-ink/5 sm:p-10 lg:p-12"
+                             x-data="{ i: 0, n: {{ $testimonials->count() }} }">
+                            <span class="grid h-14 w-14 place-items-center rounded-full bg-sage font-display text-5xl leading-none text-forest" aria-hidden="true"><span class="translate-y-2">“</span></span>
+                            @foreach ($testimonials as $t)
+                                <figure class="mt-6 flex flex-1 flex-col" @if (! $loop->first) x-cloak @endif x-show="i === {{ $loop->index }}"
+                                        x-transition:enter="transition duration-500" x-transition:enter-start="opacity-0 translate-y-2">
+                                    <blockquote class="font-display text-2xl leading-snug text-forest sm:text-[28px] lg:text-[32px]">{{ $t->quote }}</blockquote>
+                                    <figcaption class="mt-8 flex items-center gap-4 border-t border-ink/10 pt-6">
+                                        <span class="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-forest font-semibold text-white" aria-hidden="true">{{ str($t->author)->explode(' ')->map(fn ($w) => mb_substr($w, 0, 1))->take(2)->implode('') }}</span>
+                                        <span>
+                                            <strong class="block font-semibold text-ink">{{ $t->author }}</strong>
+                                            @if ($t->context)<span class="text-sm text-ink/70">{{ $t->context }}</span>@endif
+                                        </span>
+                                    </figcaption>
+                                </figure>
+                            @endforeach
+                            @if ($testimonials->count() > 1)
+                                <div class="mt-6 flex items-center justify-between">
+                                    <div class="flex gap-2">
+                                        @foreach ($testimonials as $t)
+                                            <button type="button" @click="i = {{ $loop->index }}" class="h-2.5 rounded-full transition-all" :class="i === {{ $loop->index }} ? 'w-8 bg-forest' : 'w-2.5 bg-ink/20'" aria-label="Quote {{ $loop->iteration }}"></button>
+                                        @endforeach
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <button type="button" @click="i = (i + n - 1) % n" class="grid h-11 w-11 place-items-center rounded-full border border-ink/15 hover:border-leaf" aria-label="Previous quote"><x-glyph name="arrow-right" class="h-5 w-5 rotate-180" /></button>
+                                        <button type="button" @click="i = (i + 1) % n" class="grid h-11 w-11 place-items-center rounded-full border border-ink/15 hover:border-leaf" aria-label="Next quote"><x-glyph name="arrow-right" class="h-5 w-5" /></button>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                @endif
+
+                @if ($partners->isNotEmpty())
+                    <div @class(['mt-16' => $testimonials->isNotEmpty()])>
+                        <p class="eyebrow">Trusted by</p>
+                        <ul class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6" data-reveal data-reveal-stagger>
+                            @foreach ($partners as $partner)
+                                <li><x-photo :src="$partner->logo_path ? Storage::disk('public')->url($partner->logo_path) : null" :label="$partner->name" class="h-16 w-full rounded-xl object-contain" /></li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            </div>
         </section>
     @endif
 

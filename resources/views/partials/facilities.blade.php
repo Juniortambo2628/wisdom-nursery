@@ -17,7 +17,7 @@
                 @endforeach
             </ul>
         </div>
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-2 gap-4" data-reveal data-reveal-stagger>
             <x-photo :src="site_image('image_facility_1')" label="Greenhouse" dark class="aspect-[4/3] w-full rounded-image" />
             <x-photo :src="site_image('image_facility_2')" label="Shade net" dark class="aspect-[4/3] w-full rounded-image" />
             <x-photo :src="site_image('image_facility_wide')" label="Aerial / wide shot of the nursery" dark class="col-span-2 aspect-[3/1] w-full rounded-image" />

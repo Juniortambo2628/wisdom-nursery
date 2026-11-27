@@ -50,7 +50,7 @@
                     <p class="mt-2 text-ink/70">We grow to order. <a href="{{ route('quote.show') }}" class="font-semibold text-leaf underline">Tell us what you need</a>.</p>
                 </div>
             @elseif ($view === 'grid')
-                <ul class="mt-6 grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-3">
+                <ul class="mt-6 grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-3" data-reveal data-reveal-stagger>
                     @foreach ($plants as $plant)
                         <li class="card flex min-w-0 flex-col overflow-hidden">
                             <a href="{{ route('plants.show', $plant) }}" class="block">

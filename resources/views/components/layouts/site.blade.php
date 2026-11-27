@@ -40,6 +40,13 @@
     <meta property="og:image" content="{{ $ogImage ?? asset('images/og-default.jpg') }}">
     <meta name="twitter:card" content="summary_large_image">
     @include('partials.head-icons')
+    {{-- Scroll animations: hide [data-reveal] before first paint only if motion is allowed; show everything if the script hasn't started in 3s. --}}
+    <script>
+        if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.documentElement.classList.add('reveal-ready');
+            setTimeout(function () { if (!window.__revealStarted) document.documentElement.classList.remove('reveal-ready'); }, 3000);
+        }
+    </script>
     <meta name="theme-color" content="#123524">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')

@@ -12,7 +12,7 @@
     @if ($focus->isNotEmpty())
         <section class="container-page pt-20 lg:pt-28">
             <x-section-heading title="What we grow" />
-            <ul class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <ul class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" data-reveal data-reveal-stagger>
                 @foreach ($focus as $f)
                     <li class="card p-6">
                         <x-glyph name="leaf" class="h-6 w-6 text-leaf" />
@@ -28,7 +28,7 @@
         <x-section-heading title="Meet the team">
             <x-slot:action><p class="text-ink/70">{{ $team->count() }} people · one nursery</p></x-slot:action>
         </x-section-heading>
-        <ul class="mt-10 grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4">
+        <ul class="mt-10 grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4" data-reveal data-reveal-stagger>
             @foreach ($team as $member)
                 <li>
                     <x-photo :src="$member->photo_path ? Storage::disk('public')->url($member->photo_path) : null" label="Portrait in uniform" class="aspect-[9/10] w-full rounded-image" />

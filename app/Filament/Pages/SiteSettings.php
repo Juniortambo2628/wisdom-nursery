@@ -100,9 +100,10 @@ class SiteSettings extends Page implements HasForms
                             'image_contact_banner' => 'Contact',
                             'image_quote_banner' => 'Request a quote',
                         ],
-                        'Home page: our story' => [
-                            'image_story_main' => 'Large photo',
-                            'image_story_small' => 'Small photo',
+                        'Home page' => [
+                            'image_story_main' => 'Our story: large photo',
+                            'image_story_small' => 'Our story: small photo',
+                            'image_testimonials' => 'Beside the customer quotes',
                         ],
                         'How we grow: the four steps (home page and How we grow page)' => [
                             'image_step_1' => '1. Seed',
