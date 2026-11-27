@@ -39,6 +39,8 @@ class DatabaseSeeder extends Seeder
         PageHeaderPhotosSeeder::class,
         TestimonialPhotoSeeder::class,
         NarrativeSeeder::class,
+        OrnamentalCypressSeeder::class,
+        NarrativeClimateSeeder::class,
     ];
 
     public function run(): void

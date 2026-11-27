@@ -4,7 +4,7 @@
         :image="site_image('image_about_banner')" :srcset="site_image_srcset('image_about_banner')"
         :intro="setting('about_text', setting('story_text'))" />
 
-    @include('partials.kitui-advantage')
+    @include('partials.climate-advantage')
 
     @php
         $focus = collect(range(1, 4))

@@ -26,7 +26,7 @@ class CategoryResource extends Resource
             Forms\Components\TextInput::make('name')->required(),
             Forms\Components\TextInput::make('slug')->required()->unique(ignoreRecord: true),
             Forms\Components\TextInput::make('summary')->columnSpanFull(),
-            Forms\Components\FileUpload::make('image_path')->label('Photo')->image()->disk('public')->directory('categories'),
+            \App\Filament\Forms\MediaPicker::attach(Forms\Components\FileUpload::make('image_path')->label('Photo')->image()->disk('public')->directory('categories')),
             Forms\Components\TextInput::make('sort_order')->numeric()->default(0),
         ]);
     }

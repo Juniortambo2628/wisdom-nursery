@@ -1,4 +1,4 @@
-{{-- "Why Kitui-grown": why plants raised in semi-arid Kitui do better after planting (Home, About). Text in Site settings → Home page. --}}
+{{-- "Why our plants last": why plants raised in a semi-arid climate do better after planting (Home, About). Text in Site settings → Home page. --}}
 @php
     $benefits = collect(range(1, 4))
         ->map(fn ($i) => ['title' => setting("advantage_{$i}_title"), 'text' => setting("advantage_{$i}_text")])
@@ -9,7 +9,7 @@
     <section class="bg-forest py-20 text-white lg:py-28">
         <div class="container-page grid gap-12 lg:grid-cols-[5fr_7fr] lg:gap-16">
             <div data-reveal>
-                <p class="text-sm font-bold uppercase tracking-[0.18em] text-moss">{{ setting('advantage_eyebrow', 'Why Kitui-grown') }}</p>
+                <p class="text-sm font-bold uppercase tracking-[0.18em] text-moss">{{ setting('advantage_eyebrow', 'Why our plants last') }}</p>
                 <h2 class="mt-4 text-4xl text-white sm:text-5xl">{{ setting('advantage_title') }}</h2>
                 <p class="mt-6 text-lg leading-relaxed text-white/90">{{ setting('advantage_lead') }}</p>
                 @if ($closing = setting('advantage_closing'))

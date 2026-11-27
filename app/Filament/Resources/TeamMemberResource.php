@@ -27,7 +27,7 @@ class TeamMemberResource extends Resource
         return $form->schema([
             Forms\Components\TextInput::make('name')->required(),
             Forms\Components\TextInput::make('role')->required(),
-            Forms\Components\FileUpload::make('photo_path')->label('Portrait')->image()->imageEditor()->disk('public')->directory('team'),
+            \App\Filament\Forms\MediaPicker::attach(Forms\Components\FileUpload::make('photo_path')->label('Portrait')->image()->imageEditor()->disk('public')->directory('team')),
             Forms\Components\Toggle::make('is_active')->label('Show on site')->default(true),
         ]);
     }

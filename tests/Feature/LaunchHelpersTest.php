@@ -23,7 +23,7 @@ it('clears test orders but keeps the content', function () {
     $this->artisan('nursery:clear-test-data --force')->assertSuccessful();
 
     expect(Order::count())->toBe(0)->and(QuoteRequest::count())->toBe(0)
-        ->and(Plant::count())->toBe(50)
+        ->and(Plant::count())->toBe(52)
         ->and(Setting::get('phone'))->toBe('+254 700 000 000');
     expect(Order::factory()->create()->fresh()->number)->toBe('WN-1001');
 });

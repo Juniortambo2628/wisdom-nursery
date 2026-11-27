@@ -25,7 +25,7 @@ class PartnerResource extends Resource
         return $form->schema([
             Forms\Components\TextInput::make('name')->required(),
             Forms\Components\TextInput::make('url')->url(),
-            Forms\Components\FileUpload::make('logo_path')->label('Logo')->image()->disk('public')->directory('partners'),
+            \App\Filament\Forms\MediaPicker::attach(Forms\Components\FileUpload::make('logo_path')->label('Logo')->image()->disk('public')->directory('partners')),
         ]);
     }
 

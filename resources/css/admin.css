@@ -1,2 +1,6 @@
 @import '@fontsource-variable/inter/index.css';
 @import './scrollbars.css';
+
+/* Layout utilities used by the dashboard's own views (tailwind.admin.config.js). */
+@config "../../tailwind.admin.config.js";
+@tailwind utilities;

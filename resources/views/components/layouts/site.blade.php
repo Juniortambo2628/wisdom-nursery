@@ -17,7 +17,7 @@
         'contact' => ['Contact', route('contact')],
     ];
     $pageTitle = $title ? $title.' · Wisdom Propagation Nursery' : 'Wisdom Propagation Nursery · '.setting('site_tagline', 'Every plant gets a strong start');
-    $metaDescription = $description ?? 'Fruit trees, vegetable seedlings, ornamentals and tree seedlings hardened in semi-arid Kitui, Kenya, so they establish faster after planting. From Wisdom Propagation Nursery, part of the Wisdom Capital family. Pay with M-Pesa, collect or get it delivered.';
+    $metaDescription = $description ?? 'Fruit trees, vegetable seedlings, ornamentals and tree seedlings hardened in a semi-arid climate, so they establish faster after planting. From Wisdom Propagation Nursery, part of the Wisdom Capital family. Pay with M-Pesa, collect or get it delivered.';
     $whatsapp = \App\Support\WhatsApp::link('Hello Wisdom Propagation Nursery');
     $phones = site_phones();
 @endphp

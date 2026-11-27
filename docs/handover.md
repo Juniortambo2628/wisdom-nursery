@@ -140,6 +140,13 @@ Elsewhere:
 - **Content → Grower tips**: write a guide; set **Publish on** to put it on the site (empty =
   draft).
 
+### Photo library
+
+Menu → **Settings → Photo library** shows every photo uploaded to the site, where each one is
+used, and lets you upload more (**Upload photos**). Every photo box in the dashboard has a
+**Choose from library** link: pick a photo that is already there instead of uploading it again.
+Photos that are not used anywhere can be deleted; photos in use are protected.
+
 ## 7. Who gets the order alerts
 
 Menu → **Settings → Alert recipients**: each person's name, phone, email and how they want

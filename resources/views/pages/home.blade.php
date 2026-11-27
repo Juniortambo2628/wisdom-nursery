@@ -20,11 +20,11 @@
         @endif
         <div class="container-page relative flex flex-col items-center pb-28 pt-40 text-center sm:pb-36 sm:pt-32 lg:pb-44 lg:pt-44" data-reveal data-reveal-stagger>
             <p class="text-xl font-semibold uppercase leading-snug tracking-[0.2em] text-white sm:whitespace-nowrap sm:text-[22px] sm:tracking-[0.24em] md:text-[28px] lg:text-[36px]">Wisdom Propagation Nursery</p>
-            <p class="eyebrow mt-3 text-moss">Hardened in semi-arid Kitui, Kenya · Since {{ setting('since_year', '[Year]') }}</p>
+            <p class="eyebrow mt-3 text-moss">Hardened in a semi-arid climate · Since {{ setting('since_year', '[Year]') }}</p>
             <h1 class="mt-6 max-w-4xl text-[44px] leading-[1.02] text-white sm:text-6xl lg:text-[88px]">
                 Every plant gets a <em class="font-normal italic text-moss">strong</em> start.
             </h1>
-            <p class="mt-6 max-w-2xl text-lg text-white/85">Fruit trees, seedlings and ornamentals raised under Kitui’s strong sun and dry air, so they arrive tougher and establish faster on your farm, compound or project.</p>
+            <p class="mt-6 max-w-2xl text-lg text-white/85">Fruit trees, seedlings and ornamentals raised under strong sun and dry air, so they arrive tougher and establish faster on your farm, compound or project.</p>
             <div class="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:justify-center">
                 <a href="{{ route('plants.index') }}" class="btn bg-white text-forest hover:bg-mist">Shop plants</a>
                 <a href="#quote" class="btn border border-white/60 text-white hover:bg-white/10">Request a bulk quote</a>
@@ -62,7 +62,7 @@
     </section>
 
     {{-- What we grow --}}
-    @include('partials.kitui-advantage')
+    @include('partials.climate-advantage')
 
     <section class="bg-white py-20 lg:py-28">
         <div class="container-page">

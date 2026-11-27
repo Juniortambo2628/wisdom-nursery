@@ -30,7 +30,7 @@ class PostResource extends Resource
             Forms\Components\Select::make('category')->options(['Plant care' => 'Plant care', 'Tree planting' => 'Tree planting', 'Seedlings' => 'Seedlings', 'News' => 'News']),
             Forms\Components\DateTimePicker::make('published_at')->label('Publish on')->helperText('Leave empty to keep as a draft.'),
             Forms\Components\TextInput::make('excerpt')->columnSpanFull(),
-            Forms\Components\FileUpload::make('image_path')->label('Photo')->image()->disk('public')->directory('posts')->columnSpanFull(),
+            \App\Filament\Forms\MediaPicker::attach(Forms\Components\FileUpload::make('image_path')->label('Photo')->image()->disk('public')->directory('posts')->columnSpanFull()),
             Forms\Components\RichEditor::make('body')->columnSpanFull()->disableToolbarButtons(['attachFiles', 'codeBlock']),
         ]);
     }

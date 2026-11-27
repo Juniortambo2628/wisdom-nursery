@@ -105,3 +105,23 @@ it('has an upload slot in Site settings for every photo the pages show', functio
         $component->assertFormFieldExists($key);
     }
 });
+
+it('lists every uploaded photo in the photo library and protects the ones in use', function () {
+    \Illuminate\Support\Facades\Storage::disk('public')->put('library/unused.webp', 'x');
+    \Illuminate\Support\Facades\Storage::disk('public')->put('site/in-use.webp', 'x');
+    \App\Models\Setting::put('image_hero', 'site/in-use.webp');
+
+    $this->get('/admin/photo-library')->assertOk()->assertSee('unused.webp')->assertSee('In use: Site settings: image_hero');
+
+    Livewire::test(\App\Filament\Pages\MediaLibraryPage::class)
+        ->call('deletePhoto', 'site/in-use.webp')
+        ->call('deletePhoto', 'library/unused.webp');
+
+    \Illuminate\Support\Facades\Storage::disk('public')->assertExists('site/in-use.webp');
+    \Illuminate\Support\Facades\Storage::disk('public')->assertMissing('library/unused.webp');
+});
+
+it('offers Choose from library on every photo box', function () {
+    Livewire::test(\App\Filament\Pages\SiteSettings::class)
+        ->assertFormComponentActionExists('image_hero', 'chooseFromLibrary');
+});
